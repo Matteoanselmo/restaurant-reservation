@@ -1,0 +1,10 @@
+.full-screen {
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+html, body {
+    overflow: hidden;
+    height: 100%;
+    font-family: 'Dancing Script', cursive !important;
+}
