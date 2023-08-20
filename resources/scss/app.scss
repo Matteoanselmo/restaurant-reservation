@@ -2,3 +2,10 @@
 @import '_btn-show.scss';
 
 @import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Dancing+Script&family=Eagle+Lake&family=Noto+Serif+Display:ital,wght@1,200&display=swap');
+
+//fontawesome
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
+
+//animazioni
+@import 'animate.css/animate.css';

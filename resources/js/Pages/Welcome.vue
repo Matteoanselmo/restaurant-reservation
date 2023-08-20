@@ -15,7 +15,36 @@ defineProps({
     <div id="home" >
         <ApplicationLogo class="full-screen d-flex justify-content-center align-items-center overflow-hidden" ref="appLogoRef"/>
         <NotARestaurant class="full-screen d-flex justify-content-center align-items-center overflow-hidden" ref="restaurantRef"/>
-        <ChoseShow class="full-screen d-flex justify-content-center align-items-center" ref="showRef"/>
+        <div class="d-flex">
+            <div>
+                <MareShow
+                    class="full-screen d-flex justify-content-center align-items-center"
+                    id="mare-show"
+                    ref="mareShowRef"
+                />
+                <DateMare
+                    class="full-screen d-flex flex-column justify-content-start align-items-center"
+                    id="mare-date"
+                    ref="mareDateRef"
+                />
+            </div>
+            <div>
+                <ChoseShow class="full-screen d-flex justify-content-center align-items-center" id="chose-show" ref="showRef"/>
+                <DateAttivita class="full-screen d-flex justify-content-center align-items-center" id="attivita-date" ref="attivitaDateRef"/>
+            </div>
+            <div>
+                <TerraShow
+                    class="full-screen d-flex justify-content-center align-items-center"
+                    id="terra-show"
+                    ref="terraShowRef"
+                />
+                <DateTerra
+                    class="full-screen d-flex flex-column justify-content-start align-items-center"
+                    id="terra-date"
+                    ref="terraDateRef"
+                />
+            </div>
+        </div>
     </div>
 
 </template>
@@ -24,12 +53,22 @@ defineProps({
 import ApplicationLogo from '../Components/ApplicationLogo.vue'
 import NotARestaurant from '../Components/NotARestaurant.vue'
 import ChoseShow from '../Components/ChoseShow.vue'
+import MareShow from '../Components/MareShow.vue'
+import TerraShow from '../Components/TerraShow.vue'
+import DateMare from '../Components/Date/DateMare.vue'
+import DateAttivita from '../Components/Date/DateAttivita.vue'
+import DateTerra from '../Components/Date/DateTerra.vue'
 export default {
     name: 'ApplicationLogo',
     components: {
         ApplicationLogo,
         NotARestaurant,
-        ChoseShow
+        ChoseShow,
+        MareShow,
+        TerraShow,
+        DateMare,
+        DateAttivita,
+        DateTerra
     },
     mounted() {
         setTimeout(() => {
