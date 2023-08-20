@@ -1,11 +1,13 @@
 <template>
-    <div class="d-flex flex-column justify-content-between align-items-center py-3 position-relative" >
-        <button class="position-absolute btn-show" style="top: 10px; right: 10px;" @click="scrollToSection('chose-show')">
-            <i class="fa-solid fa-chevron-up  fs-3" ></i>
-        </button>
-        <h1>
-            Il vostro spettacolo personale
-        </h1>
+    <div>
+        <div class="d-flex flex-column">
+            <button class="btn-show" @click="scrollToSection('special-show')">
+                <i class="fa-solid fa-chevron-up  fs-3" ></i>
+            </button>
+            <h1>
+                Date Special
+            </h1>
+        </div>
     </div>
 </template>
 

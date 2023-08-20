@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>
+        <div class="d-flex flex-column">
             <button class="btn-show" @click="scrollToSection('mare-show')">
                 <i class="fa-solid fa-chevron-up  fs-3" ></i>
             </button>

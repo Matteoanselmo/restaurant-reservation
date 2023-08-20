@@ -30,7 +30,14 @@ defineProps({
             </div>
             <div>
                 <ChoseShow class="full-screen d-flex justify-content-center align-items-center" id="chose-show" ref="showRef"/>
-                <DateAttivita class="full-screen d-flex justify-content-center align-items-center" id="attivita-date" ref="attivitaDateRef"/>
+                <div>
+                    <SpecialShow
+                        class="full-screen d-flex flex-column justify-content-start align-items-center position-relative"
+                        id="special-show"
+                        ref="terraShowRef"
+                    />
+                    <DateSpacial class="full-screen d-flex flex-column justify-content-start align-items-center" id="special-date" ref="attivitaDateRef"/>
+                </div>
             </div>
             <div>
                 <TerraShow
@@ -55,8 +62,9 @@ import NotARestaurant from '../Components/NotARestaurant.vue'
 import ChoseShow from '../Components/ChoseShow.vue'
 import MareShow from '../Components/MareShow.vue'
 import TerraShow from '../Components/TerraShow.vue'
+import SpecialShow from '../Components/SpecialShow.vue'
 import DateMare from '../Components/Date/DateMare.vue'
-import DateAttivita from '../Components/Date/DateAttivita.vue'
+import DateSpacial from '../Components/Date/DateSpacial.vue'
 import DateTerra from '../Components/Date/DateTerra.vue'
 export default {
     name: 'ApplicationLogo',
@@ -66,8 +74,9 @@ export default {
         ChoseShow,
         MareShow,
         TerraShow,
+        SpecialShow,
         DateMare,
-        DateAttivita,
+        DateSpacial,
         DateTerra
     },
     mounted() {
