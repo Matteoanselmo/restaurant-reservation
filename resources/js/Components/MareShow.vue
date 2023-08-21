@@ -28,6 +28,35 @@ export default {
                 targetSection.scrollIntoView({ behavior: 'smooth' });
             }
         }
+    },
+    mounted() {
+        let initialTouchX = 0;
+        let initialTouchY = 0;
+
+        // Aggiungi un listener per il gesto di swipe
+        this.$el.addEventListener('touchstart', (e) => {
+            initialTouchX = e.touches[0].clientX;
+            initialTouchY = e.touches[0].clientY;
+        });
+
+        this.$el.addEventListener('touchend', (e) => {
+            const deltaX = initialTouchX - e.changedTouches[0].clientX;
+            const deltaY = initialTouchY - e.changedTouches[0].clientY;
+            // Definisci una soglia per determinare quando considerare il gesto come uno swipe
+            const swipeThreshold = 50;
+
+            if (deltaX > swipeThreshold) {
+                // Calcola la direzione dello swipe
+                const sectionId = 'chose-show'; // Vai alla sezione successiva
+                this.scrollToSection(sectionId);
+            }
+
+            if (deltaY > swipeThreshold) {
+                // Calcola la direzione dello swipe
+                const sectionId = 'mare-date'; // Vai alla sezione successiva
+                this.scrollToSection(sectionId);
+            }
+        });
     }
 }
 </script>

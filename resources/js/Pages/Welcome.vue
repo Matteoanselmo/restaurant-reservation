@@ -15,10 +15,11 @@ defineProps({
     <div id="home" >
         <ApplicationLogo class="full-screen d-flex justify-content-center align-items-center overflow-hidden" ref="appLogoRef"/>
         <NotARestaurant class="full-screen d-flex justify-content-center align-items-center overflow-hidden" ref="restaurantRef"/>
+        <lode class="full-screen d-flex flex-column px-5 justify-content-center align-items-center overflow-hidden" ref="lodeRef"/>
         <div class="d-flex">
             <div>
                 <MareShow
-                    class="full-screen d-flex justify-content-center align-items-center"
+                    class="full-screen "
                     id="mare-show"
                     ref="mareShowRef"
                 />
@@ -58,6 +59,7 @@ defineProps({
 
 <script>
 import ApplicationLogo from '../Components/ApplicationLogo.vue'
+import Lode from '../Components/Lode.vue'
 import NotARestaurant from '../Components/NotARestaurant.vue'
 import ChoseShow from '../Components/ChoseShow.vue'
 import MareShow from '../Components/MareShow.vue'
@@ -70,6 +72,7 @@ export default {
     name: 'ApplicationLogo',
     components: {
         ApplicationLogo,
+        Lode,
         NotARestaurant,
         ChoseShow,
         MareShow,
@@ -81,26 +84,31 @@ export default {
     },
     mounted() {
         setTimeout(() => {
-        this.scrollComponent(this.$refs.restaurantRef);
-        }, 500); // Dopo 0.5 secondi
+            this.scrollComponent(this.$refs.restaurantRef);
+        }, 1500); // Dopo 0.5 secondi
     },
     methods: {
         async scrollComponent(ref) {
-        if (ref && ref.$el) {
-            ref.$el.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-            });
-            if (ref !== this.$refs.showRef) {
-            await new Promise(resolve => setTimeout(resolve, 3500)); // Attendi 0.5 secondi prima dello scorrimento successivo
-            const nextRef = this.getNextRef(ref);
-            this.scrollComponent(nextRef);
+            if (ref && ref.$el) {
+                ref.$el.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+                });
+                if (ref !== this.$refs.showRef) {
+                    if (ref === this.$refs.lodeRef) {
+                        await new Promise(resolve => setTimeout(resolve, 5000)); // Attendi 3.5 secondi prima dello scorrimento successivo
+                    }
+                    await new Promise(resolve => setTimeout(resolve, 1500)); // Attendi 3.5 secondi prima dello scorrimento successivo
+                    const nextRef = this.getNextRef(ref);
+                    this.scrollComponent(nextRef);
+                }
             }
-        }
         },
         getNextRef(currentRef) {
         switch (currentRef) {
             case this.$refs.restaurantRef:
+                return this.$refs.lodeRef;
+            case this.$refs.lodeRef:
                 return this.$refs.showRef;
             case this.$refs.showRef:
                 default:

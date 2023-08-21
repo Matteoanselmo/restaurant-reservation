@@ -22,6 +22,27 @@ export default {
                 targetSection.scrollIntoView({ behavior: 'smooth' });
             }
         }
+    },
+    mounted() {
+        let initialTouchY = 0;
+
+        // Aggiungi un listener per il gesto di swipe
+        this.$el.addEventListener('touchstart', (e) => {
+        initialTouchY = e.touches[0].clientY;
+        });
+
+        this.$el.addEventListener('touchend', (e) => {
+        const deltaY = initialTouchY - e.changedTouches[0].clientY;
+
+        // Definisci una soglia per determinare quando considerare il gesto come uno swipe
+        const swipeThreshold = -50;
+
+        if (deltaY < swipeThreshold) {
+            // Calcola la direzione dello swipe
+            const sectionId = 'terra-show'; // Vai alla sezione successiva
+            this.scrollToSection(sectionId);
+        }
+        });
     }
 }
 </script>
