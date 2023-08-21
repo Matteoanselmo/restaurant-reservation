@@ -98,7 +98,7 @@ export default {
                     if (ref === this.$refs.lodeRef) {
                         await new Promise(resolve => setTimeout(resolve, 5000)); // Attendi 3.5 secondi prima dello scorrimento successivo
                     }
-                    await new Promise(resolve => setTimeout(resolve, 1500)); // Attendi 3.5 secondi prima dello scorrimento successivo
+                    await new Promise(resolve => setTimeout(resolve, 3500)); // Attendi 3.5 secondi prima dello scorrimento successivo
                     const nextRef = this.getNextRef(ref);
                     this.scrollComponent(nextRef);
                 }
