@@ -23,10 +23,12 @@
 </template>
 
 <script>
+import {generalStore} from '@/Stores/state';
 export default {
     name: 'ChoseShow',
     data() {
         return{
+            store : generalStore(),
             allShow: [
                 {
                     tipo: 'mare',
@@ -50,9 +52,27 @@ export default {
             if (targetSection) {
                 targetSection.scrollIntoView({ behavior: 'smooth' });
             }
+        },
+        handleIntersection(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.store.setVisited();
+                }
+            });
         }
     },
     mounted() {
+        // verifico di essere all'interno DELLA VIEW
+        const options = {
+            root: null, // viewport
+            rootMargin: '0px',
+            threshold: 0.5 // il componente è considerato visibile quando è almeno per il 50% nel viewport
+        };
+
+        const observer = new IntersectionObserver(this.handleIntersection, options);
+        observer.observe(this.$el);
+
+        // METTO IN ASCOLTO UN LISTNER PER I TOUCH SWIPE
         let initialTouchX = 0;
         let initialTouchY = 0;
 
@@ -69,7 +89,7 @@ export default {
             const swipeThreshold = 50;
 
             if (deltaX < -swipeThreshold) {
-                // Calcola la direzione dello swipe
+                // Calcola la direzione dello swipe nell'asse X
                 const sectionId = 'mare-show'; // Vai alla sezione successiva
                 this.scrollToSection(sectionId);
                 console.log('X: '+ deltaX)
@@ -80,12 +100,15 @@ export default {
             }
 
             if (deltaY > swipeThreshold ) {
-                // Calcola la direzione dello swipe
+                // Calcola la direzione dello swipe nell'asse Y
                 const sectionId = 'special-show'; // Vai alla sezione successiva
                 this.scrollToSection(sectionId);
                 console.log('Y: '+ deltaY)
             }
         });
+    },
+    created(){
+
     }
 }
 </script>

@@ -13,43 +13,45 @@ defineProps({
 <template>
     <Head title="Welcome" />
     <div id="home" >
-        <ApplicationLogo class="full-screen d-flex justify-content-center align-items-center overflow-hidden" ref="appLogoRef"/>
-        <NotARestaurant class="full-screen d-flex justify-content-center align-items-center overflow-hidden" ref="restaurantRef"/>
-        <lode class="full-screen d-flex flex-column px-5 justify-content-center align-items-center overflow-hidden" ref="lodeRef"/>
+        <div>
+            <ApplicationLogo class="full-screen d-flex justify-content-center align-items-center overflow-hidden" ref="appLogoRef"/>
+            <NotARestaurant class="full-screen d-flex justify-content-center align-items-center overflow-hidden" ref="restaurantRef"/>
+            <lode class="full-screen d-flex flex-column px-5 justify-content-center align-items-center overflow-hidden" ref="lodeRef"/>
+        </div>
         <div class="d-flex">
             <div>
                 <MareShow
                     class="full-screen "
                     id="mare-show"
-                    ref="mareShowRef"
                 />
                 <DateMare
                     class="full-screen d-flex flex-column justify-content-start align-items-center"
                     id="mare-date"
-                    ref="mareDateRef"
                 />
             </div>
             <div>
-                <ChoseShow class="full-screen d-flex justify-content-center align-items-center" id="chose-show" ref="showRef"/>
+                <ChoseShow
+                    class="full-screen d-flex justify-content-center align-items-center"
+                    id="chose-show"
+                    ref="showRef"/>
                 <div>
                     <SpecialShow
                         class="full-screen d-flex flex-column justify-content-start align-items-center position-relative"
                         id="special-show"
-                        ref="terraShowRef"
                     />
-                    <DateSpacial class="full-screen d-flex flex-column justify-content-start align-items-center" id="special-date" ref="attivitaDateRef"/>
+                    <DateSpacial
+                        class="full-screen d-flex flex-column justify-content-start align-items-center"
+                        id="special-date" />
                 </div>
             </div>
             <div>
                 <TerraShow
                     class="full-screen d-flex justify-content-center align-items-center"
                     id="terra-show"
-                    ref="terraShowRef"
                 />
                 <DateTerra
                     class="full-screen d-flex flex-column justify-content-start align-items-center"
                     id="terra-date"
-                    ref="terraDateRef"
                 />
             </div>
         </div>
@@ -61,13 +63,14 @@ defineProps({
 import ApplicationLogo from '../Components/ApplicationLogo.vue'
 import Lode from '../Components/Lode.vue'
 import NotARestaurant from '../Components/NotARestaurant.vue'
-import ChoseShow from '../Components/ChoseShow.vue'
-import MareShow from '../Components/MareShow.vue'
-import TerraShow from '../Components/TerraShow.vue'
-import SpecialShow from '../Components/SpecialShow.vue'
+import ChoseShow from '../Components/Show/ChoseShow.vue'
+import MareShow from '../Components/Show/MareShow.vue'
+import TerraShow from '../Components/Show/TerraShow.vue'
+import SpecialShow from '../Components/Show/SpecialShow.vue'
 import DateMare from '../Components/Date/DateMare.vue'
 import DateSpacial from '../Components/Date/DateSpacial.vue'
 import DateTerra from '../Components/Date/DateTerra.vue'
+import {generalStore} from '@/Stores/state';
 export default {
     name: 'ApplicationLogo',
     components: {
@@ -82,27 +85,48 @@ export default {
         DateSpacial,
         DateTerra
     },
+    data(){
+        return{
+            store : generalStore(),
+        }
+    },
     mounted() {
-        setTimeout(() => {
-            this.scrollComponent(this.$refs.restaurantRef);
-        }, 1500); // Dopo 0.5 secondi
+        if(this.store.isVisited){
+            setTimeout(() => {
+                this.scrollComponent(this.$refs.restaurantRef);
+            }, 1500); // Dopo 0.5 secondi
+        } else {
+            this.showRefView()
+        }
+
     },
     methods: {
         async scrollComponent(ref) {
             if (ref && ref.$el) {
                 ref.$el.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
+                    behavior: 'smooth',
+                    block: 'start',
                 });
                 if (ref !== this.$refs.showRef) {
                     if (ref === this.$refs.lodeRef) {
-                        await new Promise(resolve => setTimeout(resolve, 5000)); // Attendi 3.5 secondi prima dello scorrimento successivo
+                        await new Promise(resolve => setTimeout(resolve, 1000)); // Attendi 5 secondi prima dello scorrimento successivo
+                    } else {
+                        await new Promise(resolve => setTimeout(resolve, 1000)); // Attendi 3.5 secondi prima dello scorrimento successivo
                     }
-                    await new Promise(resolve => setTimeout(resolve, 3500)); // Attendi 3.5 secondi prima dello scorrimento successivo
-                    const nextRef = this.getNextRef(ref);
+                }
+                const nextRef = this.getNextRef(ref);
+
+                if (nextRef) {
                     this.scrollComponent(nextRef);
+                } else if (ref === this.$refs.showRef && !this.store.isVisited) {
+                    this.showRefView();
                 }
             }
+        },
+        showRefView(){
+            this.$refs.showRef.$el.scrollIntoView({
+                block:'start'
+            })
         },
         getNextRef(currentRef) {
         switch (currentRef) {
@@ -111,9 +135,9 @@ export default {
             case this.$refs.lodeRef:
                 return this.$refs.showRef;
             case this.$refs.showRef:
-                default:
-                 return null; // Fermati qui
-        }
+            default:
+            return null; // Termina lo scorrimento qui
+            }
         },
     },
 }
