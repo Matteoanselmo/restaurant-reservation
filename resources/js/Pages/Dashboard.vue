@@ -5,68 +5,33 @@ import { Head } from '@inertiajs/vue3';
 
 <template>
     <Head title="Dashboard" />
-    <div class="fixed-top">
-        <button @click="toggleSidebar" class="btn-show d-md-none mb-4">
-            <i class="fa-solid fa-bars-staggered"></i>
-        </button>
-        <div :class="['sidebar', { 'active': sidebarVisible }]" class="shadow-lg rounded-5 m-4 py-4">
-            <div class="d-flex flex-column  align-items-center mb-5" style="backdrop-filter: blur(6px);">
-                <button class="btn-show w-50">
+        <div class="full-screen position-relative d-flex justify-content-center align-items-center flex-wrap">
+            <div class="position-absolute top-50 start-50 translate-middle z-3">
+                <button class="btn btn-dark fs-2 rounded-5 shadow " fw-bold>
+                    <i class="fa-solid fa-house"></i>
+                </button>
+            </div>
+            <div>
+                <a class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Date
-                </button>
-                <button class="btn-show w-50">
+                </a>
+            </div>
+            <div>
+                <a class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Artisti
-                </button>
-                <button class="btn-show w-50">
+                </a>
+            </div>
+            <div>
+                <a class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Prenotazioni
-                </button>
-                <button class="btn-show w-50">
+                </a>
+            </div>
+            <div>
+                <a class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Resoconto
-                </button>
-            </div>
-            <div class="d-flex justify-content-evenly align-items-center">
-                <button class="btn-show">
-                    Profilo
-                </button>
-                <button class="btn btn-danger">
-                    Esci
-                </button>
+                </a>
             </div>
         </div>
-    </div>
-    <div class="full-screen position-relative pt-5" id="dashboard" :class="['content-overlay', { 'active': sidebarVisible }]" @click="closeSidebar">
-        <div class="row rounded-5 shadow mx-3">
-            <div class="col-12 col-md-4  d-flex align-items-center justify-content-center mb-4 py-3">
-                <button class="btn-show">
-                    Mare
-                </button>
-            </div>
-            <div class="col-12 col-md-4 d-flex align-items-center justify-content-center mb-4 py-3">
-                <button class="btn-show">
-                    Special
-                </button>
-            </div>
-            <div class="col-12 col-md-4 d-flex align-items-center justify-content-center mb-4 py-3">
-                <button class="btn-show">
-                    Terra
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
-        </template>
-
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">You're logged in!</div>
-                </div>
-            </div>
-        </div>
-    </AuthenticatedLayout> -->
 </template>
 
 <script>
@@ -75,36 +40,42 @@ export default {
     name: 'Dashboard',
     components: {
         ApplicationLogo
-    },
-    data() {
-        return {
-            sidebarVisible: false,
-        };
-    },
-    methods: {
-        toggleSidebar() {
-            this.sidebarVisible = !this.sidebarVisible;
-        },
-        closeSidebar() {
-            this.sidebarVisible = false;
-        },
-    },
+    }
 }
 </script>
 
-<style>
-    /* Stili per la sidebar */
-.sidebar {
-  /* Stili della sidebar nascosta */
-    transform: translateX(-200%);
-    transition: transform 0.3s ease-in-out;
+<style >
+
+html, body {
+    overflow: auto;
 }
 
-/* Stili per la sidebar visibile */
-.sidebar.active {
-    transform: translateX(0);
+.my-card{
+    height: calc(50vh - 3rem);
+    width: calc(50vw - 3rem);
 }
-.content-overlay.active{
-    filter: blur(6px);
+/* @media (max-width: 1199.98px) {
+    .my-card {
+        height: calc(25vh - 3rem);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .my-card {
+        height: calc(25vh - 3rem);
+    }
+}
+
+@media (max-width: 767.98px) {
+    .my-card {
+        height: calc(25vh - 3rem);
+    }
+} */
+
+@media (max-width: 575.98px) {
+    .my-card {
+        height: calc(25vh - 3rem);
+        border-radius: 25px !important;
+    }
 }
 </style>
