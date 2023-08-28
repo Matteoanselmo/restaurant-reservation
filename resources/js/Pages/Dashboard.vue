@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
@@ -16,15 +17,15 @@ import { Head } from '@inertiajs/vue3';
             </button>
         </div>
         <div class="logout-button z-3 d-none" id="logout">
-            <button class="btn btn-dark fs-2 rounded-5 shadow w-100" >
+            <Link :href="route('logout')" method="POST"  class="btn btn-dark fs-2 rounded-5 shadow w-100 text-danger" >
                 <i class="fa-solid fa-right-from-bracket"></i>
-            </button>
+            </Link>
         </div>
         <div class="full-screen d-flex justify-content-evenly align-items-start flex-wrap" id="dashboard">
             <div style="cursor: pointer;">
-                <a class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
+                <Link :href="route('dashboard.date')"  class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Date
-                </a>
+                </Link>
             </div>
             <div style="cursor: pointer;">
                 <a class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
@@ -74,19 +75,19 @@ export default {
 
 <style >
 
-html, body {
+/* html, body {
     overflow: auto;
-}
+} */
 .home-button{
     position: absolute;
     left: 50%;
-    top: 30%;
-    transform: translateX(-50%);
+    top:calc((100vh / 3 ) - 2.5rem);
+    transform: translateX( -50% );
 }
 .profile-button{
     position: absolute;
     left: 50%;
-    bottom: 30%;
+    bottom: calc((100vh / 3 ) - 2.5rem);
     transform: translateX(-50%);
 }
 .logout-button{
@@ -129,16 +130,22 @@ html, body {
 } */
 
 @media (max-width: 575.98px) {
-    .home-button,  .profile-button{
+    .home-button,  .profile-button, .logout-button{
         width: 80vw !important;
     }
 
     .home-button{
-        top: 24%;
+        top:calc(50vh / 2 );
     }
 
     .profile-button{
-        bottom: 36%;
+        bottom: calc(50vh / 2 );
+    }
+
+    .logout-button{
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: calc((50vh / 2 ) - 5rem);
     }
 
     .my-card {
