@@ -11,3 +11,7 @@
 @import 'animate.css/animate.css';
 
 
+.my-blur{
+    filter: opacity(0.7) blur(6px);
+    transition: filter .7s;
+}
