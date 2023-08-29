@@ -42,7 +42,7 @@
 
 <script>
 export default {
-    name: 'DashboardDate',
+    name: 'DashboardCreateDate',
     data() {
         return {
             formData: {

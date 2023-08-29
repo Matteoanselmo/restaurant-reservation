@@ -30,9 +30,13 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::get('/date', function () {
-        return Inertia::render('Dashboard/Date');
-    })->name('dashboard.date');
+    Route::get('/create-date', function () {
+        return Inertia::render('Dashboard/Date/Create');
+    })->name('dashboard.date.create');
+
+    Route::get('/index-date', function () {
+        return Inertia::render('Dashboard/Date/Index');
+    })->name('dashboard.date.index');
 });
 
 

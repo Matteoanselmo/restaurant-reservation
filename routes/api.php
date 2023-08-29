@@ -24,3 +24,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/reservation-dates', [ReservationDateController::class, 'store']);
     Route::get('/show-types', [ShowTypeController::class, 'index']);
 });
+
+Route::post('/get-reservation-dates/{month}', [ReservationDateController::class, 'index']);

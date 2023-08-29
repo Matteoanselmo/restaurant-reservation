@@ -5,9 +5,23 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ReservationDate;
+use Illuminate\Support\Facades\DB;
 
 class ReservationDateController extends Controller
 {
+    public function index($month)
+{
+    $reservationDates = ReservationDate::where(DB::raw('MONTH(data)'), '=', $month)->get();
+
+    if ($reservationDates->isEmpty()) {
+        return response()->json(false);
+    }
+
+    return response()->json($reservationDates);
+}
+
+
+
     public function store(Request $request)
     {
         $request->validate([

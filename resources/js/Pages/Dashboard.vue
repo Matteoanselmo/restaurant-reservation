@@ -17,13 +17,13 @@ import { Link } from '@inertiajs/vue3';
             </button>
         </div>
         <div class="logout-button z-3 d-none" id="logout">
-            <Link :href="route('logout')" method="POST"  class="btn btn-dark fs-2 rounded-5 shadow w-100 text-danger" >
+            <Link :href="route('logout')" method="POST"  class="btn btn-dark fs-2 rounded-5 shadow w-100 text-danger" as="button">
                 <i class="fa-solid fa-right-from-bracket"></i>
             </Link>
         </div>
         <div class="full-screen d-flex justify-content-evenly align-items-start flex-wrap" id="dashboard">
             <div style="cursor: pointer;">
-                <Link :href="route('dashboard.date')"  class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
+                <Link :href="route('dashboard.date.index')"  class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold" as="button">
                     Date
                 </Link>
             </div>
