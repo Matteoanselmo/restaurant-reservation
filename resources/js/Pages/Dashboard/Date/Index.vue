@@ -1,15 +1,15 @@
 <template>
-    <div class="full-screen d-flex flex-column align-items-center justify-content-center my-4">
+    <div class="full-screen d-flex flex-column align-items-center justify-content-center my-4 animated animate__fadeInLeft">
         <div class="d-flex align-items-center justify-content-evenly w-100 mb-5">
             <button class="btn-show" @click="prevMonth">
                 <i class="fas fa-chevron-left fs-2"></i>
             </button>
             <h1 class="text-center mb-0 fw-bold text-uppercase">{{ currentMonth }}</h1>
             <button class="btn-show" @click="nextMonth">
-                <i class="fas fa-chevron-right fs-2"></i>
+                <i class="fas fa-chevron-right fs-2 "></i>
             </button>
         </div>
-        <div class="calendar row  w-100 align-items-center justify-content-center">
+        <div class="calendar row  w-100 align-items-center justify-content-center animated animate__fadeInUp">
             <div
             v-for="(day, index) in calendarDays"
             :key="index"

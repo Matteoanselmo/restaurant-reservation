@@ -22,32 +22,32 @@ import { Link } from '@inertiajs/vue3';
             </Link>
         </div>
         <div class="full-screen d-flex justify-content-evenly align-items-start flex-wrap" id="dashboard">
-            <div style="cursor: pointer;">
-                <Link :href="route('dashboard.date.index')"  class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold" as="button">
+            <div style="cursor: pointer;" class="animated animate__fadeIn">
+                <Link :href="route('dashboard.date.index')"  class=" my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold" as="button">
                     Date
                 </Link>
             </div>
-            <div style="cursor: pointer;">
+            <div style="cursor: pointer;" class="animated animate__fadeIn">
                 <a class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Artisti
                 </a>
             </div>
-            <div style="cursor: pointer;">
+            <div style="cursor: pointer;" class="animated animate__fadeIn">
                 <a class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Prenotazioni
                 </a>
             </div>
-            <div style="cursor: pointer;">
+            <div style="cursor: pointer;" class="animated animate__fadeIn">
                 <a class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Resoconto
                 </a>
             </div>
-            <div style="cursor: pointer;">
+            <div style="cursor: pointer;" class="animated animate__fadeIn">
                 <a class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Newsletter
                 </a>
             </div>
-            <div style="cursor: pointer;">
+            <div style="cursor: pointer;" class="animated animate__fadeIn">
                 <a class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Rubrica
                 </a>
