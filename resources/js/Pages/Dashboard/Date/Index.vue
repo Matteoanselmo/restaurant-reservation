@@ -13,29 +13,46 @@
             <div
             v-for="(day, index) in calendarDays"
             :key="index"
-            :class="[{ 'offset-day': day.firstDayOfWeek > 0 && index < day.firstDayOfWeek} , hasAvailableSeats(day.date) ? 'border-success' : '' ]"
+            :class="[{ 'offset-day': day.firstDayOfWeek > 0 && index < day.firstDayOfWeek}, hasAvailableSeats(day.date) ? 'border-success' : '']"
             class="calendar-day rounded-5 bg-white border border-2 btn-show col-2 col-md-1"
             >
-                <div class="day-header">{{ day.day }}</div>
-                <div class="day-name">{{ day.dayName }}</div>
+            <!-- <div class="text-decoration-none text-black">
+                    <div class="day-header">{{ day.day }}</div>
+                    <div class="day-name">{{ day.dayName }}</div>
+            </div> -->
+                <Link v-if="hasAvailableSeats(day.date)"
+                class="text-decoration-none text-black"
+                :href="route('dashboard.date.show', {data: day.date.toLocaleDateString('it-IT')})"
+                >
+                    <div class="day-header">{{ day.day }}</div>
+                    <div class="day-name">{{ day.dayName }}</div>
+                </Link>
+                <Link v-else class="text-decoration-none text-black" :href="route('dashboard.date.create')" >
+                    <div class="day-header">{{ day.day }}</div>
+                    <div class="day-name">{{ day.dayName }}</div>
+                </Link>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { Link } from '@inertiajs/vue3';
 export default {
+    components: {
+        Link
+    },
     data() {
-    return {
-        currentMonth: new Date().toLocaleDateString('default', {
-            month: 'long',
-            year: 'numeric',
-            hasDate: false
-        }),
-        monthWithDates: [],
-        currentDate: new Date(),
-        firstDayOfWeek: 0,
-    };
+        return {
+            currentMonth: new Date().toLocaleDateString('default', {
+                month: 'long',
+                year: 'numeric',
+                hasDate: false
+            }),
+            monthWithDates: [],
+            currentDate: new Date(),
+            firstDayOfWeek: 0,
+        };
     },
     computed: {
     calendarDays() {
@@ -70,7 +87,7 @@ export default {
                         this.monthWithDates.push(dateObject);
                         // const day = dateObject.getDate();
                     });
-                    console.log(this.monthWithDates);
+                    // console.log(this.monthWithDates);
                 }
             })
             .catch((error)=> {

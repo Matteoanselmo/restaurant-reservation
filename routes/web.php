@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DateController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -27,8 +28,12 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () {
     Route::get('/', function () {
-        return Inertia::render('Dashboard');
+        return Inertia::render('Dashboard', [
+            'data'=>Route::has('data')
+        ]);
     })->name('dashboard');
+
+    Route::get('/show-data/{data}', [DateController::class, 'show'])->name('dashboard.date.show');
 
     Route::get('/create-date', function () {
         return Inertia::render('Dashboard/Date/Create');
