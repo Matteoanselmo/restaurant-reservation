@@ -63,36 +63,17 @@ class DateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($date)
+    public function show($data)
     {
 
        // Imposta la lingua italiana per Carbon
         App::setLocale('it');
-        return response()->json([
-            'data' => $date
+
+        $matchedData = ReservationDate::where('data', $data)->get();
+
+        return Inertia::render('Dashboard/Date/Show', [
+            'data' => $matchedData
         ]);
-
-        // // Crea una nuova istanza di DateTime utilizzando il formato italiano
-        // $parsedDate = DateTime::createFromFormat('D d F Y', $date);
-
-        // // Crea una nuova istanza di Carbon dalla data analizzata
-        // $carbonDate = Carbon::instance($parsedDate);
-
-        // // Formatta la data nel formato desiderato: "31/08/2023"
-        // $formattedDate = $carbonDate->format('d/m/Y');
-        // $reservationDate = ReservationDate::where('data', $formattedDate)->first();
-
-        // if ($reservationDate) {
-        //     // La data esiste, quindi visualizza la pagina "show"
-        //     return Inertia::render('Dashboard/Date/Show', [
-        //         'data' => $reservationDate
-        //     ]);
-        // } else {
-        //     // La data non esiste, quindi visualizza la pagina "create"
-        //     return Inertia::render('Dashboard/Date/Create', [
-        //         // Dati da passare al template
-        //     ]);
-        // }
     }
 
     /**

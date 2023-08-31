@@ -16,17 +16,10 @@
             :class="[{ 'offset-day': day.firstDayOfWeek > 0 && index < day.firstDayOfWeek}, hasAvailableSeats(day.date) ? 'border-success' : '']"
             class="calendar-day rounded-5 bg-white border border-2 btn-show col-2 col-md-1"
             >
-            <!-- <div class="text-decoration-none text-black">
-                    <div class="day-header">{{ day.day }}</div>
-                    <div class="day-name">{{ day.dayName }}</div>
-            </div> -->
                 <Link v-if="hasAvailableSeats(day.date)"
                 class="text-decoration-none text-black"
                 :href="route('dashboard.date.show', { data: day.date.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-') })"
                 >
-                    <div>
-                        {{ day.date.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-') }}
-                    </div>
                     <div class="day-header">{{ day.day }}</div>
                     <div class="day-name">{{ day.dayName }}</div>
                 </Link>
@@ -88,9 +81,7 @@ export default {
                     response.data.forEach(date => {
                         const dateObject = new Date(date.data);
                         this.monthWithDates.push(dateObject);
-                        // const day = dateObject.getDate();
                     });
-                    // console.log(this.monthWithDates);
                 }
             })
             .catch((error)=> {
