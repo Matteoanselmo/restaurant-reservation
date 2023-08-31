@@ -91,29 +91,29 @@ export default {
         hasAvailableSeats(date) {
             return this.monthWithDates.some(eventDate => eventDate.getDate() === date.getDate());
         },
-    prevMonth() {
-        this.currentDate.setMonth(this.currentDate.getMonth() - 1);
-        this.updateCurrentMonth();
-    },
-    nextMonth() {
-        this.currentDate.setMonth(this.currentDate.getMonth() + 1);
-        this.updateCurrentMonth();
-    },
-    updateCurrentMonth() {
-        this.currentMonth = this.currentDate.toLocaleDateString('default', {
-        month: 'long',
-        year: 'numeric',
-        });
-        this.firstDayOfWeek = this.getFirstDayOfWeek();
-    },
-    getFirstDayOfWeek() {
-        const firstDayOfMonth = new Date(
-        this.currentDate.getFullYear(),
-        this.currentDate.getMonth(),
-        1
-        );
-        return firstDayOfMonth.getDay();
-    },
+        prevMonth() {
+            this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+            this.updateCurrentMonth();
+        },
+        nextMonth() {
+            this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+            this.updateCurrentMonth();
+        },
+        updateCurrentMonth() {
+            this.currentMonth = this.currentDate.toLocaleDateString('default', {
+            month: 'long',
+            year: 'numeric',
+            });
+            this.firstDayOfWeek = this.getFirstDayOfWeek();
+        },
+        getFirstDayOfWeek() {
+            const firstDayOfMonth = new Date(
+            this.currentDate.getFullYear(),
+            this.currentDate.getMonth(),
+            1
+            );
+            return firstDayOfMonth.getDay();
+        },
     },
 };
 </script>

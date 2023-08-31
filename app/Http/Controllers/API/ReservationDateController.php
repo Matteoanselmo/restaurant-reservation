@@ -33,7 +33,7 @@ class ReservationDateController extends Controller
             'pranzo_cena' => 'required|in:pranzo,cena', // Aggiunto il controllo per pranzo o cena
         ]);
 
-        $reservationDate = ReservationDate::create([
+        ReservationDate::create([
             'data' => $request->data,
             'show_types_id' => $request->show_type_id,
             'titolo' => $request->titolo,
@@ -42,7 +42,7 @@ class ReservationDateController extends Controller
             'pranzo_cena' => $request->pranzo_cena,
         ]);
 
-        return response()->json($reservationDate, 201);
+        return inertia()->location(route('dashboard.date.index'));
     }
 }
 

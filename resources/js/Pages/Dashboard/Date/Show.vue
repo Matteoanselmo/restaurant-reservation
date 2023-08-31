@@ -1,8 +1,9 @@
 <template>
     <div class="full-screen d-flex flex-column px-3 justify-content-start mt-3">
-        <div class="border boorder-4 rounded-5 py-3 shadow">
-            <h1 class="text-center mb-4 fw-bold">Modifica Evento</h1>
+        <div class="">
+            <h1 class="text-center mb-4 fw-bold">{{new Date(newDate[0].data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}</h1>
             <form
+            class="border boorder-4 rounded-5 py-3 shadow mb-2"
             v-for="(data, i) in newDate" :key="i">
                 <div class="row align-items-center justify-content-center">
                     <div class="col-12 col-md-5 mb-3">
@@ -40,6 +41,13 @@
                     </div>
                 </div>
             </form>
+        </div>
+        <div v-if="0 < newDate.length < 2" class="border boorder-4 rounded-5 py-3 shadow">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1>Vuoi Aggiumngere un altro spettacolo ?</h1>
+                </div>
+            </div>
         </div>
     </div>
 </template>
