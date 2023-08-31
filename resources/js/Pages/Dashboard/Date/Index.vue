@@ -22,8 +22,11 @@
             </div> -->
                 <Link v-if="hasAvailableSeats(day.date)"
                 class="text-decoration-none text-black"
-                :href="route('dashboard.date.show', {data: day.date.toLocaleDateString('it-IT')})"
+                :href="route('dashboard.date.show', { data: day.date.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-') })"
                 >
+                    <div>
+                        {{ day.date.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-') }}
+                    </div>
                     <div class="day-header">{{ day.day }}</div>
                     <div class="day-name">{{ day.dayName }}</div>
                 </Link>
