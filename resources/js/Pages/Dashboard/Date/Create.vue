@@ -1,6 +1,6 @@
 <template>
     <div class="full-screen d-flex flex-column px-3 justify-content-start mt-3">
-        <h1 class="text-center mb-4 fw-bold">Spettacolo di {{new Date(data.data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}</h1>
+        <h1 class="text-center mb-4 fw-bold">Spettacolo di {{new Date(data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}</h1>
         <form @submit.prevent="createReservationDate">
             <div class="row align-items-center justify-content-center">
                 <div class="col-12 col-md-5 mb-3">
