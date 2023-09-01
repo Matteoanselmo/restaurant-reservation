@@ -35,9 +35,7 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
 
     Route::get('/show-data/{data}', [DateController::class, 'show'])->name('dashboard.date.show');
 
-    Route::get('/create-date', function () {
-        return Inertia::render('Dashboard/Date/Create');
-    })->name('dashboard.date.create');
+    Route::get('/create-date/{data}', [DateController::class, 'create'])->name('dashboard.date.create');
 
     Route::get('/index-date', function () {
         return Inertia::render('Dashboard/Date/Index');

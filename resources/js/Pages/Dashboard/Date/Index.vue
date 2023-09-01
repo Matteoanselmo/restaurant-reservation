@@ -23,7 +23,7 @@
                     <div class="day-header">{{ day.day }}</div>
                     <div class="day-name">{{ day.dayName }}</div>
                 </Link>
-                <Link v-else class="text-decoration-none text-black" :href="route('dashboard.date.create')" >
+                <Link v-else class="text-decoration-none text-black" :href="route('dashboard.date.create', {data: day.date.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')} )" >
                     <div class="day-header">{{ day.day }}</div>
                     <div class="day-name">{{ day.dayName }}</div>
                 </Link>

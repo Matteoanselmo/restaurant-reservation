@@ -28,9 +28,11 @@ class DateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($data)
     {
-        //
+        return Inertia::render('Dashboard/Date/Create', [
+            'data' => $data
+        ]);
     }
 
     /**
