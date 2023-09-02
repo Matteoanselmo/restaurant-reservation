@@ -33,7 +33,6 @@
                 </div>
             </div>
         </form>
-        {{ data  }}
     </div>
 </template>
 
@@ -47,33 +46,31 @@ export default {
     setup(){
         const page = usePage()
         const data = page.props.data;
-        // const dateToSend = new Date(data.value) ;
         const formData = ref(
             {
                 titolo: '',
                 descrizione: '',
                 posti_disponibili: 1,
                 show_type_id: '',
-                pranzo_cena: 'pranzo', // Valore predefinito "pranzo"
+                pranzo_cena: 'pranzo',
                 data: data
             }
         );
 
         const createReservationDate = async () => {
             try {
-
-                await router.post('/api/reservation-dates', formData);
+                router.post('/api/reservation-dates', formData);
             } catch (error) {
                 console.error('Error creating reservation date:', error);
             }
         };
-        const showTypes = ref([]); // Ora showTypes è una variabile reattiva
+
+        const showTypes = ref([]);
 
         const fetchShowTypes = async () => {
             try {
                 const response = await axios.get('/api/show-types');
                 showTypes.value = response.data;
-                // console.log(response.data);
             } catch (error) {
                 console.error('Error fetching show types:', error);
             }

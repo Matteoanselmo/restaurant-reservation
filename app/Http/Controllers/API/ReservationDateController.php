@@ -45,6 +45,24 @@ class ReservationDateController extends Controller
 
         return redirect()->route('dashboard.date.index');
     }
+
+    public function destroy($id){
+        $reservationDates = ReservationDate::findOrFail($id);
+        $date = ReservationDate::where('data', $reservationDates->data)->get();
+        $existOther = ReservationDate::where('data', $reservationDates->data)
+
+        ->whereNotIn('id', [$reservationDates->id])
+        ->get();
+        if(count($existOther) > 0){
+            $reservationDates->delete();
+            return response()->json($date);
+        } else {
+            // $reservationDates->delete();
+
+            return redirect()->route('dashboard.date.index');
+            //return response()->json($id);
+        }
+    }
 }
 
 

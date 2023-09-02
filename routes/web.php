@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashBoardController;
 use App\Http\Controllers\Admin\DateController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -37,9 +38,7 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
 
     Route::get('/create-date/{data}', [DateController::class, 'create'])->name('dashboard.date.create');
 
-    Route::get('/index-date', function () {
-        return Inertia::render('Dashboard/Date/Index');
-    })->name('dashboard.date.index');
+    Route::get('/index-date', [DashBoardController::class, 'index'])->name('dashboard.date.index');
 });
 
 

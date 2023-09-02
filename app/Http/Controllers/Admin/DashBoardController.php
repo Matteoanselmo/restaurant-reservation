@@ -3,16 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\ReservationDate;
-use App\Models\ShowType;
-use Carbon\Carbon;
-use DateTime;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Inertia\Inertia;
 
-class DateController extends Controller
-
+class DashBoardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,7 +15,7 @@ class DateController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Dashboard/Date/Index');
     }
 
     /**
@@ -29,11 +23,9 @@ class DateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($data)
+    public function create()
     {
-        return Inertia::render('Dashboard/Date/Create', [
-            'data' => $data
-        ]);
+        //
     }
 
     /**
@@ -46,38 +38,16 @@ class DateController extends Controller
     {
         //
     }
-    protected $monthTranslations = [
-        'gen' => 'jan',
-        'feb' => 'feb',
-        'mar' => 'mar',
-        'apr' => 'apr',
-        'mag' => 'may',
-        'giu' => 'jun',
-        'lug' => 'jul',
-        'ago' => 'aug',
-        'set' => 'sep',
-        'ott' => 'oct',
-        'nov' => 'nov',
-        'dic' => 'dec',
-    ];
+
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($data)
+    public function show($id)
     {
-
-       // Imposta la lingua italiana per Carbon
-        App::setLocale('it');
-
-        $matchedData = ReservationDate::where('data', $data)->get();
-        $showTypes = ShowType::all();
-        return Inertia::render('Dashboard/Date/Show', [
-            'data' => $matchedData,
-            'showTypes' => $showTypes
-        ]);
+        //
     }
 
     /**
