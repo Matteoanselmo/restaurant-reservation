@@ -43,8 +43,7 @@ class ReservationDateController extends Controller
             'pranzo_cena' => $request->_value['pranzo_cena'],
         ]);
 
-        return Inertia::render('Dashboard/Date/Index');
-        // return response()->json($request->_value['data']);
+        return redirect()->route('dashboard.date.index');
     }
 }
 

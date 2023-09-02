@@ -41,6 +41,7 @@
 import { usePage } from '@inertiajs/vue3';
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
+import { router } from '@inertiajs/vue3';
 export default {
     name: 'DashboardCreateDate',
     setup(){
@@ -60,17 +61,8 @@ export default {
 
         const createReservationDate = async () => {
             try {
-                // const requestData = {
-                //     data: data,
-                //     ...formData
-                // };
-                const response = await axios.post('/api/reservation-dates', formData);
-                console.log('Reservation date created:', response.data);
-                formData.titolo = '';
-                formData.descrizione = '';
-                formData.posti_disponibili = 1;
-                formData.show_type_id = null;
-                formData.pranzo_cena = 'pranzo'; // Reimposta a "pranzo"
+
+                await router.post('/api/reservation-dates', formData);
             } catch (error) {
                 console.error('Error creating reservation date:', error);
             }
