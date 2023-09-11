@@ -11,17 +11,15 @@ use Inertia\Inertia;
 class ReservationDateController extends Controller
 {
     public function index($month)
-{
-    $reservationDates = ReservationDate::where(DB::raw('MONTH(data)'), '=', $month)->get();
+    {
+        $reservationDates = ReservationDate::where(DB::raw('MONTH(data)'), '=', $month)->get();
 
-    if ($reservationDates->isEmpty()) {
-        return response()->json(false);
+        if ($reservationDates->isEmpty()) {
+            return response()->json(false);
+        }
+
+        return response()->json($reservationDates);
     }
-
-    return response()->json($reservationDates);
-}
-
-
 
     public function store(Request $request)
     {

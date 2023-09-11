@@ -25,7 +25,7 @@ defineProps({
                     id="mare-show"
                 />
                 <DateMare
-                    class="full-screen d-flex flex-column justify-content-start align-items-center"
+                    class="full-screen d-flex flex-column align-items-center justify-content-start my-4 animated animate__fadeInLeft"
                     id="mare-date"
                 />
             </div>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashBoardController;
 use App\Http\Controllers\Admin\DateController;
+use App\Http\Controllers\Guest\DateController as GuestDateController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -42,10 +43,15 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
 });
 
 
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+Route::get('/{data}', [GuestDateController::class, 'show'])->name('guest.date.show');
+Route::get('/ci-dispiace/{data}', [GuestDateController::class, 'noDate'])->name('guest.no.date');
 
 require __DIR__.'/auth.php';

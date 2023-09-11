@@ -51,25 +51,25 @@ export default {
         };
     },
     computed: {
-    calendarDays() {
-        const year = this.currentDate.getFullYear();
-        const month = this.currentDate.getMonth();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        calendarDays() {
+            const year = this.currentDate.getFullYear();
+            const month = this.currentDate.getMonth();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-        const calendarDays = [];
-        for (let day = 1; day <= daysInMonth; day++) {
-        const date = new Date(year, month, day);
-        const dayOfWeek = (this.firstDayOfWeek + day - 1) % 7;
-        calendarDays.push({
-            day,
-            dayName: date.toLocaleDateString('default', { weekday: 'short' }),
-            date,
-            firstDayOfWeek: dayOfWeek,
-        });
-        }
-        this.getMonthDates();
-        return calendarDays;
-    },
+            const calendarDays = [];
+            for (let day = 1; day <= daysInMonth; day++) {
+            const date = new Date(year, month, day);
+            const dayOfWeek = (this.firstDayOfWeek + day - 1) % 7;
+            calendarDays.push({
+                day,
+                dayName: date.toLocaleDateString('default', { weekday: 'short' }),
+                date,
+                firstDayOfWeek: dayOfWeek,
+            });
+            }
+            this.getMonthDates();
+            return calendarDays;
+        },
     },
     methods: {
         getMonthDates(){
@@ -124,56 +124,5 @@ export default {
 html, body {
     overflow: scroll !important;
 }
-/* .calendar {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
-    width: 100%;
-    padding: 15px;
-    max-width: 80vw;
-} */
 
-.calendar-day {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    /* padding: 10px; */
-    margin: 5px;
-    cursor: pointer;
-}
-
-.day-header {
-    font-size: 1.5rem;
-}
-
-.day-name {
-    font-size: 1rem;
-    margin-top: 5px;
-}
-
-.dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin-top: 5px;
-}
-
-.dot-green {
-    background-color: green;
-}
-
-.dot-red {
-    background-color: red;
-}
-
-.btn-group {
-    margin-top: 1rem;
-}
-
-@media (max-width: 575.98px) {
-    /* .calendar{
-        grid-template-columns: repeat(7, 1fr);
-    } */
-}
 </style>
