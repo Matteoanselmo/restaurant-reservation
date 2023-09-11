@@ -8,19 +8,135 @@
             <li><button class="dropdown-item" type="button">Another action</button></li>
             <li><button class="dropdown-item" type="button">Something else here</button></li>
         </ul>
-        <button type="button" class="chair btn-show border border-2" id="chair_2">2</button>
-        <button type="button" class="chair btn-show border border-2" id="chair_3">3</button>
-        <button type="button" class="chair btn-show border border-2" id="chair_4">4</button>
-        <button type="button" class="chair btn-show border border-2" id="chair_5">5</button>
-        <button type="button" class="chair btn-show border border-2" id="chair_6">6</button>
-        <button type="button" class="chair btn-show border border-2" id="chair_7">7</button>
-        <button type="button" class="chair btn-show border border-2" id="chair_8">8</button>
+        <button v-for="(chair, i) in chairs" :key="i" type="button" class="chair btn-show border border-2" :id="'chair_' + chair.n_posto" data-bs-toggle="modal" :data-bs-target="'#exampleModal' + i">
+            {{ chair.n_posto }}
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" :id="'exampleModal' + x" tabindex="-1" :aria-labelledby="'exampleModalLabel' + x" aria-hidden="true" v-for="(chair, x) in chairs" :key="x">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header border-0">
+                <h1 class="modal-title fs-2" :id="'exampleModalLabel' + x">Posto n° {{ chair.n_posto }}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <input type="text" v-model="chairs[x].nome" placeholder="nome" class="form-control mb-3">
+                    <input type="text" v-model="chairs[x].cognome" placeholder="cognome" class="form-control mb-3">
+                    <input type="email" v-model="chairs[x].email" placeholder="email" class="form-control mb-3" @input="validateEmail(x)">
+                    <input type="text" v-model="chairs[x].n_telefono" placeholder="cell" class="form-control mb-3 " @input="validatePhoneNumber(x)">
+                </div>
+                <div class="d-flex align items-center justify-content-center">
+                    <button type="button" class="btn-show" @click="saveChanges(x)">Aggiungi</button>
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button> -->
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
     </div>
 </template>
 
 <script>
+import { computed } from 'vue';
 export default {
-    name:'PrenotationTable'
+    name:'PrenotationTable',
+    setup(){
+        const chairs = computed(() =>
+        [
+            {
+                n_posto: 1,
+                nome: "",
+                cognome: "",
+                email: "",
+                n_telefono: ""
+            },
+            {
+                n_posto: 2,
+                nome: "",
+                cognome: "",
+                email: "",
+                n_telefono: ""
+            },
+            {
+                n_posto: 3,
+                nome: "",
+                cognome: "",
+                email: "",
+                n_telefono: ""
+            },
+            {
+                n_posto: 4,
+                nome: "",
+                cognome: "",
+                email: "",
+                n_telefono: ""
+            },
+            {
+                n_posto: 5,
+                nome: "",
+                cognome: "",
+                email: "",
+                n_telefono: ""
+            },
+            {
+                n_posto: 6,
+                nome: "",
+                cognome: "",
+                email: "",
+                n_telefono: ""
+            },
+            {
+                n_posto: 7,
+                nome: "",
+                cognome: "",
+                email: "",
+                n_telefono: ""
+            },
+            {
+                n_posto: 8,
+                nome: "",
+                cognome: "",
+                email: "",
+                n_telefono: ""
+            },
+        ]
+        )
+
+        const saveChanges = (index) => {
+            // Salva le modifiche per la sedia con l'indice specificato
+            const chair = chairs.value[index];
+            console.log(`Salva modifiche per la sedia ${chair.n_posto}:`, chair);
+            // Puoi eseguire qui le operazioni di salvataggio dei dati
+        };
+
+        const validateEmail = (index) => {
+            const chair = chairs.value[index];
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+            if (!emailPattern.test(chair.email)) {
+                chair.email = '';
+            }
+        };
+
+        const validatePhoneNumber = (index) => {
+            const chair = chairs.value[index];
+
+            // Assicurati che n_telefono sia una stringa
+            chair.n_telefono = chair.n_telefono.toString();
+
+            // Rimuovi tutti i caratteri non numerici dal numero di telefono
+            chair.n_telefono = chair.n_telefono.replace(/\D/g, '');
+        };
+
+        return {
+            chairs,
+            saveChanges,
+            validateEmail,
+            validatePhoneNumber
+        }
+    }
 }
 </script>
 
