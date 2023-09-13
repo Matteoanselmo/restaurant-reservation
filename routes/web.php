@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashBoardController;
 use App\Http\Controllers\Admin\DateController;
 use App\Http\Controllers\Guest\DateController as GuestDateController;
+use App\Http\Controllers\Guest\PrenotationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -53,5 +54,5 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/{data}', [GuestDateController::class, 'show'])->name('guest.date.show');
 Route::get('/ci-dispiace/{data}', [GuestDateController::class, 'noDate'])->name('guest.no.date');
-
+Route::get('/prenotazione/{data}', [PrenotationController::class, 'show'])->name('guest.prenotation');
 require __DIR__.'/auth.php';
