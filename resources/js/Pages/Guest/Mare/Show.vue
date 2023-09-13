@@ -1,9 +1,11 @@
 <template>
-    <div class="full-screen d-flex flex-column px-3 justify-content-start mt-3">
+    <div class="full-screen d-flex flex-column px-3 justify-content-start mt-3" id="prenotation-table">
+        <div></div>
         <div class="">
             <h1 class="text-center mb-4 fw-bold">{{new Date(newDate[0].data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}</h1>
         </div>
         <PrenotationTable/>
+        <div></div>
     </div>
 
 </template>
@@ -38,5 +40,7 @@ export default {
 </script>
 
 <style>
-
+    #prenotation-table{
+        overflow: auto;
+    }
 </style>

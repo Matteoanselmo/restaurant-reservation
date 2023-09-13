@@ -8,11 +8,11 @@
             <li><button class="dropdown-item" type="button">Another action</button></li>
             <li><button class="dropdown-item" type="button">Something else here</button></li>
         </ul>
-        <button v-for="(chair, i) in chairs" :key="i" type="button" class="chair btn-show border border-2" :id="'chair_' + chair.n_posto" data-bs-toggle="modal" :data-bs-target="'#exampleModal' + i">
+        <button v-for="(chair, i) in store.prenotations" :key="i" type="button" class="chair btn-show border border-2" :id="'chair_' + chair.n_posto" data-bs-toggle="modal" :data-bs-target="'#exampleModal' + i">
             {{ chair.n_posto }}
         </button>
         <!-- Modal -->
-        <div class="modal fade" :id="'exampleModal' + x" tabindex="-1" :aria-labelledby="'exampleModalLabel' + x" aria-hidden="true" v-for="(chair, x) in chairs" :key="x">
+        <div class="modal fade" :id="'exampleModal' + x" tabindex="-1" :aria-labelledby="'exampleModalLabel' + x" aria-hidden="true" v-for="(chair, x) in store.prenotations" :key="x">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
             <div class="modal-header border-0">
@@ -21,13 +21,25 @@
             </div>
             <div class="modal-body">
                 <div>
-                    <input type="text" v-model="chairs[x].nome" placeholder="nome" class="form-control mb-3">
-                    <input type="text" v-model="chairs[x].cognome" placeholder="cognome" class="form-control mb-3">
-                    <input type="email" v-model="chairs[x].email" placeholder="email" class="form-control mb-3" @input="validateEmail(x)">
-                    <input type="text" v-model="chairs[x].n_telefono" placeholder="cell" class="form-control mb-3 " @input="validatePhoneNumber(x)">
+                    <div class="d-flex">
+                        <p class="mb-0 me-3 fs-5">Nome</p>
+                        <input type="text" v-model="store.prenotations[x].nome" :placeholder="chair.nome" class="form-control mb-3">
+                    </div>
+                    <div class="d-flex">
+                        <p class="mb-0 me-3 fs-5">Cognome</p>
+                        <input type="text" v-model="store.prenotations[x].cognome" :placeholder="chair.cognome" class="form-control mb-3">
+                    </div>
+                    <div class="d-flex">
+                        <p class="mb-0 me-3 fs-5">Email</p>
+                        <input type="email" v-model="store.prenotations[x].email"  class="form-control mb-3" >
+                    </div>
+                    <div class="d-flex">
+                        <p class="mb-0 me-3 fs-5">Telefono</p>
+                        <input type="text" v-model="store.prenotations[x].n_telefono" :placeholder="chair.cell" class="form-control mb-3 " @input="validatePhoneNumber(x)">
+                    </div>
                 </div>
                 <div class="d-flex align items-center justify-content-center">
-                    <button type="button" class="btn-show" @click="saveChanges(x)">Aggiungi</button>
+                    <button type="button" class="btn-show" @click="store.addInPrenotation(chair)">Aggiungi</button>
                     <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Save changes</button> -->
                 </div>
@@ -40,88 +52,22 @@
 
 <script>
 import { computed } from 'vue';
+import { ref, watch } from 'vue';
+import {generalStore} from '@/Stores/state';
 export default {
     name:'PrenotationTable',
     setup(){
-        const chairs = computed(() =>
-        [
-            {
-                n_posto: 1,
-                nome: "",
-                cognome: "",
-                email: "",
-                n_telefono: ""
-            },
-            {
-                n_posto: 2,
-                nome: "",
-                cognome: "",
-                email: "",
-                n_telefono: ""
-            },
-            {
-                n_posto: 3,
-                nome: "",
-                cognome: "",
-                email: "",
-                n_telefono: ""
-            },
-            {
-                n_posto: 4,
-                nome: "",
-                cognome: "",
-                email: "",
-                n_telefono: ""
-            },
-            {
-                n_posto: 5,
-                nome: "",
-                cognome: "",
-                email: "",
-                n_telefono: ""
-            },
-            {
-                n_posto: 6,
-                nome: "",
-                cognome: "",
-                email: "",
-                n_telefono: ""
-            },
-            {
-                n_posto: 7,
-                nome: "",
-                cognome: "",
-                email: "",
-                n_telefono: ""
-            },
-            {
-                n_posto: 8,
-                nome: "",
-                cognome: "",
-                email: "",
-                n_telefono: ""
-            },
-        ]
-        )
-
-        const saveChanges = (index) => {
-            // Salva le modifiche per la sedia con l'indice specificato
-            const chair = chairs.value[index];
-            console.log(`Salva modifiche per la sedia ${chair.n_posto}:`, chair);
-            // Puoi eseguire qui le operazioni di salvataggio dei dati
-        };
-
+        const store = generalStore();
         const validateEmail = (index) => {
-            const chair = chairs.value[index];
+            const chair = store.prenotations.value[index];
             const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
             if (!emailPattern.test(chair.email)) {
                 chair.email = '';
             }
         };
 
         const validatePhoneNumber = (index) => {
-            const chair = chairs.value[index];
+            const chair = store.prenotations.value[index];
 
             // Assicurati che n_telefono sia una stringa
             chair.n_telefono = chair.n_telefono.toString();
@@ -131,10 +77,9 @@ export default {
         };
 
         return {
-            chairs,
-            saveChanges,
+            validatePhoneNumber,
             validateEmail,
-            validatePhoneNumber
+            store,
         }
     }
 }
@@ -205,5 +150,58 @@ export default {
 #chair_8{
     left: calc(80vw / 3);
     bottom: 20%;
+}
+
+@media (max-width: 575.98px) {
+    .table{
+        height: 25vh;
+    }
+    #chair_1{
+        border-radius: 45%;
+    left: 2%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+#chair_2{
+    border-radius: 45%;
+    left: calc((80vw / 3) - 40px);
+    top: 35%;
+    transform: translateY(-35%);
+}
+#chair_3{
+    border-radius: 45%;
+    border-radius: 45%;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%, -35%);
+}
+#chair_4{
+    border-radius: 45%;
+    right: calc((80vw / 3) - 40px);
+    top: 35%;
+    transform: translateY(-35%);
+}
+#chair_5{
+    border-radius: 45%;
+    right: 2%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+#chair_6{
+    right: calc((80vw / 3) - 40px);
+    bottom: 32%;
+    border-radius: 45%;
+}
+#chair_7{
+    left: 50%;
+    bottom: 32%;
+    border-radius: 45%;
+    transform: translateX(-50%);
+}
+#chair_8{
+    left: calc((80vw / 3) - 40px);
+    bottom: 32%;
+    border-radius: 45%;
+}
 }
 </style>
