@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="col-12 text-center">
-                <button class="btn-show text-uppercase border border-2">prenota</button>
+                <a :href="route('payment')" class="btn-show text-uppercase border border-2">prenota</a>
             </div>
         </div>
     </div>

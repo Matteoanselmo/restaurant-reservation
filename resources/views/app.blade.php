@@ -10,11 +10,13 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
 
         <!-- Scripts -->
+        <script src="https://js.stripe.com/v3/"></script>
         @routes
         @vite(['resources/scss/app.scss' ,'resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
     </head>
     <body>
         @inertia
+
     </body>
 </html>

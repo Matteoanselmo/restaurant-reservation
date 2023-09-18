@@ -55,4 +55,17 @@ Route::middleware('auth')->group(function () {
 Route::get('/data/{data}', [GuestDateController::class, 'show'])->name('guest.date.show');
 Route::get('/ci-dispiace/{data}', [GuestDateController::class, 'noDate'])->name('guest.no.date');
 Route::get('/prenotazione/{data}', [PrenotationController::class, 'show'])->name('guest.prenotation');
+
+Route::get('pagamento', function () {
+    return Inertia::render('Payments');
+})->name('payment');
+
+Route::get('grazie', function () {
+    return Inertia::render('Thanks');
+})->name('thanks.payment');
+
+Route::get('errore-pagamento', function () {
+    return Inertia::render('PaymentError');
+})->name('error.payment');
+
 require __DIR__.'/auth.php';

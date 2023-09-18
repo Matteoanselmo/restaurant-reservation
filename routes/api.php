@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\API\ReservationDateController;
 use App\Http\Controllers\API\ShowTypeController;
 use App\Models\ReservationDate;
@@ -26,5 +27,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/show-types', [ShowTypeController::class, 'index']);
     Route::delete('/delete-data/{id}', [ReservationDateController::class, 'destroy']);
 });
+
+Route::get('payment/initiate', [PaymentController::class, 'index'])->name('payment.initiate');
+// Route::post('payment/complete', [PaymentController::class, 'completePayment'])->name('payment.complete');
+// Route::post('payment/failure', [PaymentController::class, 'failPayment'])->name('payment.failure');
 
 Route::post('/get-reservation-dates/{month}', [ReservationDateController::class, 'index']);
