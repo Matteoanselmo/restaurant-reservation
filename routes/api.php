@@ -28,7 +28,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/delete-data/{id}', [ReservationDateController::class, 'destroy']);
 });
 
-Route::get('payment/initiate', [PaymentController::class, 'index'])->name('payment.initiate');
+Route::post('payment/initiate', [PaymentController::class, 'index'])->name('payment.initiate');
 // Route::post('payment/complete', [PaymentController::class, 'completePayment'])->name('payment.complete');
 // Route::post('payment/failure', [PaymentController::class, 'failPayment'])->name('payment.failure');
 
