@@ -4,6 +4,10 @@ import { warn } from 'vue';
 export const generalStore = defineStore('state', {
     state: () => ({
         isVisited: true,
+        data: {
+            data: '',
+            pranzoOCena: ''
+        },
         prenotations: [
             {
                 n_posto: 1,
@@ -64,11 +68,24 @@ export const generalStore = defineStore('state', {
         ]
     }),
     getters: {
-
+        prenotationsWithRequiredFields() {
+            return this.prenotations.filter((prenotation) => {
+                return (
+                    prenotation.nome !== "" &&
+                    prenotation.cognome !== "" &&
+                    prenotation.email !== "" &&
+                    prenotation.n_telefono !== ""
+                );
+            });
+        },
     },
     actions: {
         setVisited(){
             this.isVisited = false;
+        },
+        setData(selectedData, pranzoCena){
+            this.data.data = selectedData;
+            this.data.pranzoOCena = pranzoCena;
         },
         addInPrenotation(userData) {
             const existingIndex = this.prenotations.findIndex(user => user.n_posto === userData.n_posto);

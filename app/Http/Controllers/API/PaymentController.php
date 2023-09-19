@@ -35,14 +35,14 @@ class PaymentController extends Controller
 
     // Creazione di prezzi per i prodotti
     $price1 = $stripe->prices->create([
-        'unit_amount' => 1500, // Il prezzo è in centesimi (1500 centesimi = $15.00 USD)
-        'currency' => 'usd',
+        'unit_amount' => 1500, // Il prezzo è in centesimi (1500 centesimi = 15.00 eur)
+        'currency' => 'eur',
         'product' => $product1->id,
     ]);
 
     $price2 = $stripe->prices->create([
         'unit_amount' => 2000, // Ad esempio, un'altra tariffa
-        'currency' => 'usd',
+        'currency' => 'eur',
         'product' => $product2->id,
     ]);
 

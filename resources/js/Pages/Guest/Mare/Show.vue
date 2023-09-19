@@ -17,7 +17,6 @@ import { computed } from 'vue'
 import { usePage } from '@inertiajs/vue3'
 import axios from 'axios'
 import { ref, onMounted } from 'vue';
-import { router } from '@inertiajs/vue3';
 import PrenotationTable from '../../../Components/Prenotation/PrenotationTable.vue'
 export default {
     name: 'GuestShowMare',
