@@ -14,56 +14,64 @@ export const generalStore = defineStore('state', {
                 nome: "",
                 cognome: "",
                 email: "",
-                n_telefono: ""
+                n_telefono: "",
+                price: 1500
             },
             {
                 n_posto: 2,
                 nome: "",
                 cognome: "",
                 email: "",
-                n_telefono: ""
+                n_telefono: "",
+                price: 1500
             },
             {
                 n_posto: 3,
                 nome: "",
                 cognome: "",
                 email: "",
-                n_telefono: ""
+                n_telefono: "",
+                price: 1500
             },
             {
                 n_posto: 4,
                 nome: "",
                 cognome: "",
                 email: "",
-                n_telefono: ""
+                n_telefono: "",
+                price: 1500
             },
             {
                 n_posto: 5,
                 nome: "",
                 cognome: "",
                 email: "",
-                n_telefono: ""
+                n_telefono: "",
+                price: 1500
             },
             {
                 n_posto: 6,
                 nome: "",
                 cognome: "",
                 email: "",
-                n_telefono: ""
+                n_telefono: "",
+                price: 1500
             },
             {
                 n_posto: 7,
                 nome: "",
                 cognome: "",
                 email: "",
-                n_telefono: ""
+                n_telefono: "",
+                price: 1500
             },
             {
                 n_posto: 8,
                 nome: "",
                 cognome: "",
                 email: "",
-                n_telefono: ""
+                n_telefono: "",
+                price: 1500
             },
         ]
     }),
@@ -78,6 +86,9 @@ export const generalStore = defineStore('state', {
                 );
             });
         },
+        returnTotalPrice() {
+            return this.prenotations.reduce((totalPrice, prenotation) => totalPrice + prenotation.price, 0);
+        }
     },
     actions: {
         setVisited(){

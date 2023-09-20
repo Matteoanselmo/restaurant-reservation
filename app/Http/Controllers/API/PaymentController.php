@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Stripe;
 
 class PaymentController extends Controller
@@ -13,61 +14,87 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+        public function index(Request $request)
     {
-        $config = [
-            'secret' => env('STRIPE_SECRET'), // La tua chiave API segreta di Stripe
-            'key' => env('STRIPE_KEY'), // La tua chiave API pubblica di Stripe
-        ];
-        Stripe\Stripe::setApiKey($config['secret']);
+        // Verifica che la richiesta contenga dati validi
 
-        $stripe = new \Stripe\StripeClient($config['secret']);
-        // Creazione di prodotti statici
-    $product1 = $stripe->products->create([
-        'name' => 'T-shirt personalizzata',
-        'description' => 'Una t-shirt personalizzata con il tuo logo o design.',
-    ]);
+        // if (!isset($requestData['prenotations']) || empty($requestData['prenotations'])) {
+        //     return response()->json(['error' => 'Dati delle prenotazioni non validi'], 400);
+        // }
 
-    $product2 = $stripe->products->create([
-        'name' => 'Maglietta personalizzata',
-        'description' => 'Una maglietta personalizzata con il tuo logo o design.',
-    ]);
+        $prenotations = $request->input('prenotations');
+        $results = [];
+        foreach ($prenotations as $prenotation) {
+                    // Estrarre i dati dalla stringa JSON
+                    $prenotationData = json_decode($prenotation, true);
 
-    // Creazione di prezzi per i prodotti
-    $price1 = $stripe->prices->create([
-        'unit_amount' => 1500, // Il prezzo è in centesimi (1500 centesimi = 15.00 eur)
-        'currency' => 'eur',
-        'product' => $product1->id,
-    ]);
+                    // Esempio: accedere ai dati
+                    $n_posto = $prenotationData['n_posto'];
+                    $nome = $prenotationData['nome'];
+                    $cognome = $prenotationData['cognome'];
+                    $n_telefono = $prenotationData['n_telefono'];
+                    $price = $prenotationData['price'];
 
-    $price2 = $stripe->prices->create([
-        'unit_amount' => 2000, // Ad esempio, un'altra tariffa
-        'currency' => 'eur',
-        'product' => $product2->id,
-    ]);
+                    // Aggiungere i dati al risultato
+                    $results[] = [
+                        'n_posto' => $n_posto,
+                        'nome' => $nome,
+                        'cognome' => $cognome,
+                        'n_telefono' => $n_telefono,
+                        'price' => $price
+                    ];
+                }
+        if (empty($results)) {
+            return response()->json(['error' => 'Dati delle prenotazioni non validi'], 400);
+        }
 
-    // Creazione di una sessione di pagamento
-    $session = \Stripe\Checkout\Session::create([
-        'payment_method_types' => ['card'],
-        'line_items' => [
-            [
-                'price' => $price1->id,
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        // Inizializza Stripe con la chiave segreta
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+
+        // Crea prodotti e prezzi basati sui dati delle prenotazioni
+        $lineItems = [];
+        foreach ($results as $prenotationData) {
+            // Assicurati di avere i dati necessari per creare un prodotto e un prezzo per ciascuna prenotazione
+            if (!isset($prenotationData['nome']) || !isset($prenotationData['cognome']) || !isset($prenotationData['price'])) {
+                return response()->json(['error' => 'Dati delle prenotazioni non validi'], 400);
+            }
+
+            // Crea un nuovo prodotto con il titolo "Cena evento"
+            $product = $stripe->products->create([
+                'name' => 'Cena evento', // Titolo del prodotto
+                'description' => $prenotationData['nome'] . ' ' . $prenotationData['cognome'], // Descrizione personalizzata
+            ]);
+
+            // Crea un nuovo prezzo per il prodotto con il prezzo unitario
+            $price = $stripe->prices->create([
+                'unit_amount' => $prenotationData['price'], // Converti il prezzo in centesimi
+                'currency' => 'eur', // Valuta
+                'product' => $product->id,
+            ]);
+
+            // Aggiungi l'elemento linea per la sessione di pagamento
+            $lineItems[] = [
+                'price' => $price->id,
                 'quantity' => 1,
-            ],
-            [
-                'price' => $price2->id,
-                'quantity' => 1,
-            ],
-        ],
-        'mode' => 'payment',
-        'success_url' => 'https://example.com/success',
-        'cancel_url' => 'https://example.com/cancel',
-    ]);
+            ];
+        }
 
-    return response()->json([
-        'data' => $session
-    ]);
+        // Crea una sessione di pagamento
+        $session = \Stripe\Checkout\Session::create([
+            'payment_method_types' => ['card'],
+            'line_items' => $lineItems,
+            'mode' => 'payment',
+            'success_url' => 'http://192.168.188.32:8000/grazie',
+            'cancel_url' => 'http://192.168.188.32:8000/errore-pagamento',
+        ]);
+
+        return response()->json([
+            'session' => $session
+        ]);
     }
+
+
 
     /**
      * Show the form for creating a new resource.
