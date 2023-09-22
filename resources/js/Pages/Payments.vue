@@ -3,24 +3,48 @@
         <div class="payment-form">
             <h2 class="text-center mt-5">Dati Pagante</h2>
             <!-- Display a payment form -->
-            <form id="payment-form" class="mb-4" @submit.prevent="handleSubmit(e)">
-                <div id="link-authentication-element">
-                    <!--Stripe.js injects the Link Authentication Element-->
-                </div>
-                <div id="payment-element">
-                    <!--Stripe.js injects the Payment Element-->
-                </div>
-                <input type="hidden" name="amount" :value="store.returnTotalPrice">
+            <form id="payment-form" class="d-flex flex-column justify-content-center align-items-center mb-4" >
+                <div style="width: 500px; " class="border border-2 rounded-4 p-4">
+                    <div class="input-group mb-3 d-flex flex-column ">
+                        <label for="first_name">Nome</label>
+                        <input type="text" class="form-control w-100" v-model="customer.first_name"  >
+                    </div>
+                    <div class="input-group mb-3 d-flex flex-column ">
+                        <label for="last_name">Cognome</label>
+                        <input type="text" class="form-control w-100" v-model="customer.last_name"  >
+                    </div>
+                    <div class="input-group mb-3 d-flex flex-column ">
+                        <label for="email">E-Mail</label>
+                        <input type="email" class="form-control w-100" v-model="customer.email"  >
+                    </div>
+                    <div class="input-group mb-3 d-flex flex-column ">
+                        <label for="n_phone">Phone</label>
+                        <input type="text" class="form-control w-100" v-model="customer.n_phone"  >
+                    </div>
+                    <div class="input-group mb-3 d-flex flex-column ">
+                        <label for="address">Via</label>
+                        <input type="text" class="form-control w-100" v-model="customer.address"  >
+                    </div>
+                    <div class="input-group mb-3 d-flex flex-column ">
+                        <label for="city">Città</label>
+                        <input type="text" class="form-control w-100" v-model="customer.city"  >
+                    </div>
+                    <div class="input-group mb-3 d-flex flex-column ">
+                        <label for="zip_code">Codice Postale</label>
+                        <input type="text" class="form-control w-100"  id="zip_code" v-model="customer.zip_code"  >
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-center">
+                        <div id="payment-element"></div>
+                    </div>
+                    <div class="w-100">
+                        <button class="btn btn-primary" ype="submit" @click="handleSubmit"   v-text="paymentProcessing ? 'Processing' : 'Pay Now'">
 
-                <button id="submit">
-                    <div class="spinner hidden" id="spinner"></div>
-                    <span id="button-text">Pay now</span>
-                </button>
-                <div id="payment-message" class="hidden"></div>
-            </form>
+                        </button>
+                    </div>
+                </div>
+            </form >
             <h2 class="text-center mb-4">Importo da pagare: {{formatCurrency(store.returnTotalPrice) }} &euro;</h2>
         </div>
-
         <div class="payment-result">
             <!-- Visualizza qui il risultato del pagamento -->
         </div>
@@ -31,150 +55,139 @@
 import axios from 'axios';
 import { ref, onMounted, computed } from 'vue';
 import {generalStore} from '@/Stores/state';
+import { loadStripe } from '@stripe/stripe-js';
 export default {
     setup() {
+        const token = ref(null);
+        const stripe = ref(null);
+        const elements = ref(null);
+        const clientSecret = ref(null);
         const store = generalStore();
+        const customer = ref({
+            first_name: '',
+            last_name: '',
+            email: '',
+            address: '',
+            city: '',
+            zip_code:'',
+            n_phone: ''
+        })
+
+        const paymentProcessing = ref(false);
 
         const formatCurrency = function(value) {
             // Formatta l'importo in valuta
                 return `${(value / 100).toFixed(2)} Euro`;
             }
-        // This is your test publishable API key.
-        const stripe = Stripe("pk_test_51NrdqoJSKktHNGOdRN4FmawpqhTaMNNp9KAlBgg4iYIB2haRgOeqGzNEAX7UU1oStRqjZ0Ysk30ZsqDRoT9UoNwi00suEnUYN7");
 
-        let elements;
+        //     const processPayment = async function(){
 
-        initialize();
-        checkStatus();
+        //         paymentProcessing.value = true;
 
+        //         const {paymentMethod, error} = await stripe.createPaymentMethod(
+        //             'card', cardElement, {
+        //                 billing_details: {
+        //                     name: customer.first_name + ' ' + customer.last_name,
+        //                     email: customer.email,
+        //                     n_phone: customer.n_phone,
+        //                     address: {
+        //                         line1: customer.address,
+        //                         city: customer.city,
+        //                         state: customer.state,
+        //                         postal_code: customer.zip_code
+        //                     }
+        //                 }
+        //             }
+        //         )
 
-        let emailAddress = '';
+        //         if(error) {
+        //             paymentProcessing.value = false;
+        //             alert(error);
+        //         } else {
+        //             customer.payment_method_id = paymentMethod.id;
+        //             customer.amount = store.returnTotalPrice;
+        //             customer.cart = JSON.stringify(store.prenotationsWithRequiredFields)
 
-        async function initialize() {
-            const { clientSecret } = await fetch('/api/generate-client-secret').then((r) => r.json());
+        //             axios.post('/api/payment/initiate', customer)
+        //             .then((response) => {
+        //                 paymentProcessing.value = false;
+        //                 console.log(response.data.message)
+        //             })
+        //             .catch((err) => {
+        //                 paymentProcessing.value = false;
+        //                 alert(err);
+        //             })
+        //         }
+        //     }
 
-            elements = stripe.elements({ clientSecret });
+            const handleSubmit = async (e) => {
+                e.preventDefault();
 
-            const linkAuthenticationElement = elements.create("linkAuthentication");
-            linkAuthenticationElement.mount("#link-authentication-element");
+                const { error } = await stripe.value.confirmPayment({
+                    elements: elements.value,
+                    confirmParams: {
+                        // Return URL where the customer should be redirected after the PaymentIntent is confirmed.
+                        return_url: 'http://192.168.188.32:8000/grazie',
+                    },
+                });
 
-            const paymentElementOptions = {
-                layout: "tabs",
-            };
+                if (error === undefined) {
+                    axios.post("/api/payment/complete", {
+                        token: token.value,
+                    }).then((res) => {
 
-            const paymentElement = elements.create("payment", paymentElementOptions);
-            paymentElement.mount("#payment-element");
-        }
-
-        async function handleSubmit() {
-            // Imposti spinner On
-            setLoading(true);
-
-            // Crea un nuovo oggetto FormData
-            const formData = new FormData();
-
-            // Aggiungi i dati delle prenotazioni al FormData
-            for (const prenotation of store.prenotationsWithRequiredFields) {
-                // Crea un oggetto con i dati della prenotazione
-                const prenotationData = {
-                    n_posto: prenotation.n_posto,
-                    nome: prenotation.nome,
-                    cognome: prenotation.cognome,
-                    email: prenotation.email,
-                    n_telefono: prenotation.n_telefono,
-                    price: prenotation.price,
-                };
-
-                // Converti l'oggetto in una stringa JSON e aggiungila come valore
-                // con una chiave unica al FormData
-                formData.append('prenotations[]', JSON.stringify(prenotationData));
+                    });
+                } else {
+                    axios.post("/api/payment/failure", {
+                        token: token.value,
+                        code: error.code,
+                        description: error.message,
+                    })
+                }
             }
-            const response = await axios.post('/api/payment/initiate', formData, {
-                responseType: 'json'
+
+        onMounted(async () => {
+            customer.amount = store.returnTotalPrice;
+            customer.cart = JSON.stringify(store.prenotationsWithRequiredFields)
+
+            axios.post('/api/payment/initiate', customer ).then(response => {
+                token.value = response.data.token // Use to identify the payment
+                stripe.value = Stripe('pk_test_51NrdqoJSKktHNGOdRN4FmawpqhTaMNNp9KAlBgg4iYIB2haRgOeqGzNEAX7UU1oStRqjZ0Ysk30ZsqDRoT9UoNwi00suEnUYN7');
+                clientSecret.value = response.data.client_secret;
+                const options = {
+                    clientSecret: response.data.client_secret,
+                }
+
+                elements.value = stripe.value.elements(options);
+                const paymentElement = elements.value.create('payment');
+                paymentElement.mount('#payment-element');
+                console.log(response.data.client_secret)
+            }).catch(error => {
+                console.error(error)
             })
-            console.log(response.data.session);
+            // stripe = await loadStripe(import.meta.env.VITE_STRIPE_KEY);
+            // stripe = await loadStripe('pk_test_51NrdqoJSKktHNGOdRN4FmawpqhTaMNNp9KAlBgg4iYIB2haRgOeqGzNEAX7UU1oStRqjZ0Ysk30ZsqDRoT9UoNwi00suEnUYN7');
+            // const elements = stripe.elements({
+            //     mode: 'payment',
+            //     currency: 'eur',
+            //     amount: 10000,
+            // });
 
-            const { error } = await stripe.confirmPayment({
-                elements,
-                confirmParams: {
-                    // Make sure to change this to your payment completion page
-                    return_url: response.data.session.success_url,
-                    receipt_email: emailAddress,
-                },
-            });
+            // cardElement = elements.create('card', {
+            //     classes: {
+            //         base: 'rounded border border-2 w-100 form-control'
+            //     }
+            // })
 
-            // This point will only be reached if there is an immediate error when
-            // confirming the payment. Otherwise, your customer will be redirected to
-            // your `return_url`. For some payment methods like iDEAL, your customer will
-            // be redirected to an intermediate site first to authorize the payment, then
-            // redirected to the `return_url`.
-            if (error.type === "card_error" || error.type === "validation_error") {
-                showMessage(error.message);
-            } else {
-                showMessage("An unexpected error occurred.");
-            }
+            // cardElement.mount('#card-element')
+        })
 
-            setLoading(false);
-        }
-
-        // Fetches the payment intent status after payment submission
-        async function checkStatus() {
-            const clientSecret = new URLSearchParams(window.location.search).get(
-                "payment_intent_client_secret"
-            );
-
-            if (!clientSecret) {
-                return;
-            }
-
-            const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
-
-            switch (paymentIntent.status) {
-                case "succeeded":
-                showMessage("Payment succeeded!");
-                break;
-                case "processing":
-                showMessage("Your payment is processing.");
-                break;
-                case "requires_payment_method":
-                showMessage("Your payment was not successful, please try again.");
-                break;
-                default:
-                showMessage("Something went wrong.");
-                break;
-            }
-        }
-        // ------- UI helpers -------
-
-        function showMessage(messageText) {
-            const messageContainer = document.querySelector("#payment-message");
-
-            messageContainer.classList.remove("hidden");
-            messageContainer.textContent = messageText;
-
-            setTimeout(function () {
-                messageContainer.classList.add("hidden");
-                messageContainer.textContent = "";
-            }, 4000);
-        }
-
-        // Show a spinner on payment submission
-        function setLoading(isLoading) {
-            if (isLoading) {
-                // Disable the button and show a spinner
-                document.querySelector("#submit").disabled = true;
-                document.querySelector("#spinner").classList.remove("hidden");
-                document.querySelector("#button-text").classList.add("hidden");
-            } else {
-                document.querySelector("#submit").disabled = false;
-                document.querySelector("#spinner").classList.add("hidden");
-                document.querySelector("#button-text").classList.remove("hidden");
-            }
-        }
         return {
-            handleSubmit,
+            customer,
             store,
-            formatCurrency
+            formatCurrency,
+            paymentProcessing,
+            handleSubmit
         }
 
     },

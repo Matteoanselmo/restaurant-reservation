@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\API\ReservationDateController;
 use App\Http\Controllers\API\ShowTypeController;
+use App\Http\Controllers\API\StriperController;
 use App\Models\ReservationDate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,22 +31,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/delete-data/{id}', [ReservationDateController::class, 'destroy']);
 });
 
-Route::post('payment/initiate', [PaymentController::class, 'index'])->name('payment.initiate');
-
-Route::get('generate-client-secret', function () {
-    // Imposta la tua chiave segreta di Stripe
-    Stripe::setApiKey(env('STRIPE_SECRET'));
-
-    // Crea un intento di pagamento con un importo e una valuta desiderati
-    $intent = PaymentIntent::create([
-        'amount' => 1000, // Importo in centesimi (ad esempio, $10.00)
-        'currency' => 'usd', // Valuta desiderata
-    ]);
-
-    // Restituisci il clientSecret dell'intento di pagamento
-    return response()->json(['clientSecret' => $intent->client_secret]);
-});
-// Route::post('payment/complete', [PaymentController::class, 'completePayment'])->name('payment.complete');
-// Route::post('payment/failure', [PaymentController::class, 'failPayment'])->name('payment.failure');
+// Route::post('payment/initiate', [PaymentController::class, 'index'])->name('payment.initiate');
+Route::post('payment/initiate', [StriperController::class, 'initiatePayment']);
+Route::post('payment/complete', [StriperController::class, 'completePayment']);
+Route::post('payment/failure', [StriperController::class, 'failPayment']);
 
 Route::post('/get-reservation-dates/{month}', [ReservationDateController::class, 'index']);
