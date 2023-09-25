@@ -87,7 +87,7 @@ export const generalStore = defineStore('state', {
             });
         },
         returnTotalPrice() {
-            return this.prenotations.reduce((totalPrice, prenotation) => totalPrice + prenotation.price, 0);
+            return this.prenotationsWithRequiredFields.reduce((totalPrice, prenotation) => totalPrice + prenotation.price, 0);
         }
     },
     actions: {

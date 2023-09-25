@@ -20,7 +20,8 @@ class StriperController extends Controller
     // Crea un intento di pagamento con un importo e una valuta desiderati
     $paymentIntent = PaymentIntent::create([
         'amount' => $data['amount'], // Importo in centesimi (ad esempio, $10.00)
-        'currency' => 'eur', // Valuta desiderata
+        'currency' => 'eur',
+        'description' => 'Prenotazione ' // Valuta desiderata
     ]);
 
         return response()->json([
@@ -39,8 +40,6 @@ class StriperController extends Controller
 
         if ($paymentDetail->status != 'succeeded') {
             return Inertia::render('PaymentError');
-        } else {
-            return Inertia::render('Thanks');
         }
 
         // return response()->json([
@@ -48,5 +47,12 @@ class StriperController extends Controller
         // ]);
 
         // Complete the payment
+    }
+
+    public function failPayment(Request $request){
+        $data = $request->all();
+        return Inertia::render('PaymentError', [
+            'error' => $data['code']
+        ]);
     }
 }

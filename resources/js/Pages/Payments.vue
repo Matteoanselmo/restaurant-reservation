@@ -1,17 +1,17 @@
 <template>
     <div>
-        <div class="payment-form">
+        <div class="payment-form mb-5">
             <h2 class="text-center mt-5">Dati Pagante</h2>
             <!-- Display a payment form -->
             <form id="payment-form" class="d-flex flex-column justify-content-center align-items-center mb-4" >
-                <div style="width: 500px; " class="border border-2 rounded-4 p-4">
+                <div style="width: 500px; " class="p-4">
                     <div class="input-group mb-3 d-flex flex-column ">
                         <label for="first_name">Nome</label>
-                        <input type="text" class="form-control w-100" v-model="customer.first_name"  >
+                        <input type="text" class="form-control w-100 text-capitalize" v-model="customer.first_name"  >
                     </div>
                     <div class="input-group mb-3 d-flex flex-column ">
                         <label for="last_name">Cognome</label>
-                        <input type="text" class="form-control w-100" v-model="customer.last_name"  >
+                        <input type="text" class="form-control w-100 text-capitalize" v-model="customer.last_name"  >
                     </div>
                     <div class="input-group mb-3 d-flex flex-column ">
                         <label for="email">E-Mail</label>
@@ -19,19 +19,19 @@
                     </div>
                     <div class="input-group mb-3 d-flex flex-column ">
                         <label for="n_phone">Phone</label>
-                        <input type="text" class="form-control w-100" v-model="customer.n_phone"  >
+                        <input type="text" class="form-control w-100 text-capitalize" v-model="customer.n_phone"  >
                     </div>
                     <div class="input-group mb-3 d-flex flex-column ">
                         <label for="address">Via</label>
-                        <input type="text" class="form-control w-100" v-model="customer.address"  >
+                        <input type="text" class="form-control w-100 text-capitalize" v-model="customer.address"  >
                     </div>
                     <div class="input-group mb-3 d-flex flex-column ">
                         <label for="city">Città</label>
-                        <input type="text" class="form-control w-100" v-model="customer.city"  >
+                        <input type="text" class="form-control w-100 text-capitalize" v-model="customer.city"  >
                     </div>
                     <div class="input-group mb-3 d-flex flex-column ">
                         <label for="zip_code">Codice Postale</label>
-                        <input type="text" class="form-control w-100"  id="zip_code" v-model="customer.zip_code"  >
+                        <input type="text" class="form-control w-100 text-capitalize"  id="zip_code" v-model="customer.zip_code"  >
                     </div>
                     <div class="d-flex flex-wrap justify-content-center">
                         <div id="payment-element"></div>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
             </form >
-            <h2 class="text-center mb-4">Importo da pagare: {{formatCurrency(store.returnTotalPrice) }} &euro;</h2>
+            <h2 class="text-center pb-5">Importo da pagare: {{formatCurrency(store.returnTotalPrice) }} &euro;</h2>
         </div>
         <div class="payment-result">
             <!-- Visualizza qui il risultato del pagamento -->
@@ -62,6 +62,7 @@ export default {
         const stripe = ref(null);
         const elements = ref(null);
         const clientSecret = ref(null);
+        const redirect = ref('');
         const store = generalStore();
         const customer = ref({
             first_name: '',
@@ -80,46 +81,6 @@ export default {
                 return `${(value / 100).toFixed(2)} Euro`;
             }
 
-        //     const processPayment = async function(){
-
-        //         paymentProcessing.value = true;
-
-        //         const {paymentMethod, error} = await stripe.createPaymentMethod(
-        //             'card', cardElement, {
-        //                 billing_details: {
-        //                     name: customer.first_name + ' ' + customer.last_name,
-        //                     email: customer.email,
-        //                     n_phone: customer.n_phone,
-        //                     address: {
-        //                         line1: customer.address,
-        //                         city: customer.city,
-        //                         state: customer.state,
-        //                         postal_code: customer.zip_code
-        //                     }
-        //                 }
-        //             }
-        //         )
-
-        //         if(error) {
-        //             paymentProcessing.value = false;
-        //             alert(error);
-        //         } else {
-        //             customer.payment_method_id = paymentMethod.id;
-        //             customer.amount = store.returnTotalPrice;
-        //             customer.cart = JSON.stringify(store.prenotationsWithRequiredFields)
-
-        //             axios.post('/api/payment/initiate', customer)
-        //             .then((response) => {
-        //                 paymentProcessing.value = false;
-        //                 console.log(response.data.message)
-        //             })
-        //             .catch((err) => {
-        //                 paymentProcessing.value = false;
-        //                 alert(err);
-        //             })
-        //         }
-        //     }
-
             const handleSubmit = async (e) => {
                 e.preventDefault();
 
@@ -128,6 +89,18 @@ export default {
                     confirmParams: {
                         // Return URL where the customer should be redirected after the PaymentIntent is confirmed.
                         return_url: 'http://192.168.188.32:8000/grazie',
+                        payment_method_data: {
+                            billing_details: {
+                                name: customer.value.first_name + ' ' + customer.value.last_name,
+                                email: customer.value.email,
+                                address: {
+                                    city: customer.value.city,
+                                    line1: customer.value.address,
+                                    postal_code: customer.value.postal_code
+                                },
+                                phone: customer.value.n_phone
+                            }
+                        },
                     },
                 });
 
@@ -152,34 +125,21 @@ export default {
 
             axios.post('/api/payment/initiate', customer ).then(response => {
                 token.value = response.data.token // Use to identify the payment
-                stripe.value = Stripe('pk_test_51NrdqoJSKktHNGOdRN4FmawpqhTaMNNp9KAlBgg4iYIB2haRgOeqGzNEAX7UU1oStRqjZ0Ysk30ZsqDRoT9UoNwi00suEnUYN7');
+                stripe.value = Stripe(import.meta.env.VITE_STRIPE_KEY);
                 clientSecret.value = response.data.client_secret;
+                console.log(customer.value);
                 const options = {
-                    clientSecret: response.data.client_secret,
+                    clientSecret: clientSecret.value,
                 }
 
                 elements.value = stripe.value.elements(options);
                 const paymentElement = elements.value.create('payment');
                 paymentElement.mount('#payment-element');
-                console.log(response.data.client_secret)
+                // console.log(response.data.client_secret)
+                // console.log(token.value)
             }).catch(error => {
                 console.error(error)
             })
-            // stripe = await loadStripe(import.meta.env.VITE_STRIPE_KEY);
-            // stripe = await loadStripe('pk_test_51NrdqoJSKktHNGOdRN4FmawpqhTaMNNp9KAlBgg4iYIB2haRgOeqGzNEAX7UU1oStRqjZ0Ysk30ZsqDRoT9UoNwi00suEnUYN7');
-            // const elements = stripe.elements({
-            //     mode: 'payment',
-            //     currency: 'eur',
-            //     amount: 10000,
-            // });
-
-            // cardElement = elements.create('card', {
-            //     classes: {
-            //         base: 'rounded border border-2 w-100 form-control'
-            //     }
-            // })
-
-            // cardElement.mount('#card-element')
         })
 
         return {
