@@ -21,12 +21,13 @@ class StriperController extends Controller
     $paymentIntent = PaymentIntent::create([
         'amount' => $data['amount'], // Importo in centesimi (ad esempio, $10.00)
         'currency' => 'eur',
-        'description' => 'Prenotazione ' // Valuta desiderata
+        'description' => 'Prenotazione '. $data['data']['pranzoOCena'] . ' del ' . $data['data']['data']  // Valuta desiderata
     ]);
 
         return response()->json([
             'token' => (string) Str::uuid(),
-            'client_secret' => $paymentIntent->client_secret
+            'client_secret' => $paymentIntent->client_secret,
+            'data' => $paymentIntent['description']
         ]);
     }
 

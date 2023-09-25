@@ -122,12 +122,12 @@ export default {
         onMounted(async () => {
             customer.amount = store.returnTotalPrice;
             customer.cart = JSON.stringify(store.prenotationsWithRequiredFields)
-
+            customer.data = store.data;
             axios.post('/api/payment/initiate', customer ).then(response => {
                 token.value = response.data.token // Use to identify the payment
                 stripe.value = Stripe(import.meta.env.VITE_STRIPE_KEY);
                 clientSecret.value = response.data.client_secret;
-                console.log(customer.value);
+                console.log(response.data.data);
                 const options = {
                     clientSecret: clientSecret.value,
                 }
