@@ -4,41 +4,40 @@
             <h2 class="text-center mt-5">Dati Pagante</h2>
             <!-- Display a payment form -->
             <form id="payment-form" class="d-flex flex-column justify-content-center align-items-center mb-4" >
-                <div style="width: 500px; " class="p-4">
+                <div class="p-4">
                     <div class="input-group mb-3 d-flex flex-column ">
                         <label for="first_name">Nome</label>
-                        <input type="text" class="form-control w-100 text-capitalize" v-model="customer.first_name"  >
+                        <input type="text" class="form-control w-100 text-capitalize rounded-5" v-model="customer.first_name"  >
                     </div>
                     <div class="input-group mb-3 d-flex flex-column ">
                         <label for="last_name">Cognome</label>
-                        <input type="text" class="form-control w-100 text-capitalize" v-model="customer.last_name"  >
+                        <input type="text" class="form-control w-100 text-capitalize rounded-5" v-model="customer.last_name"  >
                     </div>
                     <div class="input-group mb-3 d-flex flex-column ">
                         <label for="email">E-Mail</label>
-                        <input type="email" class="form-control w-100" v-model="customer.email"  >
+                        <input type="email" class="form-control w-100 rounded-5" v-model="customer.email"  >
                     </div>
                     <div class="input-group mb-3 d-flex flex-column ">
                         <label for="n_phone">Phone</label>
-                        <input type="text" class="form-control w-100 text-capitalize" v-model="customer.n_phone"  >
+                        <input type="text" class="form-control w-100 text-capitalize rounded-5" v-model="customer.n_phone"  >
                     </div>
                     <div class="input-group mb-3 d-flex flex-column ">
                         <label for="address">Via</label>
-                        <input type="text" class="form-control w-100 text-capitalize" v-model="customer.address"  >
+                        <input type="text" class="form-control w-100 text-capitalize rounded-5" v-model="customer.address"  >
                     </div>
                     <div class="input-group mb-3 d-flex flex-column ">
                         <label for="city">Città</label>
-                        <input type="text" class="form-control w-100 text-capitalize" v-model="customer.city"  >
+                        <input type="text" class="form-control w-100 text-capitalize rounded-5" v-model="customer.city"  >
                     </div>
                     <div class="input-group mb-3 d-flex flex-column ">
                         <label for="zip_code">Codice Postale</label>
-                        <input type="text" class="form-control w-100 text-capitalize"  id="zip_code" v-model="customer.zip_code"  >
+                        <input type="text" class="form-control w-100 text-capitalize rounded-5"  id="zip_code" v-model="customer.zip_code"  >
                     </div>
                     <div class="d-flex flex-wrap justify-content-center">
                         <div id="payment-element"></div>
                     </div>
                     <div class="w-100">
-                        <button class="btn btn-primary" ype="submit" @click="handleSubmit"   v-text="paymentProcessing ? 'Processing' : 'Pay Now'">
-
+                        <button class="btn btn-primary" type="submit" @click="handleSubmit"   v-text="paymentProcessing ? 'Processing' : 'Pay Now'">
                         </button>
                     </div>
                 </div>

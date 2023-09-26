@@ -3,11 +3,11 @@
         <h1 class="text-center mb-4 fw-bold">Spettacolo di {{new Date(data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}</h1>
         <form @submit.prevent="createReservationDate">
             <div class="row align-items-center justify-content-center">
-                <div class="col-12 col-md-5 mb-3">
+                <div class="col-12 col-md-5 mb-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Semplice ed efficace">
                     <label class="mb-1 fs-4" for="titolo">Titolo:</label>
                     <input type="text" id="titolo" class="form-control" v-model="formData.titolo" required>
                 </div>
-                <div class="col-12 col-md-5 mb-3">
+                <div class="col-12 col-md-5 mb-3" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Aggiungi una descrizione precisa e non troppo lunga">
                     <label class="mb-1 fs-4" for="descrizione">Descrizione:</label>
                     <textarea id="descrizione" class="form-control" v-model="formData.descrizione" required></textarea>
                 </div>
@@ -28,6 +28,21 @@
                         <option value="cena">Cena</option>
                     </select>
                 </div>
+                <div class="col-12 col-md-5 mb-5" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Formatta il prezzo inserendo la visrgola da solo">
+                    <label for="price">
+                    Prezzo
+                    </label>
+                    <input
+                        type="text"
+                        id="price"
+                        class="form-control"
+                        pattern="[0-9]*"
+                        v-model.number="formData.price"
+                        step=0.01
+                        @change="formattedPrice"
+
+                    >
+                </div>
                 <div class="col-12 d-flex align-items-center justify-content-center">
                     <button class="btn-show text-center" type="submit">Crea Spettacolo</button>
                 </div>
@@ -41,6 +56,7 @@ import { usePage } from '@inertiajs/vue3';
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
 import { router } from '@inertiajs/vue3';
+import * as bootstrap from 'bootstrap'
 export default {
     name: 'DashboardCreateDate',
     setup(){
@@ -53,7 +69,8 @@ export default {
                 posti_disponibili: 1,
                 show_type_id: '',
                 pranzo_cena: 'pranzo',
-                data: data
+                data: data,
+                price : 0
             }
         );
 
@@ -75,14 +92,32 @@ export default {
                 console.error('Error fetching show types:', error);
             }
         };
+        function formattedPrice() {
+            formData.value.price = formData.value.price / 100;
+            console.log(typeof  formData.value.price)
+        }
+
+        function onPriceBlur($event) {
+            if ($event.target.value.includes(".")) {
+                let price = parseFloat($event.target.value);
+                formData.value.price = price.toFixed(2);
+            }
+        }
         onMounted(() => {
             fetchShowTypes();
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
         });
+
         return {
             data,
             formData,
             createReservationDate,
             showTypes,
+            formattedPrice,
+            onPriceBlur
         }
     },
 };
