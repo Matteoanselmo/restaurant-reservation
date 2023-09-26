@@ -14,9 +14,9 @@ defineProps({
     <Head title="Welcome" />
     <div id="home" >
         <div>
-            <ApplicationLogo class="full-screen d-flex justify-content-center align-items-center overflow-hidden" ref="appLogoRef"/>
-            <NotARestaurant class="full-screen d-flex justify-content-center align-items-center overflow-hidden" ref="restaurantRef"/>
-            <lode class="full-screen d-flex flex-column px-5 justify-content-center align-items-center overflow-hidden" ref="lodeRef"/>
+            <ApplicationLogo class="full-screen d-flex justify-content-center align-items-center overflow-hidden animated animate__slideInUp" ref="appLogoRef"/>
+            <NotARestaurant class="full-screen d-flex justify-content-center align-items-center overflow-hidden animated animate__zoomIn" ref="restaurantRef"/>
+            <lode class="full-screen d-flex flex-column px-5 justify-content-center align-items-center overflow-hidden " ref="lodeRef"/>
         </div>
         <div class="d-flex">
             <div>

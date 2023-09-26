@@ -1,39 +1,40 @@
 <template>
-    <div class="full-screen d-flex flex-column px-3 justify-content-start mt-3">
-        <div class="">
-            <h1 class="text-center mb-4 fw-bold">{{new Date(newDate[0].data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}</h1>
+    <div class="d-flex flex-column pt-4 justify-content-start m-0 container-fluid">
+        <div class="mb-5">
+            <h1 class="text-center mb-4 fw-bold animated animate__zoomIn">{{new Date(newDate[0].data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}</h1>
             <form
-            class="border boorder-4 rounded-5 py-3 shadow mb-2"
+            class="container-fluid border boorder-4 rounded-5 py-3 shadow mb-2 animated animate__zoomIn px-4"
             v-for="(data, i) in newDate" :key="i">
-                <div class="row align-items-center justify-content-center">
-                    <div class="col-12 col-md-5 mb-3">
+                <div class="row align-items-center justify-content-center w-100 m-0">
+                    <div class="col-12 col-md-3 mb-3">
                         <label class="mb-1 fs-4" for="titolo">Titolo: {{  }}</label>
                         <input type="text" id="titolo" class="form-control" v-model="data.titolo" required>
                     </div>
-                    <div class="col-12 col-md-5 mb-3">
+                    <div class="col-12 col-md-3 mb-3">
                         <label class="mb-1 fs-4" for="descrizione">Descrizione:</label>
                         <textarea id="descrizione" class="form-control" v-model="data.descrizione" required></textarea>
                     </div>
-                    <div class="col-12 col-md-5 mb-3">
-                        <label class="mb-1 fs-4" for="maxSeats">Posti Massimi:</label>
-                        <input type="number" id="maxSeats" class="form-control" v-model="data.posti_disponibili" min="1" max="8" required>
-                    </div>
-                    <div class="col-12 col-md-5 mb-3">
+
+                    <div class="col-12 col-md-3 mb-3">
                         <label class="mb-1 fs-4" for="data">Data:</label>
                         <input type="date" id="data" class="form-control" v-model="data.data" required>
                     </div>
-                    <div class="col-12 col-md-5 mb-5">
+                    <div class="col-12 col-md-3">
                         <label class="mb-1 fs-4" for="mealType">Ora Spettacolo:</label>
                         <select id="mealType" class="form-control" v-model="data.pranzo_cena" required>
                             <option value="pranzo">Pranzo</option>
                             <option value="cena">Cena</option>
                         </select>
                     </div>
-                    <div class="col-12 col-md-5 mb-5" >
+                    <div class="col-12 col-md-3 " >
                         <label class="mb-1 fs-4" for="mealType">Tipo Spettacolo:</label>
                         <select id="mealType" class="form-control" v-model="data.show_types" required>
-                            <option v-for="(show, x) in showTypes" :key="x" :value="show.id" :selected="show.id == data.show_types">{{ show.nome }}</option>
+                            <option v-for="(show, x) in showTypes" :key="x" :value="show.id" :selected="show.id = data.show_types">{{ show.nome }}</option>
                         </select>
+                    </div>
+                    <div class="col-12  mb-5">
+                        <label class="mb-1 fs-4" for="prezzo">Prezzo</label>
+                        <input type="text" id="prezzo" class="form-control" v-model="data.prezzo" required>
                     </div>
                     <div class="col-12 d-flex align-items-center justify-content-evenly">
                         <!-- DELETE -->
@@ -66,10 +67,10 @@
                 </div>
             </form>
         </div>
-        <div v-if="newDate.length === 1 " class="border boorder-4 rounded-5 py-3 shadow">
+        <div v-if="newDate.length === 1 " class="container-fluid">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h1>Vuoi Aggiumngere un altro spettacolo ?</h1>
+                    <a :href="route('dashboard.date.create', {data: newDate[0].data})" class="btn-show border border-2 animated animate__zoomIn">Vuoi Aggiumngere un altro spettacolo ?</a>
                 </div>
             </div>
         </div>
@@ -89,14 +90,23 @@ export default {
         const page = usePage()
         const date = computed(() => page.props.data)
         const showTypes = computed(() => page.props.showTypes)
-        const newDate = date;
+        const newDate = ref(date);
         const alert = ref([]);
-        const deleteData = async (id) => {
+
+        const deleteData = (id) => {
             try {
-                const response = router.delete(`${window.location.origin}/api/delete-data/${id}`);
+                router.delete('/api/delete-data/' + id)
             } catch (error) {
-                console.error(error);
+                console.error('Error creating reservation date:', error);
             }
+            // try {
+            //     const response = router.delete(`${window.location.origin}/api/delete-data/${id}`);
+            //     console.log(response)
+            //     newDate.value = [];
+            //     newDate.push(response.data.data)
+            // } catch (error) {
+            //     console.error(error);
+            // }
         }
 
         return {

@@ -11,10 +11,10 @@
                     <label class="mb-1 fs-4" for="descrizione">Descrizione:</label>
                     <textarea id="descrizione" class="form-control" v-model="formData.descrizione" required></textarea>
                 </div>
-                <div class="col-12 col-md-5 mb-3">
+                <!-- <div class="col-12 col-md-5 mb-3">
                     <label class="mb-1 fs-4" for="maxSeats">Posti Massimi:</label>
                     <input type="number" id="maxSeats" class="form-control" v-model="formData.posti_disponibili" min="1" max="8" required>
-                </div>
+                </div> -->
                 <div class="col-12 col-md-5 mb-3">
                     <label class="mb-1 fs-4" for="showType">Show Type:</label>
                     <select id="showType" class="form-control" v-model="formData.show_type_id" required>
@@ -29,15 +29,15 @@
                     </select>
                 </div>
                 <div class="col-12 col-md-5 mb-5" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Formatta il prezzo inserendo la visrgola da solo">
-                    <label for="price">
+                    <label for="prezzo" class="mb-1 fs-4">
                     Prezzo
                     </label>
                     <input
                         type="text"
-                        id="price"
+                        id="prezzo"
                         class="form-control"
-                        pattern="[0-9]*"
-                        v-model.number="formData.price"
+
+                        v-model.number="formData.prezzo"
                         step=0.01
                         @change="formattedPrice"
 
@@ -70,7 +70,7 @@ export default {
                 show_type_id: '',
                 pranzo_cena: 'pranzo',
                 data: data,
-                price : 0
+                prezzo : 0
             }
         );
 
@@ -93,14 +93,14 @@ export default {
             }
         };
         function formattedPrice() {
-            formData.value.price = formData.value.price / 100;
-            console.log(typeof  formData.value.price)
+            formData.value.prezzo = formData.value.prezzo / 100;
+            console.log(typeof  formData.value.prezzo)
         }
 
         function onPriceBlur($event) {
             if ($event.target.value.includes(".")) {
                 let price = parseFloat($event.target.value);
-                formData.value.price = price.toFixed(2);
+                formData.value.prezzo = price.toFixed(2);
             }
         }
         onMounted(() => {

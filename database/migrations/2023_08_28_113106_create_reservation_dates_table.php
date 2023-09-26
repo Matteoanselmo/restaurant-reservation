@@ -21,7 +21,7 @@ return new class extends Migration
             // $table->foreignId('show_types_id')->constrained('show_types');
             $table->string('titolo');
             $table->text('descrizione');
-            $table->unsignedTinyInteger('posti_disponibili');
+            $table->float('prezzo', 5, 2);
             $table->enum('pranzo_cena', ['pranzo', 'cena']);
             $table->timestamps();
         });

@@ -14,7 +14,7 @@ class ReservationDate extends Model
         'show_types_id',
         'titolo',
         'descrizione',
-        'posti_disponibili',
+        'prezzo',
         'pranzo_cena',
     ];
 
