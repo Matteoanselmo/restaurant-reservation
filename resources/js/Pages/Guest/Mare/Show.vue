@@ -4,7 +4,7 @@
             <div class="row justify-content-evenly">
                 <div class="col-12 mb-5">
                     <h1 class="text-center">
-                        {{ showTypes }} {{new Date(newDate[0].data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}
+                        {{new Date(newDate[0].data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}
                     </h1>
                 </div>
                 <div class="col-12 col-md-5 d-flex flex-column align-items-center justify-content-center border-bottom border-2 mb-5"  v-for="(data, i) in newDate" :key="i">
