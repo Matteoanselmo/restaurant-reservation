@@ -10,11 +10,12 @@ use Inertia\Inertia;
 
 class ReservationDateController extends Controller
 {
-    public function index($month)
+    public function index($month, $showTypeId)
     {
         $reservationDates = ReservationDate::with('showType')
-        ->where(DB::raw('MONTH(data)'), '=', $month)
-        ->get();
+            ->where(DB::raw('MONTH(data)'), '=', $month)
+            ->where('show_types_id', $showTypeId)
+            ->get();
 
         if ($reservationDates->isEmpty()) {
             return response()->json(false);
@@ -22,6 +23,7 @@ class ReservationDateController extends Controller
 
         return response()->json($reservationDates);
     }
+
 
     public function store(Request $request)
     {

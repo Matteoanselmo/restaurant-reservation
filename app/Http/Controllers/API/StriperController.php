@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 use Stripe\StripeClient;
 use Stripe\PaymentIntent;
@@ -43,11 +44,20 @@ class StriperController extends Controller
             return Inertia::render('PaymentError');
         }
 
-        // return response()->json([
-        //     'message' => $data
-        // ]);
+        // Loop through the customer array and save bookings
+        foreach ($data['customer'] as $customerData) {
+            // Assuming you have a Booking model
+            $booking = new Booking();
+            $booking->reservation_date_id = $customerData['reservation_date_id'];
+            $booking->client_id = 1;
+            $booking->posto = $customerData['posto'];
+            // Add any other fields you need to save
 
-        // Complete the payment
+            // Save the booking
+            $booking->save();
+        }
+
+        return Inertia::render('Thanks');
     }
 
     public function failPayment(Request $request){

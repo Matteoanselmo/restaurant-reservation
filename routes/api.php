@@ -36,4 +36,4 @@ Route::post('payment/initiate', [StriperController::class, 'initiatePayment']);
 Route::post('payment/complete', [StriperController::class, 'completePayment']);
 Route::post('payment/failure', [StriperController::class, 'failPayment']);
 
-Route::post('/get-reservation-dates/{month}', [ReservationDateController::class, 'index']);
+Route::post('/get-reservation-dates/{month}/{showTypeId}', [ReservationDateController::class, 'index']);

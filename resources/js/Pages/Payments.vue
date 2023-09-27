@@ -106,6 +106,7 @@ export default {
                 if (error === undefined) {
                     axios.post("/api/payment/complete", {
                         token: token.value,
+                        customer: customer.value
                     }).then((res) => {
 
                     });
