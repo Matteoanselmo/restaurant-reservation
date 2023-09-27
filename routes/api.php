@@ -29,6 +29,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/reservation-dates', [ReservationDateController::class, 'store']);
     Route::get('/show-types', [ShowTypeController::class, 'index']);
     Route::delete('/delete-data/{id}', [ReservationDateController::class, 'destroy']);
+    Route::post('/get-all-reservation-dates/{month}/', [ReservationDateController::class, 'allMonthDate']);
 });
 
 // Route::post('payment/initiate', [PaymentController::class, 'index'])->name('payment.initiate');

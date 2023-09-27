@@ -11,7 +11,7 @@ class ReservationDate extends Model
 
     protected $fillable = [
         'data',
-        'show_types_id',
+        'show_type_id',
         'titolo',
         'descrizione',
         'prezzo',
@@ -25,6 +25,6 @@ class ReservationDate extends Model
 
     public function showType()
     {
-        return $this->belongsTo(ShowType::class, 'show_types_id');
+        return $this->belongsTo(ShowType::class, 'show_type_id');
     }
 }

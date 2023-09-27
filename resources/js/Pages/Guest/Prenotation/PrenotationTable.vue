@@ -1,11 +1,13 @@
 <template>
     <div class="row position-relative">
         <div class="table shadow d-flex align-items-center justify-content-center">
-            <a v-if="justUserInsert" :href="route('guest.prenotation', data.data)" class="btn-show text-uppercase fs-3">prenota</a>
+            <a v-if="justUserInsert" :href="route('guest.prenotation', { data: data.data })" class="btn-show text-uppercase fs-3">prenota</a>
         </div>
-        <button type="button" class="chair btn-show border border-2 dropdown-toggle" id="chair_1" data-bs-toggle="drop_chair_1" aria-expanded="false">1</button>
-        <button v-for="(chair, i) in store.prenotations" :key="i" type="button" class="chair btn-show border border-2 shadow" :id="'chair_' + chair.n_posto" data-bs-toggle="modal" :data-bs-target="'#exampleModal' + i">
+        <!-- <button type="button" class="chair btn-show border border-2 dropdown-toggle" id="chair_1" data-bs-toggle="drop_chair_1" aria-expanded="false">1</button> -->
+        <!-- Modal Button-->
+        <button v-for="(chair, i) in store.prenotations" :key="i" type="button" class="chair btn-show border border-2 shadow" :class="(isJustPrenotated.some(posto => posto === chair.n_posto)) ? 'border-danger my-blur' : 'border'"  :id="'chair_' + chair.n_posto" data-bs-toggle="modal" :data-bs-target="'#exampleModal' + i" :disabled="isJustPrenotated.some(posto => posto === chair.n_posto)">
             {{ chair.n_posto }}
+            <p v-if="isJustPrenotated.some(posto => posto === chair.n_posto)"><i class="fa-solid fa-x"></i></p>
             <p v-if="chair.nome" class="position-absolute top-0 start-50 translate-middle-x">{{ chair.nome }}</p>
         </button>
         <!-- Modal -->
@@ -50,14 +52,20 @@
 import { computed } from 'vue';
 import { ref, watch, onMounted } from 'vue';
 import {generalStore} from '@/Stores/state';
+import { usePage } from '@inertiajs/vue3'
 export default {
     name:'PrenotationTable',
-    props: {
-        data: Object
-    },
     setup(){
+        const page = usePage()
+        const data = computed(() => page.props.data)
         const store = generalStore();
+
         const justUserInsert = ref(false);
+
+        const isJustPrenotated = computed(() => {
+            return data.value.bookings.map(booking => booking.posto);
+        });
+
         const thereIsAnyUser =  () => {
             store.prenotations.forEach(chair => {
                 if((chair.nome != '') || (chair.cognome != '') || (chair.email != '') || (chair. n_telefono != '')){
@@ -91,14 +99,17 @@ export default {
 
         onMounted(()=> {
             thereIsAnyUser();
+            console.log(data.value)
         })
 
         return {
+            data,
             validatePhoneNumber,
             validateEmail,
             store,
             changeButtonText,
-            justUserInsert
+            justUserInsert,
+            isJustPrenotated
         }
     }
 }

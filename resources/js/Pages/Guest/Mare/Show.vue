@@ -14,11 +14,13 @@
                 </div>
                 <div class="col-12 col-md-5 d-flex flex-column align-items-center justify-content-center border-bottom border-2 mb-5"  v-for="(data, i) in newDate" :key="i">
                     <h1 class="text-uppercase">{{ data.pranzo_cena }}</h1>
-                    <h3>
+                    <h3 class="mb-5">
                         {{ data.descrizione }}
                     </h3>
-                    <h3>&euro;{{ data.prezzo }}</h3>
-                    <button class="btn-show border border-2 mb-4">Posti</button>
+                    <h3 class="mb-2">&euro;{{ data.prezzo }}</h3>
+                    <p>{{ data.id }}</p>
+                    <a :href="route('scelta.posti', {id: data.id})" class="btn-show border border-2 mb-4">Prenota</a>
+                    <h3>diponibili: {{ store.prenotations.length - data.bookings.length }}</h3>
                 </div>
             </div>
         </div>
@@ -34,6 +36,7 @@
 import { computed } from 'vue'
 import { usePage } from '@inertiajs/vue3'
 import { ref, onMounted } from 'vue';
+import {generalStore} from '@/Stores/state';
 // import PrenotationTable from '../../../Components/Prenotation/PrenotationTable.vue'
 export default {
     name: 'GuestShowMare',
@@ -45,11 +48,13 @@ export default {
         const date = computed(() => page.props.data)
         const newDate = date;
         const alert = ref([]);
+        const store = generalStore();
         console.log(date.value)
         return {
             date,
             newDate,
-            alert
+            alert,
+            store
         }
     }
 }

@@ -14,11 +14,6 @@
                         <label class="mb-1 fs-4" for="descrizione">Descrizione:</label>
                         <textarea id="descrizione" class="form-control" v-model="data.descrizione" required></textarea>
                     </div>
-
-                    <div class="col-12 col-md-3 mb-3">
-                        <label class="mb-1 fs-4" for="data">Data:</label>
-                        <input type="date" id="data" class="form-control" v-model="data.data" required>
-                    </div>
                     <div class="col-12 col-md-3">
                         <label class="mb-1 fs-4" for="mealType">Ora Spettacolo:</label>
                         <select id="mealType" class="form-control" v-model="data.pranzo_cena" required>
@@ -28,8 +23,8 @@
                     </div>
                     <div class="col-12 col-md-3 " >
                         <label class="mb-1 fs-4" for="mealType">Tipo Spettacolo:</label>
-                        <select id="mealType" class="form-control" v-model="data.show_types" required>
-                            <option v-for="(show, x) in showTypes" :key="x" :value="show.id" :selected="show.id = data.show_types">{{ show.nome }}</option>
+                        <select id="mealType" class="form-control" v-model="data.show_type_id" required>
+                            <option v-for="(show, x) in showTypes" :key="x" :value="show.id" :selected="show.id === data.show_type_id">{{ show.nome }}</option>
                         </select>
                     </div>
                     <div class="col-12  mb-5">

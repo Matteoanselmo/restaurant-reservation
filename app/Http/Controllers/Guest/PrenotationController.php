@@ -14,9 +14,14 @@ class PrenotationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $data = ReservationDate::with('bookings')
+        ->with('showType')
+        ->findOrFail($id);
+        return Inertia::render('Guest/Prenotation/PrenotationTable', [
+            "data" => $data
+        ]);
     }
 
     /**

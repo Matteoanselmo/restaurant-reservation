@@ -1,14 +1,4 @@
 <template>
-    <!-- <div>
-        <div class="d-flex flex-column">
-            <button class="btn-show" @click="scrollToSection('terra-show')">
-                <i class="fa-solid fa-chevron-up  fs-3" ></i>
-            </button>
-            <h1>
-                Date di terra
-            </h1>
-        </div>
-    </div> -->
     <div>
         <div>
             <div class="d-flex flex-column align-items-center d-none">
@@ -99,6 +89,7 @@ export default {
             axios.post(`/api/get-reservation-dates/${month}/${3}`)
             .then((response) => {
                 if(response.data){
+                    console.log(response.data[0].bookings)
                     response.data.forEach(date => {
                         const dateObject = new Date(date.data);
                         this.monthWithDates.push(dateObject);

@@ -22,8 +22,9 @@ class DateController extends Controller
         // Imposta la lingua italiana per Carbon
         App::setLocale('it');
 
-        $matchedData = ReservationDate::with('showType')->
-        where('data', $data)
+        $matchedData = ReservationDate::with('showType')
+        ->with('bookings')
+        ->where('data', $data)
         ->get();
 
         return Inertia::render('Guest/Mare/Show', [

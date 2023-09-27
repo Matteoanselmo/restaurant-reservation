@@ -13,8 +13,9 @@ class ReservationDateController extends Controller
     public function index($month, $showTypeId)
     {
         $reservationDates = ReservationDate::with('showType')
+            ->with('bookings')
             ->where(DB::raw('MONTH(data)'), '=', $month)
-            ->where('show_types_id', $showTypeId)
+            ->where('show_type_id', $showTypeId)
             ->get();
 
         if ($reservationDates->isEmpty()) {
@@ -24,6 +25,18 @@ class ReservationDateController extends Controller
         return response()->json($reservationDates);
     }
 
+    public function allMonthDate($month)
+    {
+        $reservationDates = ReservationDate::with('showType')
+            ->where(DB::raw('MONTH(data)'), '=', $month)
+            ->get();
+
+        if ($reservationDates->isEmpty()) {
+            return response()->json(false);
+        }
+
+        return response()->json($reservationDates);
+    }
 
     public function store(Request $request)
     {

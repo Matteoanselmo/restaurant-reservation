@@ -18,7 +18,7 @@
                 <div class="col-12 col-md-5 mb-3">
                     <label class="mb-1 fs-4" for="showType">Show Type:</label>
                     <select id="showType" class="form-control" v-model="formData.show_type_id" required>
-                        <option class="text-uppercase" v-for="showType in showTypes" :key="showType.id" :value="showType.id">{{ showType.nome }}</option>
+                        <option class="text-uppercase" v-for="(showType, x) in showTypes" :key="x" :value="showType.id">{{ showType.nome }}</option>
                     </select>
                 </div>
                 <div class="col-12 col-md-5 mb-5">
