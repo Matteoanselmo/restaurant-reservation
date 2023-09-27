@@ -25,6 +25,6 @@ class ReservationDate extends Model
 
     public function showType()
     {
-        return $this->hasMany(ShowType::class);
+        return $this->belongsTo(ShowType::class, 'show_types_id');
     }
 }

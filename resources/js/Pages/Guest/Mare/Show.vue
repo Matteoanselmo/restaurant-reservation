@@ -1,10 +1,15 @@
 <template>
-    <div class="full-screen container-fluid d-flex flex-column px-3 justify-content-start mt-3" id="prenotation-table">
+    <div class="container-fluid d-flex flex-column px-3 justify-content-start mt-3" id="prenotation-table">
         <div class="container-fluid">
             <div class="row justify-content-evenly">
                 <div class="col-12 mb-5">
-                    <h1 class="text-center">
+                    <h1 class="text-center text-capitalize">
                         {{new Date(newDate[0].data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}
+                    </h1>
+                </div>
+                <div class="col-12 mb-5">
+                    <h1 class="text-uppercase text-center">
+                        {{ newDate[0].show_type.nome }}
                     </h1>
                 </div>
                 <div class="col-12 col-md-5 d-flex flex-column align-items-center justify-content-center border-bottom border-2 mb-5"  v-for="(data, i) in newDate" :key="i">
@@ -28,7 +33,6 @@
 <script>
 import { computed } from 'vue'
 import { usePage } from '@inertiajs/vue3'
-import axios from 'axios'
 import { ref, onMounted } from 'vue';
 // import PrenotationTable from '../../../Components/Prenotation/PrenotationTable.vue'
 export default {
@@ -39,14 +43,12 @@ export default {
     setup(){
         const page = usePage()
         const date = computed(() => page.props.data)
-        const showTypes = computed(() => page.props.showTypes)
         const newDate = date;
         const alert = ref([]);
-
+        console.log(date.value)
         return {
             date,
             newDate,
-            showTypes,
             alert
         }
     }

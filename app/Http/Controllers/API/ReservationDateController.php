@@ -12,7 +12,9 @@ class ReservationDateController extends Controller
 {
     public function index($month)
     {
-        $reservationDates = ReservationDate::where(DB::raw('MONTH(data)'), '=', $month)->get();
+        $reservationDates = ReservationDate::with('showType')
+        ->where(DB::raw('MONTH(data)'), '=', $month)
+        ->get();
 
         if ($reservationDates->isEmpty()) {
             return response()->json(false);

@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/data/{data}', [GuestDateController::class, 'show'])->name('guest.date.show');
+Route::get('/mare/data/{data}', [GuestDateController::class, 'showMare'])->name('guest.mare.show');
 Route::get('/ci-dispiace/{data}', [GuestDateController::class, 'noDate'])->name('guest.no.date');
 Route::get('/prenotazione/{data}', [PrenotationController::class, 'show'])->name('guest.prenotation');
 
