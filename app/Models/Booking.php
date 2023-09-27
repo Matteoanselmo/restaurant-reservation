@@ -11,14 +11,8 @@ class Booking extends Model
 
     protected $fillable = [
         'reservation_date_id',
-        'client_id',
         'posto',
     ];
-
-    public function client()
-    {
-        return $this->belongsTo(Client::class);
-    }
 
     public function reservationDate()
     {

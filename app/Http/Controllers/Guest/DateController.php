@@ -17,16 +17,18 @@ class DateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($data)
+    public function showMare($data)
     {
         // Imposta la lingua italiana per Carbon
         App::setLocale('it');
 
-        $matchedData = ReservationDate::where('data', $data)->get();
-        $showTypes = ShowType::all();
+        $matchedData = ReservationDate::with('showType')
+        ->with('bookings')
+        ->where('data', $data)
+        ->get();
+
         return Inertia::render('Guest/Mare/Show', [
             'data' => $matchedData,
-            'showTypes' => $showTypes
         ]);
     }
 

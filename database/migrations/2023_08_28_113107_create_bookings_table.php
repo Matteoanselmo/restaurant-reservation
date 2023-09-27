@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('reservation_date_id')->constrained('reservation_dates');
-            $table->foreignId('client_id')->constrained('clients');
             $table->unsignedTinyInteger('posto');
             $table->timestamps();
         });

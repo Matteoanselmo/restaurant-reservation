@@ -10,9 +10,26 @@ use Inertia\Inertia;
 
 class ReservationDateController extends Controller
 {
-    public function index($month)
+    public function index($month, $showTypeId)
     {
-        $reservationDates = ReservationDate::where(DB::raw('MONTH(data)'), '=', $month)->get();
+        $reservationDates = ReservationDate::with('showType')
+            ->with('bookings')
+            ->where(DB::raw('MONTH(data)'), '=', $month)
+            ->where('show_type_id', $showTypeId)
+            ->get();
+
+        if ($reservationDates->isEmpty()) {
+            return response()->json(false);
+        }
+
+        return response()->json($reservationDates);
+    }
+
+    public function allMonthDate($month)
+    {
+        $reservationDates = ReservationDate::with('showType')
+            ->where(DB::raw('MONTH(data)'), '=', $month)
+            ->get();
 
         if ($reservationDates->isEmpty()) {
             return response()->json(false);
@@ -28,7 +45,7 @@ class ReservationDateController extends Controller
             // 'show_type_id' => 'required|exists:show_types.id',
             'titolo' => 'string',
             'descrizione' => 'string',
-            'posti_disponibili' => 'integer|min:1|max:8',
+            // 'prezzo' => 'float',
             'pranzo_cena' => 'in:pranzo,cena', // Aggiunto il controllo per pranzo o cena
         ]);
 
@@ -37,7 +54,7 @@ class ReservationDateController extends Controller
             'show_type_id' => $request->_value['show_type_id'],
             'titolo' => $request->_value['titolo'],
             'descrizione' => $request->_value['descrizione'],
-            'posti_disponibili' => $request->_value['posti_disponibili'],
+            'prezzo' => $request->_value['prezzo'],
             'pranzo_cena' => $request->_value['pranzo_cena'],
         ]);
 
@@ -46,16 +63,20 @@ class ReservationDateController extends Controller
 
     public function destroy($id){
         $reservationDates = ReservationDate::findOrFail($id);
-        $date = ReservationDate::where('data', $reservationDates->data)->get();
-        $existOther = ReservationDate::where('data', $reservationDates->data)
 
+        $existOther = ReservationDate::where('data', $reservationDates->data)
         ->whereNotIn('id', [$reservationDates->id])
         ->get();
+
         if(count($existOther) > 0){
             $reservationDates->delete();
-            return response()->json($date);
+            $date = ReservationDate::where('data', $reservationDates->data)->get();
+            // return response()->json([
+            //     "data" => $date
+            // ]);
+            return Inertia::render('Dashboard/Date/Index');
         } else {
-            // $reservationDates->delete();
+            $reservationDates->delete();
 
             return redirect()->route('dashboard.date.index');
             //return response()->json($id);

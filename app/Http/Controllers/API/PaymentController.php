@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
-use Stripe;
+use Stripe\Stripe as StripeGateway;
+use Stripe\PaymentIntent;
 
 class PaymentController extends Controller
 {
@@ -16,82 +21,55 @@ class PaymentController extends Controller
      */
         public function index(Request $request)
     {
-        // Verifica che la richiesta contenga dati validi
+        $data = $request->all();
+        StripeGateway::setApiKey('STRIPE_SECRET_KEY');
 
-        // if (!isset($requestData['prenotations']) || empty($requestData['prenotations'])) {
-        //     return response()->json(['error' => 'Dati delle prenotazioni non validi'], 400);
+        try {
+            $paymentIntent = PaymentIntent::create([
+                'amount' => $data['amount'], // Multiply as & when required
+                'currency' => $request->currency,
+                'automatic_payment_methods' => [
+                    'enabled' => true,
+                ],
+            ]);
+
+            // Save the $paymentIntent->id to identify this payment later
+        } catch (\Exception $e) {
+            // throw error
+        }
+
+        return [
+            'token' => (string) Str::uuid(),
+            'client_secret' => $paymentIntent->client_secret
+        ];
+
+        // $client = Client::create(
+        //         [
+        //             'mail' => $data['_rawValue']['email'],
+        //             'nome' => $data['_rawValue']['first_name'],
+        //             'cognome' => $data['_rawValue']['last_name'],
+        //             'numero_di_telefono' => $data['_rawValue']['n_phone'],
+        //         ]
+        // );
+
+        // try {
+        //     $payment = $client->charge(
+        //         $data['amount'],
+        //         $data['payment_method_id']
+        //         // $request->input('amount'),
+        //         // $request->input('payment_method_id')
+        //     );
+
+        //     $payment = $payment->asStripePaymentIntent();
+        //     return response()->json([
+        //         'message' => 'Ora manca la create degli ordini'
+        //     ]);
+
+        // } catch(\Exception $e) {
+        //     return response()->json([
+        //         'message' => $e->getMessage()
+        //     ]);
         // }
-
-        $prenotations = $request->input('prenotations');
-        $results = [];
-        foreach ($prenotations as $prenotation) {
-                    // Estrarre i dati dalla stringa JSON
-                    $prenotationData = json_decode($prenotation, true);
-
-                    // Esempio: accedere ai dati
-                    $n_posto = $prenotationData['n_posto'];
-                    $nome = $prenotationData['nome'];
-                    $cognome = $prenotationData['cognome'];
-                    $n_telefono = $prenotationData['n_telefono'];
-                    $price = $prenotationData['price'];
-
-                    // Aggiungere i dati al risultato
-                    $results[] = [
-                        'n_posto' => $n_posto,
-                        'nome' => $nome,
-                        'cognome' => $cognome,
-                        'n_telefono' => $n_telefono,
-                        'price' => $price
-                    ];
-                }
-        if (empty($results)) {
-            return response()->json(['error' => 'Dati delle prenotazioni non validi'], 400);
-        }
-
-        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-        // Inizializza Stripe con la chiave segreta
-        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
-
-        // Crea prodotti e prezzi basati sui dati delle prenotazioni
-        $lineItems = [];
-        foreach ($results as $prenotationData) {
-            // Assicurati di avere i dati necessari per creare un prodotto e un prezzo per ciascuna prenotazione
-            if (!isset($prenotationData['nome']) || !isset($prenotationData['cognome']) || !isset($prenotationData['price'])) {
-                return response()->json(['error' => 'Dati delle prenotazioni non validi'], 400);
-            }
-
-            // Crea un nuovo prodotto con il titolo "Cena evento"
-            $product = $stripe->products->create([
-                'name' => 'Cena evento', // Titolo del prodotto
-                'description' => $prenotationData['nome'] . ' ' . $prenotationData['cognome'], // Descrizione personalizzata
-            ]);
-
-            // Crea un nuovo prezzo per il prodotto con il prezzo unitario
-            $price = $stripe->prices->create([
-                'unit_amount' => $prenotationData['price'], // Converti il prezzo in centesimi
-                'currency' => 'eur', // Valuta
-                'product' => $product->id,
-            ]);
-
-            // Aggiungi l'elemento linea per la sessione di pagamento
-            $lineItems[] = [
-                'price' => $price->id,
-                'quantity' => 1,
-            ];
-        }
-
-        // Crea una sessione di pagamento
-        $session = \Stripe\Checkout\Session::create([
-            'payment_method_types' => ['card'],
-            'line_items' => $lineItems,
-            'mode' => 'payment',
-            'success_url' => 'http://192.168.188.32:8000/grazie',
-            'cancel_url' => 'http://192.168.188.32:8000/errore-pagamento',
-        ]);
-
-        return response()->json([
-            'session' => $session
-        ]);
     }
 
 
