@@ -36,11 +36,9 @@
                         type="text"
                         id="prezzo"
                         class="form-control"
-
                         v-model.number="formData.prezzo"
                         step=0.01
-                        @change="formattedPrice"
-
+                        @input="formatCurrency"
                     >
                 </div>
                 <div class="col-12 d-flex align-items-center justify-content-center">
@@ -92,9 +90,25 @@ export default {
                 console.error('Error fetching show types:', error);
             }
         };
-        function formattedPrice() {
-            formData.value.prezzo = formData.value.prezzo / 100;
-            console.log(typeof  formData.value.prezzo)
+
+        function formatCurrency() {
+            let price = String(formData.value.prezzo).replace(/[^\d]/g,'');
+            let pre, dec;
+            let delimiter = '.';
+
+            let result = price;
+
+            if (price.length > 3 && price.charAt(0) == '0') {
+                price = price.substr(1);
+            }
+
+            if (price.length > 2) {
+                pre = price.slice(0,-2);
+                dec = price.substr((price.length-2), 2);
+                result = pre + delimiter + dec;
+            }
+
+            formData.value.prezzo = result;
         }
 
         function onPriceBlur($event) {
@@ -116,8 +130,8 @@ export default {
             formData,
             createReservationDate,
             showTypes,
-            formattedPrice,
-            onPriceBlur
+            onPriceBlur,
+            formatCurrency
         }
     },
 };

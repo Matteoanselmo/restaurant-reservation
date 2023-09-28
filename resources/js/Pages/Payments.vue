@@ -6,31 +6,31 @@
             <form id="payment-form" class="d-flex flex-column justify-content-center align-items-center mb-4" >
                 <div class="p-4">
                     <div class="input-group mb-3 d-flex flex-column ">
-                        <label for="first_name">Nome</label>
+                        <label for="first_name">Nome*</label>
                         <input type="text" class="form-control w-100 text-capitalize rounded-5" v-model="customer.first_name"  >
                     </div>
                     <div class="input-group mb-3 d-flex flex-column ">
-                        <label for="last_name">Cognome</label>
+                        <label for="last_name">Cognome*</label>
                         <input type="text" class="form-control w-100 text-capitalize rounded-5" v-model="customer.last_name"  >
                     </div>
                     <div class="input-group mb-3 d-flex flex-column ">
-                        <label for="email">E-Mail</label>
+                        <label for="email">E-Mail*</label>
                         <input type="email" class="form-control w-100 rounded-5" v-model="customer.email"  >
                     </div>
                     <div class="input-group mb-3 d-flex flex-column ">
-                        <label for="n_phone">Phone</label>
+                        <label for="n_phone">Telefono*</label>
                         <input type="text" class="form-control w-100 text-capitalize rounded-5" v-model="customer.n_phone"  >
                     </div>
                     <div class="input-group mb-3 d-flex flex-column ">
-                        <label for="address">Via</label>
+                        <label for="address">Via*</label>
                         <input type="text" class="form-control w-100 text-capitalize rounded-5" v-model="customer.address"  >
                     </div>
                     <div class="input-group mb-3 d-flex flex-column ">
-                        <label for="city">Città</label>
+                        <label for="city">Città*</label>
                         <input type="text" class="form-control w-100 text-capitalize rounded-5" v-model="customer.city"  >
                     </div>
                     <div class="input-group mb-3 d-flex flex-column ">
-                        <label for="zip_code">Codice Postale</label>
+                        <label for="zip_code">Codice Postale*</label>
                         <input type="text" class="form-control w-100 text-capitalize rounded-5"  id="zip_code" v-model="customer.zip_code"  >
                     </div>
                     <div class="d-flex flex-wrap justify-content-center">
@@ -42,7 +42,7 @@
                     </div>
                 </div>
             </form >
-            <h2 class="text-center pb-5">Importo da pagare: {{formatCurrency(store.returnTotalPrice) }} &euro;</h2>
+            <h2 class="text-center pb-5">Importo da pagare: {{ store.returnTotalPrice }} &euro;</h2>
         </div>
         <div class="payment-result">
             <!-- Visualizza qui il risultato del pagamento -->
