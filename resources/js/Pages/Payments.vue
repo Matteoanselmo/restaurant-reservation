@@ -55,6 +55,7 @@ import axios from 'axios';
 import { ref, onMounted, computed } from 'vue';
 import {generalStore} from '@/Stores/state';
 import { loadStripe } from '@stripe/stripe-js';
+import { router } from '@inertiajs/vue3';
 export default {
     setup() {
         const token = ref(null);
@@ -85,9 +86,8 @@ export default {
 
                 const { error } = await stripe.value.confirmPayment({
                     elements: elements.value,
+                    redirect: 'if_required',
                     confirmParams: {
-                        // Return URL where the customer should be redirected after the PaymentIntent is confirmed.
-                        return_url: 'http://192.168.188.32:8000/grazie',
                         payment_method_data: {
                             billing_details: {
                                 name: customer.value.first_name + ' ' + customer.value.last_name,
@@ -102,20 +102,20 @@ export default {
                         },
                     },
                 });
-
+                console.log(error);
                 if (error === undefined) {
-                    axios.post("/api/payment/complete", {
+                    router.post("/api/payment/complete", {
                         token: token.value,
-                        customer: customer.value
-                    }).then((res) => {
-
-                    });
-                } else {
-                    axios.post("/api/payment/failure", {
-                        token: token.value,
-                        code: error.code,
-                        description: error.message,
+                        customer: customer.value,
+                        booked: store.prenotationsWithRequiredFields
                     })
+                } else {
+                    // router.post("/api/payment/failure", {
+                    //     token: token.value,
+                    //     code: error.code,
+                    //     description: error.message,
+                    // })
+                    console.log(error);
                 }
             }
 
@@ -127,7 +127,6 @@ export default {
                 token.value = response.data.token // Use to identify the payment
                 stripe.value = Stripe(import.meta.env.VITE_STRIPE_KEY);
                 clientSecret.value = response.data.client_secret;
-                console.log(response.data.data);
                 const options = {
                     clientSecret: clientSecret.value,
                 }
@@ -136,7 +135,7 @@ export default {
                 const paymentElement = elements.value.create('payment');
                 paymentElement.mount('#payment-element');
                 // console.log(response.data.client_secret)
-                // console.log(token.value)
+                console.log(response.data.intent)
             }).catch(error => {
                 console.error(error)
             })

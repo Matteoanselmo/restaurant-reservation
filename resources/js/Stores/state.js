@@ -94,6 +94,13 @@ export const generalStore = defineStore('state', {
                 );
             });
         },
+        prenotationsWithNewsLetter() {
+            return this.prenotationsWithRequiredFields.filter((prenotation) => {
+                return (
+                    prenotation.newsletter === true
+                );
+            });
+        },
         returnTotalPrice() {
             return this.prenotationsWithRequiredFields.reduce((totalPrice, prenotation) => totalPrice + prenotation.price, 0);
         }
