@@ -16,19 +16,21 @@ class StriperController extends Controller
     public function initiatePayment(Request $request)
     {
         $data = $request->all();
+
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
     // Crea un intento di pagamento con un importo e una valuta desiderati
     $paymentIntent = PaymentIntent::create([
-        'amount' => $data['amount'], // Importo in centesimi (ad esempio, $10.00)
+        'amount' => $data['amount'] * 100, // Importo in centesimi (ad esempio, $10.00)
         'currency' => 'eur',
         'description' => 'Prenotazione '. $data['data']['pranzoOCena'] . ' del ' . $data['data']['data']  // Valuta desiderata
     ]);
 
         return response()->json([
-            'token' => (string) Str::uuid(),
+            'token' => $paymentIntent->id,
             'client_secret' => $paymentIntent->client_secret,
-            'data' => $paymentIntent['description']
+            'data' => $paymentIntent['description'],
+            'intent' => $paymentIntent
         ]);
     }
 
@@ -36,28 +38,22 @@ class StriperController extends Controller
     {
         $data = $request->all();
         $stripe = new StripeClient(env('STRIPE_SECRET'));
+        $paymentIntent = $stripe->paymentIntents->retrieve($data['token']);
 
-        // // Use the payment intent ID stored when initiating payment
-        $paymentDetail = $stripe->paymentIntents->retrieve($data['token']);
-
-        if ($paymentDetail->status != 'succeeded') {
+        if ($paymentIntent->status !== 'succeeded') {
             return Inertia::render('PaymentError');
         }
-
         // Loop through the customer array and save bookings
-        foreach ($data['customer'] as $customerData) {
+        foreach ($data['booked'] as $customerData) {
             // Assuming you have a Booking model
-            $booking = new Booking();
-            $booking->reservation_date_id = $customerData['reservation_date_id'];
-            $booking->client_id = 1;
-            $booking->posto = $customerData['posto'];
-            // Add any other fields you need to save
-
-            // Save the booking
-            $booking->save();
+            if($customerData['newsletter']){
+                Booking::create([
+                    'reservation_date_id' => 2,
+                    'posto' => $customerData['n_posto']
+                ]);
+            }
         }
-
-        return Inertia::render('Thanks');
+        return Inertia::render('Thanks', $data);
     }
 
     public function failPayment(Request $request){

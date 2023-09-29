@@ -8,7 +8,7 @@ use App\Models\ShowType;
 
 class ShowTypeController extends Controller
 {
-    public function index()
+    protected function index()
     {
         $showTypes = ShowType::all();
 

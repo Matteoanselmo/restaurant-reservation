@@ -17,7 +17,7 @@ class DateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function showMare($data)
+    protected function showMare($data)
     {
         // Imposta la lingua italiana per Carbon
         App::setLocale('it');

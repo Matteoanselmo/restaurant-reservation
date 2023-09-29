@@ -11,8 +11,17 @@
 </template>
 
 <script>
+import { usePage } from '@inertiajs/vue3'
+import { onMounted, computed } from 'vue';
 export default {
+    setup(){
+        const page = usePage();
+        const data = computed(() => page.props.data);
 
+        onMounted ( () => {
+            console.log(data.value)
+        })
+    }
 }
 </script>
 

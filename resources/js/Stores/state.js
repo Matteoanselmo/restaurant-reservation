@@ -15,7 +15,8 @@ export const generalStore = defineStore('state', {
                 cognome: "",
                 email: "",
                 n_telefono: "",
-                price: 1500
+                price: 0,
+                newsletter: false
             },
             {
                 n_posto: 2,
@@ -23,7 +24,8 @@ export const generalStore = defineStore('state', {
                 cognome: "",
                 email: "",
                 n_telefono: "",
-                price: 1500
+                price: 0,
+                newsletter: false
             },
             {
                 n_posto: 3,
@@ -31,7 +33,8 @@ export const generalStore = defineStore('state', {
                 cognome: "",
                 email: "",
                 n_telefono: "",
-                price: 1500
+                price: 0,
+                newsletter: false
             },
             {
                 n_posto: 4,
@@ -39,7 +42,8 @@ export const generalStore = defineStore('state', {
                 cognome: "",
                 email: "",
                 n_telefono: "",
-                price: 1500
+                price: 0,
+                newsletter: false
             },
             {
                 n_posto: 5,
@@ -47,7 +51,8 @@ export const generalStore = defineStore('state', {
                 cognome: "",
                 email: "",
                 n_telefono: "",
-                price: 1500
+                price: 0,
+                newsletter: false
             },
             {
                 n_posto: 6,
@@ -55,7 +60,8 @@ export const generalStore = defineStore('state', {
                 cognome: "",
                 email: "",
                 n_telefono: "",
-                price: 1500
+                price: 0,
+                newsletter: false
             },
             {
                 n_posto: 7,
@@ -63,7 +69,8 @@ export const generalStore = defineStore('state', {
                 cognome: "",
                 email: "",
                 n_telefono: "",
-                price: 1500
+                price: 0,
+                newsletter: false
             },
             {
                 n_posto: 8,
@@ -71,7 +78,8 @@ export const generalStore = defineStore('state', {
                 cognome: "",
                 email: "",
                 n_telefono: "",
-                price: 1500
+                price: 0,
+                newsletter: false
             },
         ]
     }),
@@ -86,11 +94,23 @@ export const generalStore = defineStore('state', {
                 );
             });
         },
+        prenotationsWithNewsLetter() {
+            return this.prenotationsWithRequiredFields.filter((prenotation) => {
+                return (
+                    prenotation.newsletter === true
+                );
+            });
+        },
         returnTotalPrice() {
             return this.prenotationsWithRequiredFields.reduce((totalPrice, prenotation) => totalPrice + prenotation.price, 0);
         }
     },
     actions: {
+        setPrenotationsPrice(price){
+            for(const chairsPrice of this.prenotations){
+                chairsPrice.price = price
+            }
+        },
         setVisited(){
             this.isVisited = false;
         },

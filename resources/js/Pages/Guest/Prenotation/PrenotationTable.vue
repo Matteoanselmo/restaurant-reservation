@@ -34,7 +34,11 @@
                     </div>
                     <div class="d-flex">
                         <p class="mb-0 me-3 fs-5">Telefono*</p>
-                        <input type="text" v-model="store.prenotations[x].n_telefono" :placeholder="chair.cell" class="form-control mb-3 " @input="validatePhoneNumber(x)">
+                        <input type="text" v-model="store.prenotations[x].n_telefono" :placeholder="chair.cell" class="form-control mb-3 ">
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Scegliendo di iscriverti alla nostra newsletter vogliamo assicurarti che rispettiamo la tua privacy. I tuoi dati personali saranno utilizzati esclusivamente da Villa-Albertina.it per inviarti aggiornamenti sui nostri spettacoli e offerte speciali. Non condivideremo né venderemo mai i tuoi dati a terze parti. Puoi annullare l'iscrizione in qualsiasi momento.">
+                        <input type="checkbox" v-model="store.prenotations[x].newsletter" :placeholder="chair.newsletter" class="form-check-input me-3">
+                        <p class="mb-0  fs-5">Rimani aggiornato alla newsletter</p>
                     </div>
                 </div>
                 <div class="d-flex align items-center justify-content-center">
@@ -52,7 +56,8 @@
 import { computed } from 'vue';
 import { ref, watch, onMounted } from 'vue';
 import {generalStore} from '@/Stores/state';
-import { usePage } from '@inertiajs/vue3'
+import { usePage } from '@inertiajs/vue3';
+import * as bootstrap from 'bootstrap'
 export default {
     name:'PrenotationTable',
     setup(){
@@ -100,6 +105,11 @@ export default {
         onMounted(()=> {
             thereIsAnyUser();
             console.log(data.value)
+            store.setPrenotationsPrice(data.value.prezzo);
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
         })
 
         return {
