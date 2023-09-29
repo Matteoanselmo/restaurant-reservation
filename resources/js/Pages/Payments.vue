@@ -104,10 +104,13 @@ export default {
                 });
                 console.log(error);
                 if (error === undefined) {
-                    router.post("/api/payment/complete", {
+                    localStorage.clear;
+                    axios.post("/api/payment/complete", {
                         token: token.value,
                         customer: customer.value,
                         booked: store.prenotationsWithRequiredFields
+                    }).then((response) => {
+                        window.location.replace(response.data.url);
                     })
                 } else {
                     // router.post("/api/payment/failure", {
@@ -135,7 +138,7 @@ export default {
                 const paymentElement = elements.value.create('payment');
                 paymentElement.mount('#payment-element');
                 // console.log(response.data.client_secret)
-                console.log(response.data.intent)
+                console.log(customer.value)
             }).catch(error => {
                 console.error(error)
             })

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\GuestConfirmedPayment;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Stripe\StripeClient;
@@ -41,7 +42,9 @@ class StriperController extends Controller
         $paymentIntent = $stripe->paymentIntents->retrieve($data['token']);
 
         if ($paymentIntent->status !== 'succeeded') {
-            return Inertia::render('PaymentError');
+            return response()->json([
+                'url' => 'http://192.168.188.32:8000/errore-pagamento'
+            ]);
         }
         // Loop through the customer array and save bookings
         foreach ($data['booked'] as $customerData) {
@@ -53,7 +56,13 @@ class StriperController extends Controller
                 ]);
             }
         }
-        return Inertia::render('Thanks', $data);
+
+        // Invia l'email personalizzata
+        \Mail::to($data['customer']['email'])->send(new GuestConfirmedPayment($data));
+
+        return response()->json([
+            'url' => 'http://192.168.188.32:8000/grazie'
+        ]);
     }
 
     public function failPayment(Request $request){

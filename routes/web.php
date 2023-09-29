@@ -70,4 +70,14 @@ Route::get('errore-pagamento', function () {
     return Inertia::render('PaymentError');
 })->name('error.payment');
 
+Route::get('email', function() {
+    $data = [
+        'customer' => [
+            'first_name' => 'Matteo',
+            'last_name' => 'Anselmo',
+        ]
+        ];
+    return view('emails.GuestConfirmedPayment', compact('data'));
+});
+
 require __DIR__.'/auth.php';
