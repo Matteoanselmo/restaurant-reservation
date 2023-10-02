@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashBoardController;
 use App\Http\Controllers\Admin\DateController;
+use App\Http\Controllers\Admin\RubricaController;
 use App\Http\Controllers\Guest\DateController as GuestDateController;
 use App\Http\Controllers\Guest\PrenotationController;
 use App\Http\Controllers\ProfileController;
@@ -30,7 +31,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
+// Dashboard Amministratore
 Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () {
     Route::get('/', function () {
         return Inertia::render('Dashboard', [
@@ -38,16 +39,20 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
         ]);
     })->name('dashboard');
 
+    // Date
     Route::get('/show-data/{data}', [DateController::class, 'show'])->name('dashboard.date.show');
-
     Route::get('/create-date/{data}', [DateController::class, 'create'])->name('dashboard.date.create');
-
     Route::get('/index-date', [DashBoardController::class, 'index'])->name('dashboard.date.index');
+
+    // Rubrica
+    Route::get('/rubrica', [RubricaController::class, 'index'])->name('dashboard.rubrica.index');
+    Route::get('/rubrica/{id}', [RubricaController::class, 'show'])->name('dashboard.rubrica.show');
 });
 
 
-
+// Dashboard Amministratore
 Route::middleware('auth')->group(function () {
+    // profilo
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

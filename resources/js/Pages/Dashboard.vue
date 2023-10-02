@@ -48,7 +48,7 @@ import { Link } from '@inertiajs/vue3';
                 </a>
             </div>
             <div style="cursor: pointer;" class="animated animate__fadeIn">
-                <a class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
+                <a :href="route('dashboard.rubrica.index')" class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Rubrica
                 </a>
             </div>
