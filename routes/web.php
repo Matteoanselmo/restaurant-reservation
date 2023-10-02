@@ -5,7 +5,9 @@ use App\Http\Controllers\Admin\DateController;
 use App\Http\Controllers\Guest\DateController as GuestDateController;
 use App\Http\Controllers\Guest\PrenotationController;
 use App\Http\Controllers\ProfileController;
+use App\Mail\GuestConfirmedPayment;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -77,6 +79,8 @@ Route::get('email', function() {
             'last_name' => 'Anselmo',
         ]
         ];
+    Mail::to('matteo.anselmo96@gmail.com')->send(new GuestConfirmedPayment($data));
+
     return view('emails.GuestConfirmedPayment', compact('data'));
 });
 

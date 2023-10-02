@@ -105,12 +105,11 @@ export default {
                 console.log(error);
                 if (error === undefined) {
                     localStorage.clear;
-                    axios.post("/api/payment/complete", {
+                    router.post("/api/payment/complete", {
                         token: token.value,
                         customer: customer.value,
-                        booked: store.prenotationsWithRequiredFields
-                    }).then((response) => {
-                        window.location.replace(response.data.url);
+                        booked: store.prenotationsWithRequiredFields,
+                        data:store.data
                     })
                 } else {
                     // router.post("/api/payment/failure", {
@@ -142,6 +141,8 @@ export default {
             }).catch(error => {
                 console.error(error)
             })
+
+            console.log(store.prenotationsWithRequiredFields)
         })
 
         return {

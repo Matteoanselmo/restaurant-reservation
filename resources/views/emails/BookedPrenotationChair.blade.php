@@ -13,41 +13,20 @@
         </div>
         <div style="text-align: center; color: black; padding: 20px; background-color: white;">
             <h1 style="font-family: 'Berkshire Swash', cursive; color: black;">
-            Ciao! {{$data['customer']['first_name']}} {{ $data['customer']['last_name'] }}
+            Ciao! {{$data['nome']}} {{ $data['cognome'] }}
             </h1>
             <h3>
-            La prenotazione per {{ $data['data']['pranzoOCena'] }} del {{ $data['data']['data'] }} è andata a buon fine
+                La prenotazione per {{ $data['pranzoOCena'] }} del {{ $data['data'] }} è andata a buon fine
             </h3>
             <h4 style="font-family: 'Noto Serif Display', serif;">
             Grazie per aver prenotato il tuo show a Villa Albertina 🏠
             </h4>
-            <h5 style="font-family: 'Noto Serif Display', serif; margin-bottom: 10px;">
+            <h5 style="font-family: 'Noto Serif Display', serif;">
             Se avessi dubbi e/o domande, non esitare a contattarci ;
             </h5>
-            <table>
-                <tr>
-                    <th>
-                        Prenotato
-                    </th>
-                    <th>
-                        Contatto
-                    </th>
-                    <th>
-                        Prezzo
-                    </th>
-                </tr>
-                @foreach ($data['booked'] as $customerData)
-                    <tr>
-                        <td>{{ $customerData['nome'] }} {{ $customerData['cognome'] }}</td>
-                        <td>{{$customerData['email']}}</td>
-                        <td>&euro; {{$customerData['price']}}</td>
-                    </tr>
-                @endforeach
-            </table>
             <div style="font-family: 'Berkshire Swash', cursive;">
                 👨‍🍳 Lo STAFF di {{ config('app.name') }} 👨‍🍳
             </div>
-
         </div>
     </div>
 </body>
