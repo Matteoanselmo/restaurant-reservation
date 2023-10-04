@@ -2,11 +2,14 @@
 
 use App\Http\Controllers\Admin\DashBoardController;
 use App\Http\Controllers\Admin\DateController;
+use App\Http\Controllers\Admin\PrenotationController as AdminPrenotationController;
 use App\Http\Controllers\Admin\RubricaController;
 use App\Http\Controllers\Guest\DateController as GuestDateController;
 use App\Http\Controllers\Guest\PrenotationController;
 use App\Http\Controllers\ProfileController;
 use App\Mail\GuestConfirmedPayment;
+use App\Mail\NewsletterMail;
+use App\Models\Client;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +50,12 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
     // Rubrica
     Route::get('/rubrica', [RubricaController::class, 'index'])->name('dashboard.rubrica.index');
     Route::get('/rubrica/{id}', [RubricaController::class, 'show'])->name('dashboard.rubrica.show');
+
+    //Prenotazioni
+    Route::get('/prenotazioni', [AdminPrenotationController::class, 'index'])->name('dashboard.prenotazioni.index');
+
+    //NewsLetter
+    Route::get('/newsletter', [DashBoardController::class, 'newsLetter'])->name('dashboard.newsletter');
 });
 
 
@@ -77,16 +86,18 @@ Route::get('errore-pagamento', function () {
     return Inertia::render('PaymentError');
 })->name('error.payment');
 
-Route::get('email', function() {
-    $data = [
-        'customer' => [
-            'first_name' => 'Matteo',
-            'last_name' => 'Anselmo',
-        ]
-        ];
-    Mail::to('matteo.anselmo96@gmail.com')->send(new GuestConfirmedPayment($data));
+// Route::get('email', function() {
+//     $message = 'ciao ciao ciao ';
+//     // Mail::to('matteo.anselmo96@gmail.com')->send(new GuestConfirmedPayment($data));
+//     // // Recupera la lista delle email dei clienti da qualche parte
+//     $clientEmails = Client::pluck('email')->toArray();
 
-    return view('emails.GuestConfirmedPayment', compact('data'));
-});
+//     // // // Invia la newsletter a tutte le email dei clienti
+//     foreach ($clientEmails as $email) {
+//         Mail::to($email)->send(new NewsletterMail($message));
+//     }
+
+//     return view('emails.Newsletter', compact('message'));
+// });
 
 require __DIR__.'/auth.php';

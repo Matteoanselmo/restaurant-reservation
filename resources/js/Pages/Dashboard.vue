@@ -33,7 +33,7 @@ import { Link } from '@inertiajs/vue3';
                 </a>
             </div>
             <div style="cursor: pointer;" class="animated animate__fadeIn">
-                <a class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
+                <a :href="route('dashboard.prenotazioni.index')" class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Prenotazioni
                 </a>
             </div>
@@ -43,7 +43,7 @@ import { Link } from '@inertiajs/vue3';
                 </a>
             </div>
             <div style="cursor: pointer;" class="animated animate__fadeIn">
-                <a class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
+                <a :href="route('dashboard.newsletter')" class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Newsletter
                 </a>
             </div>
