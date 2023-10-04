@@ -1,13 +1,10 @@
 <template>
     <div>
         <div>
-            <div class="d-flex flex-column align-items-center d-none">
+            <div class="d-flex flex-column align-items-center position-absolute top-0 end-0 m-1">
                 <button class="btn-show" @click="scrollToSection('mare-show')">
                     <i class="fa-solid fa-chevron-up  fs-3" ></i>
                 </button>
-                <h1>
-                    Date di mare
-                </h1>
             </div>
             <div class="d-flex align-items-center justify-content-evenly w-100 mb-5">
                 <button class="btn-show" @click="prevMonth">
@@ -26,15 +23,15 @@
                 class="calendar-day rounded-5 bg-white border border-2 btn-show col col-md-2"
                 >
                     <Link v-if="hasAvailableSeats(day.date)"
-                    class="text-decoration-none text-black"
+                    class="text-decoration-none text-black normal-font"
                     :href="route('guest.mare.show', { data: day.date.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-') })"
                     >
-                        <div class="day-header">{{ day.day }}</div>
-                        <div class="day-name">{{ day.dayName }}</div>
+                        <div class="day-header text-black ">{{ day.day }}</div>
+                        <div class="day-name text-secondary">{{ day.dayName }}</div>
                     </Link>
-                    <Link v-else class="text-decoration-none text-black" :href="route('guest.no.date', {data: day.date.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')} )" >
-                        <div class="day-header">{{ day.day }}</div>
-                        <div class="day-name">{{ day.dayName }}</div>
+                    <Link v-else class="text-decoration-none normal-font" :href="route('guest.no.date', {data: day.date.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')} )" >
+                        <div class="day-header text-black ">{{ day.day }}</div>
+                        <div class="day-name text-secondary">{{ day.dayName }}</div>
                     </Link>
                 </div>
             </div>

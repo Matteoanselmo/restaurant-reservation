@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="payment-form mb-5">
+        <div class="payment-form mb-5" style="overflow: auto !important;">
             <h2 class="text-center mt-5">Dati Pagante</h2>
             <!-- Display a payment form -->
             <form id="payment-form" class="d-flex flex-column justify-content-center align-items-center mb-4" >
@@ -158,6 +158,11 @@ export default {
 </script>
 
 <style scoped>
+
+html, body {
+    overflow: auto !important;
+}
+
 /* Stili CSS per il tuo componente Vue */
 form {
     width: 30vw;

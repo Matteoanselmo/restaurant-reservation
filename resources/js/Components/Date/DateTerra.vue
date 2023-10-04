@@ -1,13 +1,10 @@
 <template>
     <div>
-        <div>
-            <div class="d-flex flex-column align-items-center d-none">
+        <div class="position-relative animated " :class="(targetIsVisible) ? 'animate__zoomIn' : ''">
+            <div class="d-flex flex-column align-items-center position-absolute top-0 start-0 m-1">
                 <button class="btn-show" @click="scrollToSection('terra-show')">
                     <i class="fa-solid fa-chevron-up  fs-3" ></i>
                 </button>
-                <h1>
-                    Date di terra
-                </h1>
             </div>
             <div class="d-flex align-items-center justify-content-evenly w-100 mb-5">
                 <button class="btn-show" @click="prevMonth">
@@ -18,7 +15,10 @@
                     <i class="fas fa-chevron-right fs-2 "></i>
                 </button>
             </div>
-            <div class="calendar row  m-0 w-100 align-items-center justify-content-center animated animate__fadeInUp">
+            <!-- <div ref="target">
+                <h1>{{ target ? 'esiste' : 'non esiste' }}</h1>
+            </div> -->
+            <div class="calendar row  m-0 w-100 align-items-center justify-content-center" ref="target" >
                 <div
                 v-for="(day, index) in calendarDays"
                 :key="index"
@@ -26,15 +26,15 @@
                 class="calendar-day rounded-5 bg-white border border-2 btn-show col col-md-2"
                 >
                     <Link v-if="hasAvailableSeats(day.date)"
-                    class="text-decoration-none text-black"
+                    class="text-decoration-none text-black normal-font"
                     :href="route('guest.mare.show', { data: day.date.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-') })"
                     >
-                        <div class="day-header">{{ day.day }}</div>
-                        <div class="day-name">{{ day.dayName }}</div>
+                        <div class="day-header text-black">{{ day.day }}</div>
+                        <div class="day-name text-secondary">{{ day.dayName }}</div>
                     </Link>
-                    <Link v-else class="text-decoration-none text-black" :href="route('guest.no.date', {data: day.date.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')} )" >
-                        <div class="day-header">{{ day.day }}</div>
-                        <div class="day-name">{{ day.dayName }}</div>
+                    <Link v-else class="text-decoration-none text-black normal-font" :href="route('guest.no.date', {data: day.date.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')} )" >
+                        <div class="day-header text-black">{{ day.day }}</div>
+                        <div class="day-name text-secondary">{{ day.dayName }}</div>
                     </Link>
                 </div>
             </div>
@@ -44,10 +44,22 @@
 
 <script>
 import { Link } from '@inertiajs/vue3';
+import { compile, computed, onMounted, ref } from 'vue'
+import { useElementVisibility } from '@vueuse/core'
+
 export default {
     name: 'DateTerra',
     components: {
-        Link
+        Link,
+    },
+    setup() {
+        const target = ref(null)
+        const targetIsVisible = useElementVisibility(target)
+
+        return {
+        target,
+        targetIsVisible,
+        }
     },
     data() {
         return {
@@ -89,7 +101,6 @@ export default {
             axios.post(`/api/get-reservation-dates/${month}/${3}`)
             .then((response) => {
                 if(response.data){
-                    console.log(response.data[0].bookings)
                     response.data.forEach(date => {
                         const dateObject = new Date(date.data);
                         this.monthWithDates.push(dateObject);

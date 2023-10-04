@@ -1,12 +1,12 @@
 <template>
     <div class="d-flex flex-column justify-content-evenly py-3">
         <div class="px-3 text-center">
-            <h1 class="mb-3">
+            <h1 class="mb-3 fw-bold">
                 Passa una serata con noi!
             </h1>
-            <h4>
+            <h5 class="normal-font text-secondary">
                 Prenota il tuo posto a sedere e vivi uno show con degustazione a Villa Albertina.
-            </h4>
+            </h5>
         </div>
         <div class="d-flex">
             <button class="btn-show animated animate__fadeIn" v-for="(show, index) in allShow" :key="index" @click="scrollToSection(show.routeId)" >

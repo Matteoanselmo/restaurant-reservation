@@ -98,7 +98,6 @@ export default {
         } else {
             this.showRefView()
         }
-
     },
     methods: {
         async scrollComponent(ref) {

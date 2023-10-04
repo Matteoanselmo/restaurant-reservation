@@ -2,6 +2,7 @@
 @import '_btn-show.scss';
 @import '_calendar.scss';
 @import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Dancing+Script&family=Eagle+Lake&family=Noto+Serif+Display:ital,wght@1,200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Dancing+Script&family=Eagle+Lake&family=Noto+Serif+Display:ital,wght@1,200&family=Young+Serif&display=swap');
 
 //fontawesome
 @import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -12,7 +13,12 @@
 
 // Import all of Bootstrap's CSS
 @import "bootstrap/scss/bootstrap";
+
 .my-blur{
     filter: opacity(0.7) blur(6px);
     transition: filter .7s;
+}
+
+.normal-font {
+    font-family: 'Young Serif', serif !important;
 }
