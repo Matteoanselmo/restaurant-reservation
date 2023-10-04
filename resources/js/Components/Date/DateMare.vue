@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>
+        <div class="position-relative animated " :class="(targetIsVisible) ? 'animate__zoomIn' : ''">
             <div class="d-flex flex-column align-items-center position-absolute top-0 end-0 m-1">
                 <button class="btn-show" @click="scrollToSection('mare-show')">
                     <i class="fa-solid fa-chevron-up  fs-3" ></i>
@@ -15,7 +15,7 @@
                     <i class="fas fa-chevron-right fs-2 "></i>
                 </button>
             </div>
-            <div class="calendar row  m-0 w-100 align-items-center justify-content-center animated animate__fadeInUp">
+            <div class="calendar row  m-0 w-100 align-items-center justify-content-center" ref="target">
                 <div
                 v-for="(day, index) in calendarDays"
                 :key="index"
@@ -41,10 +41,21 @@
 
 <script>
 import { Link } from '@inertiajs/vue3';
+import { compile, computed, onMounted, ref } from 'vue'
+import { useElementVisibility } from '@vueuse/core'
 export default {
     name: 'DateMare',
     components: {
         Link
+    },
+    setup() {
+        const target = ref(null)
+        const targetIsVisible = useElementVisibility(target)
+
+        return {
+        target,
+        targetIsVisible,
+        }
     },
     data() {
         return {
@@ -78,9 +89,6 @@ export default {
             this.getMonthDates();
             return calendarDays;
         },
-    },
-    setup(){
-
     },
     methods: {
         getMonthDates(){
