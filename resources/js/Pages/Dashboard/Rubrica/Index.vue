@@ -1,8 +1,9 @@
 <template>
     <div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-        <h1 class="text-capitalize text-center">Rubrica</h1>
+    <div class="row mb-5">
+        <div class="col-12 position-relative">
+            <a :href="route('dashboard')" class="btn-show border border-2 position-absolute top-0 start-0 m-2 z-2"><i class="fa-solid fa-chevron-left"></i></a>
+            <h1 class="text-capitalize text-center">Rubrica</h1>
         </div>
     </div>
     <div class="row">

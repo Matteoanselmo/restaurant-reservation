@@ -6,7 +6,7 @@
                     <i class="fa-solid fa-chevron-up  fs-3" ></i>
                 </button>
             </div>
-            <div class="d-flex align-items-center justify-content-evenly w-100 mb-5">
+            <div class="d-flex align-items-center justify-content-evenly w-100 mb-2">
                 <button class="btn-show" @click="prevMonth">
                     <i class="fas fa-chevron-left fs-2"></i>
                 </button>
@@ -15,12 +15,12 @@
                     <i class="fas fa-chevron-right fs-2 "></i>
                 </button>
             </div>
-            <div class="calendar row  m-0 w-100 align-items-center justify-content-center" ref="target">
+            <div class="calendar d-flex flex-wrap m-0 align-items-center justify-content-center" ref="target">
                 <div
                 v-for="(day, index) in calendarDays"
                 :key="index"
                 :class="[{ 'offset-day': day.firstDayOfWeek > 0 && index < day.firstDayOfWeek}, hasAvailableSeats(day.date) ? 'border-success' : '']"
-                class="calendar-day rounded-5 bg-white border border-2 btn-show col col-md-2"
+                class="calendar-day rounded-5 bg-white border border-2 btn-show"
                 >
                     <Link v-if="hasAvailableSeats(day.date)"
                     class="text-decoration-none text-black normal-font"

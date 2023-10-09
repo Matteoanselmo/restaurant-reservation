@@ -16,7 +16,7 @@ class PrenotationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    protected function index()
     {    $today = Carbon::now(); // Ottieni la data e l'ora attuali
 
         $resrvationDates = ReservationDate::with('bookings')
@@ -29,69 +29,17 @@ class PrenotationController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    protected function oldPrenotations(){
+        $today = Carbon::now(); // Ottieni la data e l'ora attuali
+
+        $oldreservationDates = ReservationDate::with('bookings')
+        ->whereDate('data', '<', $today) // Seleziona date da oggi in poi
+        ->orderBy('data') // Ordina per data in ordine crescente
+        ->get();
+
+        return Inertia::render('Dashboard/Prenotazioni/VecchiePrenotazioni', [
+            'prenotazioni' => $oldreservationDates
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -100,6 +100,7 @@ export default {
                                 phone: customer.value.n_phone
                             }
                         },
+                        return_url: `${window.location.origin}/grazie`,
                     },
                 });
                 console.log(error);

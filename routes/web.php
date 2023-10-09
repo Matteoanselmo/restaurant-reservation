@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashBoardController;
 use App\Http\Controllers\Admin\DateController;
 use App\Http\Controllers\Admin\PrenotationController as AdminPrenotationController;
+use App\Http\Controllers\Admin\ResocontoController;
 use App\Http\Controllers\Admin\RubricaController;
 use App\Http\Controllers\Guest\DateController as GuestDateController;
 use App\Http\Controllers\Guest\PrenotationController;
@@ -53,6 +54,10 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
 
     //Prenotazioni
     Route::get('/prenotazioni', [AdminPrenotationController::class, 'index'])->name('dashboard.prenotazioni.index');
+    Route::get('/prenotazioni-scadute', [AdminPrenotationController::class, 'oldPrenotations'])->name('dashboard.prenotazioni.scadute');
+
+    //Resoconto
+    Route::get('/resoconto', [ResocontoController::class , 'index'])->name('dashboard.resoconto.index');
 
     //NewsLetter
     Route::get('/newsletter', [DashBoardController::class, 'newsLetter'])->name('dashboard.newsletter');

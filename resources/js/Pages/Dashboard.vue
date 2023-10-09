@@ -7,9 +7,9 @@ import { Link } from '@inertiajs/vue3';
 <template>
     <Head title="Dashboard" />
         <div class="home-button z-3">
-            <button class="btn btn-dark fs-2 rounded-5 shadow w-100" >
+            <a href="/" class="btn btn-dark fs-2 rounded-5 shadow w-100" >
                 <i class="fa-solid fa-house"></i>
-            </button>
+            </a>
         </div>
         <div class="profile-button z-3">
             <button class="btn btn-dark fs-2 rounded-5 shadow w-100" @click="showButton('logout')">
@@ -38,7 +38,7 @@ import { Link } from '@inertiajs/vue3';
                 </a>
             </div>
             <div style="cursor: pointer;" class="animated animate__fadeIn">
-                <a class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
+                <a :href="route('dashboard.resoconto.index')" class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Resoconto
                 </a>
             </div>
