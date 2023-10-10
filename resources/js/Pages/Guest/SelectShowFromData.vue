@@ -7,11 +7,6 @@
                         {{new Date(newDate[0].data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}
                     </h1>
                 </div>
-                <!-- <div class="col-12 mb-5">
-                    <h1 class="text-uppercase text-center">
-
-                    </h1>
-                </div> -->
                 <div class="col-12 mb-5">
                     <h1 class="text-uppercase text-center">
                         {{ newDate[0].titolo }}
@@ -23,7 +18,7 @@
                         {{ data.descrizione }}
                     </h3>
                     <h3 class="mb-4">&euro;{{ data.prezzo }} p.p.</h3>
-                    <a :href="route('scelta.posti', {id: data.id})" class="btn-show border border-2 mb-4">Prenota</a>
+                    <a :href="route('scelta.posti', {id: data.id})" class="btn-show border border-2 mb-4 text-uppercase">seleziona posti</a>
                     <h3>diponibili: {{ store.prenotations.length - data.bookings.length }}</h3>
                 </div>
             </div>

@@ -1,9 +1,8 @@
 <template>
     <div class="row position-relative">
         <div class="table shadow d-flex align-items-center justify-content-center">
-            <a v-if="justUserInsert" :href="route('guest.prenotation', { data: data.data })" class="btn-show text-uppercase fs-3">prenota</a>
+            <a v-if="store.prenotations.some(item => item.justoCompiled === true)" :href="route('guest.prenotation', { data: data.data })" class="btn-show text-uppercase fs-3">prenota</a>
         </div>
-        <!-- <button type="button" class="chair btn-show border border-2 dropdown-toggle" id="chair_1" data-bs-toggle="drop_chair_1" aria-expanded="false">1</button> -->
         <!-- Modal Button-->
         <button v-for="(chair, i) in store.prenotations" :key="i" type="button" class="chair btn-show border border-2 shadow" :class="(isJustPrenotated.some(posto => posto === chair.n_posto)) ? 'border-danger my-blur' : 'border'"  :id="'chair_' + chair.n_posto" data-bs-toggle="modal" :data-bs-target="'#exampleModal' + i" :disabled="isJustPrenotated.some(posto => posto === chair.n_posto)">
             {{ chair.n_posto }}
@@ -42,8 +41,8 @@
                     </div>
                 </div>
                 <div class="d-flex align items-center justify-content-center">
-                    <button v-if="(chair.nome.length > 0) || (chair.cognome.length > 0) || (chair.email.length > 0) || (chair. n_telefono.length > 0)" :id="'btn-insert' + x" type="button" class="btn-show btn-insert" @click="store.addInPrenotation(chair), thereIsAnyUser()" data-bs-dismiss="modal" >Modifica</button>
-                    <button v-else :id="'btn-insert' + x" type="button" class="btn-show btn-insert" @click="store.addInPrenotation(chair), thereIsAnyUser()" data-bs-dismiss="modal">Aggiungi</button>
+                    <button v-if="store.prenotations[x].justoCompiled" :id="'btn-insert' + x" type="button" class="btn-show btn-insert" @click="store.addInPrenotation(chair)" data-bs-dismiss="modal" >Modifica</button>
+                    <button v-else :id="'btn-insert' + x" type="button" class="btn-show btn-insert" @click="store.prenotations[x].justoCompiled = true, store.addInPrenotation(chair)" data-bs-dismiss="modal">Aggiungi</button>
                 </div>
             </div>
             </div>
@@ -71,13 +70,10 @@ export default {
             return data.value.bookings.map(booking => booking.posto);
         });
 
-        const thereIsAnyUser =  () => {
-            store.prenotations.forEach(chair => {
-                if((chair.nome != '') || (chair.cognome != '') || (chair.email != '') || (chair. n_telefono != '')){
-                    return justUserInsert.value = true
-                }
-            });
-        }
+        const justCompiled = computed((obj) => {
+            Object.keys(obj).every((k) => obj[k] != '')
+        })
+
         const validateEmail = (index) => {
             const chair = store.prenotations.value[index];
             const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -103,8 +99,6 @@ export default {
         };
 
         onMounted(()=> {
-            thereIsAnyUser();
-            console.log(data.value)
             store.setPrenotationsPrice(data.value.prezzo);
             const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
             tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -119,7 +113,8 @@ export default {
             store,
             changeButtonText,
             justUserInsert,
-            isJustPrenotated
+            isJustPrenotated,
+            justCompiled
         }
     }
 }

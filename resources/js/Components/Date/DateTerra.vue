@@ -15,9 +15,6 @@
                     <i class="fas fa-chevron-right fs-2 "></i>
                 </button>
             </div>
-            <!-- <div ref="target">
-                <h1>{{ target ? 'esiste' : 'non esiste' }}</h1>
-            </div> -->
             <div class="calendar d-flex flex-wrap m-0 align-items-center justify-content-center" ref="target" >
                 <div
                 v-for="(day, index) in calendarDays"
@@ -27,7 +24,7 @@
                 >
                     <Link v-if="hasAvailableSeats(day.date)"
                     class="text-decoration-none text-black normal-font"
-                    :href="route('guest.mare.show', { data: day.date.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-') })"
+                    :href="route('guest.select.show', { data: day.date.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-') })"
                     >
                         <div class="day-header text-black">{{ day.day }}</div>
                         <div class="day-name text-secondary">{{ day.dayName }}</div>
