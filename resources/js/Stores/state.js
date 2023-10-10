@@ -16,7 +16,8 @@ export const generalStore = defineStore('state', {
                 email: "",
                 n_telefono: "",
                 price: 0,
-                newsletter: false
+                newsletter: false,
+                justoCompiled: false
             },
             {
                 n_posto: 2,
@@ -25,7 +26,8 @@ export const generalStore = defineStore('state', {
                 email: "",
                 n_telefono: "",
                 price: 0,
-                newsletter: false
+                newsletter: false,
+                justoCompiled: false
             },
             {
                 n_posto: 3,
@@ -43,7 +45,8 @@ export const generalStore = defineStore('state', {
                 email: "",
                 n_telefono: "",
                 price: 0,
-                newsletter: false
+                newsletter: false,
+                justoCompiled: false
             },
             {
                 n_posto: 5,
@@ -52,7 +55,8 @@ export const generalStore = defineStore('state', {
                 email: "",
                 n_telefono: "",
                 price: 0,
-                newsletter: false
+                newsletter: false,
+                justoCompiled: false
             },
             {
                 n_posto: 6,
@@ -61,7 +65,8 @@ export const generalStore = defineStore('state', {
                 email: "",
                 n_telefono: "",
                 price: 0,
-                newsletter: false
+                newsletter: false,
+                justoCompiled: false
             },
             {
                 n_posto: 7,
@@ -70,7 +75,8 @@ export const generalStore = defineStore('state', {
                 email: "",
                 n_telefono: "",
                 price: 0,
-                newsletter: false
+                newsletter: false,
+                justoCompiled: false
             },
             {
                 n_posto: 8,
@@ -79,7 +85,8 @@ export const generalStore = defineStore('state', {
                 email: "",
                 n_telefono: "",
                 price: 0,
-                newsletter: false
+                newsletter: false,
+                justoCompiled: false
             },
         ]
     }),

@@ -1,53 +1,55 @@
 <template>
-    <div class="row position-relative">
-        <div class="table shadow d-flex align-items-center justify-content-center">
-            <a v-if="justUserInsert" :href="route('guest.prenotation', { data: data.data })" class="btn-show text-uppercase fs-3">prenota</a>
-        </div>
-        <!-- <button type="button" class="chair btn-show border border-2 dropdown-toggle" id="chair_1" data-bs-toggle="drop_chair_1" aria-expanded="false">1</button> -->
-        <!-- Modal Button-->
-        <button v-for="(chair, i) in store.prenotations" :key="i" type="button" class="chair btn-show border border-2 shadow" :class="(isJustPrenotated.some(posto => posto === chair.n_posto)) ? 'border-danger my-blur' : 'border'"  :id="'chair_' + chair.n_posto" data-bs-toggle="modal" :data-bs-target="'#exampleModal' + i" :disabled="isJustPrenotated.some(posto => posto === chair.n_posto)">
-            {{ chair.n_posto }}
-            <p v-if="isJustPrenotated.some(posto => posto === chair.n_posto)"><i class="fa-solid fa-x"></i></p>
-            <p v-if="chair.nome" class="position-absolute top-0 start-50 translate-middle-x">{{ chair.nome }}</p>
-        </button>
-        <!-- Modal -->
-        <div class="modal fade" :id="'exampleModal' + x" tabindex="-1" :aria-labelledby="'exampleModalLabel' + x" aria-hidden="true" v-for="(chair, x) in store.prenotations" :key="x">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-            <div class="modal-header border-0">
-                <h1 class="modal-title fs-2" :id="'exampleModalLabel' + x">Posto n° {{ chair.n_posto }}</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="container-fluid">
+            <ApplicationLogo class="position-absolute table-logo"/>
+        <div class="row table-row position-relative">
+            <div class="table shadow d-flex align-items-center justify-content-center">
+                <a v-if="store.prenotations.some(item => item.justoCompiled === true)" :href="route('guest.prenotation', { data: data.data })" class="btn-show text-uppercase fs-3">prenota</a>
             </div>
-            <div class="modal-body">
-                <div>
-                    <div class="d-flex">
-                        <p class="mb-0 me-3 fs-5">Nome*</p>
-                        <input type="text" v-model="store.prenotations[x].nome" :placeholder="chair.nome" class="form-control mb-3">
+            <!-- Modal Button-->
+            <button v-for="(chair, i) in store.prenotations" :key="i" type="button" class="chair btn-show border border-2 shadow" :class="(isJustPrenotated.some(posto => posto === chair.n_posto)) ? 'border-danger my-blur' : 'border'"  :id="'chair_' + chair.n_posto" data-bs-toggle="modal" :data-bs-target="'#exampleModal' + i" :disabled="isJustPrenotated.some(posto => posto === chair.n_posto)">
+                {{ chair.n_posto }}
+                <p v-if="isJustPrenotated.some(posto => posto === chair.n_posto)"><i class="fa-solid fa-x"></i></p>
+                <p v-if="chair.nome" class="position-absolute top-0 start-50 translate-middle-x">{{ chair.nome }}</p>
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" :id="'exampleModal' + x" tabindex="-1" :aria-labelledby="'exampleModalLabel' + x" aria-hidden="true" v-for="(chair, x) in store.prenotations" :key="x">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h1 class="modal-title fs-2" :id="'exampleModalLabel' + x">Posto n° {{ chair.n_posto }}</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="d-flex">
+                            <p class="mb-0 me-3 fs-5">Nome*</p>
+                            <input type="text" v-model="store.prenotations[x].nome" :placeholder="chair.nome" class="form-control mb-3">
+                        </div>
+                        <div class="d-flex">
+                            <p class="mb-0 me-3 fs-5">Cognome*</p>
+                            <input type="text" v-model="store.prenotations[x].cognome" :placeholder="chair.cognome" class="form-control mb-3">
+                        </div>
+                        <div class="d-flex">
+                            <p class="mb-0 me-3 fs-5">Email*</p>
+                            <input type="email" v-model="store.prenotations[x].email"  class="form-control mb-3" >
+                        </div>
+                        <div class="d-flex">
+                            <p class="mb-0 me-3 fs-5">Telefono*</p>
+                            <input type="text" v-model="store.prenotations[x].n_telefono" :placeholder="chair.cell" class="form-control mb-3 ">
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Scegliendo di iscriverti alla nostra newsletter vogliamo assicurarti che rispettiamo la tua privacy. I tuoi dati personali saranno utilizzati esclusivamente da Villa-Albertina.it per inviarti aggiornamenti sui nostri spettacoli e offerte speciali. Non condivideremo né venderemo mai i tuoi dati a terze parti. Puoi annullare l'iscrizione in qualsiasi momento.">
+                            <input type="checkbox" v-model="store.prenotations[x].newsletter" :placeholder="chair.newsletter" class="form-check-input me-3">
+                            <p class="mb-0  fs-5">Rimani aggiornato alla newsletter</p>
+                        </div>
                     </div>
-                    <div class="d-flex">
-                        <p class="mb-0 me-3 fs-5">Cognome*</p>
-                        <input type="text" v-model="store.prenotations[x].cognome" :placeholder="chair.cognome" class="form-control mb-3">
-                    </div>
-                    <div class="d-flex">
-                        <p class="mb-0 me-3 fs-5">Email*</p>
-                        <input type="email" v-model="store.prenotations[x].email"  class="form-control mb-3" >
-                    </div>
-                    <div class="d-flex">
-                        <p class="mb-0 me-3 fs-5">Telefono*</p>
-                        <input type="text" v-model="store.prenotations[x].n_telefono" :placeholder="chair.cell" class="form-control mb-3 ">
-                    </div>
-                    <div class="d-flex align-items-center justify-content-center" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Scegliendo di iscriverti alla nostra newsletter vogliamo assicurarti che rispettiamo la tua privacy. I tuoi dati personali saranno utilizzati esclusivamente da Villa-Albertina.it per inviarti aggiornamenti sui nostri spettacoli e offerte speciali. Non condivideremo né venderemo mai i tuoi dati a terze parti. Puoi annullare l'iscrizione in qualsiasi momento.">
-                        <input type="checkbox" v-model="store.prenotations[x].newsletter" :placeholder="chair.newsletter" class="form-check-input me-3">
-                        <p class="mb-0  fs-5">Rimani aggiornato alla newsletter</p>
+                    <div class="d-flex align items-center justify-content-center">
+                        <button v-if="store.prenotations[x].justoCompiled" :id="'btn-insert' + x" type="button" class="btn-show btn-insert" @click="store.addInPrenotation(chair)" data-bs-dismiss="modal" >Modifica</button>
+                        <button v-else :id="'btn-insert' + x" type="button" class="btn-show btn-insert" @click="store.prenotations[x].justoCompiled = true, store.addInPrenotation(chair)" data-bs-dismiss="modal">Aggiungi</button>
                     </div>
                 </div>
-                <div class="d-flex align items-center justify-content-center">
-                    <button v-if="(chair.nome.length > 0) || (chair.cognome.length > 0) || (chair.email.length > 0) || (chair. n_telefono.length > 0)" :id="'btn-insert' + x" type="button" class="btn-show btn-insert" @click="store.addInPrenotation(chair), thereIsAnyUser()" data-bs-dismiss="modal" >Modifica</button>
-                    <button v-else :id="'btn-insert' + x" type="button" class="btn-show btn-insert" @click="store.addInPrenotation(chair), thereIsAnyUser()" data-bs-dismiss="modal">Aggiungi</button>
                 </div>
             </div>
             </div>
-        </div>
         </div>
     </div>
 </template>
@@ -58,8 +60,10 @@ import { ref, watch, onMounted } from 'vue';
 import {generalStore} from '@/Stores/state';
 import { usePage } from '@inertiajs/vue3';
 import * as bootstrap from 'bootstrap'
+import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 export default {
     name:'PrenotationTable',
+    components: {ApplicationLogo},
     setup(){
         const page = usePage()
         const data = computed(() => page.props.data)
@@ -71,13 +75,10 @@ export default {
             return data.value.bookings.map(booking => booking.posto);
         });
 
-        const thereIsAnyUser =  () => {
-            store.prenotations.forEach(chair => {
-                if((chair.nome != '') || (chair.cognome != '') || (chair.email != '') || (chair. n_telefono != '')){
-                    return justUserInsert.value = true
-                }
-            });
-        }
+        const justCompiled = computed((obj) => {
+            Object.keys(obj).every((k) => obj[k] != '')
+        })
+
         const validateEmail = (index) => {
             const chair = store.prenotations.value[index];
             const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -103,8 +104,6 @@ export default {
         };
 
         onMounted(()=> {
-            thereIsAnyUser();
-            console.log(data.value)
             store.setPrenotationsPrice(data.value.prezzo);
             const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
             tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -119,14 +118,27 @@ export default {
             store,
             changeButtonText,
             justUserInsert,
-            isJustPrenotated
+            isJustPrenotated,
+            justCompiled
         }
     }
 }
 </script>
 
 <style scoped>
-.row{
+.table-logo{
+    top: 0;
+    left: 0;
+    /* transform: translateX(-50%); */
+    width: 220px;
+    z-index: 4;
+}
+
+/* @media (max-width: 992px) {
+
+} */
+
+.table-row{
     height: calc(100vh - 50px);
 }
 .table{
@@ -192,7 +204,12 @@ export default {
     bottom: 20%;
 }
 
-@media (max-width: 575.98px) {
+@media (max-width: 992px) {
+    .table-logo{
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
     .table{
         height: 25vh;
     }

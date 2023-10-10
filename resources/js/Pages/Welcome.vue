@@ -87,7 +87,7 @@ export default {
     },
     data(){
         return{
-            store : generalStore(),
+            store : generalStore()
         }
     },
     mounted() {
@@ -98,7 +98,6 @@ export default {
         } else {
             this.showRefView()
         }
-
     },
     methods: {
         async scrollComponent(ref) {
@@ -136,7 +135,7 @@ export default {
                 return this.$refs.showRef;
             case this.$refs.showRef:
             default:
-            return null; // Termina lo scorrimento qui
+                return null; // Termina lo scorrimento qui
             }
         },
     },

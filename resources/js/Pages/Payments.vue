@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="payment-form mb-5">
+        <div class="payment-form mb-5" style="overflow: auto !important;">
             <h2 class="text-center mt-5">Dati Pagante</h2>
             <!-- Display a payment form -->
             <form id="payment-form" class="d-flex flex-column justify-content-center align-items-center mb-4" >
@@ -100,14 +100,17 @@ export default {
                                 phone: customer.value.n_phone
                             }
                         },
+                        return_url: `${window.location.origin}/grazie`,
                     },
                 });
                 console.log(error);
                 if (error === undefined) {
+                    localStorage.clear;
                     router.post("/api/payment/complete", {
                         token: token.value,
                         customer: customer.value,
-                        booked: store.prenotationsWithRequiredFields
+                        booked: store.prenotationsWithRequiredFields,
+                        data:store.data
                     })
                 } else {
                     // router.post("/api/payment/failure", {
@@ -135,10 +138,12 @@ export default {
                 const paymentElement = elements.value.create('payment');
                 paymentElement.mount('#payment-element');
                 // console.log(response.data.client_secret)
-                console.log(response.data.intent)
+                console.log(customer.value)
             }).catch(error => {
                 console.error(error)
             })
+
+            console.log(store.prenotationsWithRequiredFields)
         })
 
         return {
@@ -154,6 +159,11 @@ export default {
 </script>
 
 <style scoped>
+
+html, body {
+    overflow: auto !important;
+}
+
 /* Stili CSS per il tuo componente Vue */
 form {
     width: 30vw;

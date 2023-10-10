@@ -17,7 +17,7 @@ class DateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    protected function showMare($data)
+    protected function selectShowFromData($data)
     {
         // Imposta la lingua italiana per Carbon
         App::setLocale('it');
@@ -27,7 +27,7 @@ class DateController extends Controller
         ->where('data', $data)
         ->get();
 
-        return Inertia::render('Guest/Mare/Show', [
+        return Inertia::render('Guest/SelectShowFromData', [
             'data' => $matchedData,
         ]);
     }

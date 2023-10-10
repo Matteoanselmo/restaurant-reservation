@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="col-12 text-center">
-                <a  @click="store.setData(data[0].data, data[0].pranzo_cena)" :href="route('payment')" class="btn-show text-uppercase border border-2">prenota</a>
+                <a  @click="store.setData(data[0].data, data[0].pranzo_cena)" :href="route('payment')" class="btn-show text-uppercase border border-2">Vai al Pagamento</a>
             </div>
         </div>
     </div>
