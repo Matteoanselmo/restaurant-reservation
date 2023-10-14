@@ -21,6 +21,10 @@ class PrenotationController extends Controller
 
         $resrvationDates = ReservationDate::with('bookings')
         ->whereDate('data', '>=', $today) // Seleziona date da oggi in poi
+        ->whereHas('bookings', function ($query) {
+            // Filtra i risultati in base alla presenza di almeno un booking
+            $query->whereNotNull('id');
+        })
         ->orderBy('data') // Ordina per data in ordine crescente
         ->get();
 

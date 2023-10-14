@@ -6,7 +6,7 @@ import { Link } from '@inertiajs/vue3';
 <template>
     <div class="position-relative">
         <div>
-                <ApplicationLogo class="position-absolute top-50 start-50 translate-middle" style="z-index: -1;" />
+                <ApplicationLogo class="position-absolute top-50 start-50 translate-middle login-logo my-blur" style="z-index: -1;" />
         </div>
 
         <div
@@ -16,3 +16,11 @@ import { Link } from '@inertiajs/vue3';
         </div>
     </div>
 </template>
+
+<style scoped>
+.login-logo {
+    height: 100%;
+    object-position: center;
+    object-fit: cover;
+}
+</style>

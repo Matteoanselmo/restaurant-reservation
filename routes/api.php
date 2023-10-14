@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ArtistController;
 use App\Http\Controllers\Api\NewsLetterController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\API\ReservationDateController;
@@ -32,6 +33,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/delete-data/{id}', [ReservationDateController::class, 'destroy']);
     Route::post('/get-all-reservation-dates/{month}/', [ReservationDateController::class, 'allMonthDate']);
     Route::post('/send-newsletter', [NewsLetterController::class, 'sendNewsletter']);
+    Route::post('/create-artist', [ArtistController::class, 'store']);
 });
 
 // Route::post('payment/initiate', [PaymentController::class, 'index'])->name('payment.initiate');

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ArtistiController;
 use App\Http\Controllers\Admin\DashBoardController;
 use App\Http\Controllers\Admin\DateController;
 use App\Http\Controllers\Admin\PrenotationController as AdminPrenotationController;
@@ -61,6 +62,10 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
 
     //NewsLetter
     Route::get('/newsletter', [DashBoardController::class, 'newsLetter'])->name('dashboard.newsletter');
+
+    //Artisti
+    Route::get('/artisti', [ArtistiController::class, 'index'])->name('dashboard.artists.index');
+    Route::get('/aggiungi/artista', [ArtistiController::class, 'create'])->name('dashboard.artists.create');
 });
 
 
