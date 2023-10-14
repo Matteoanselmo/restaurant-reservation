@@ -13,6 +13,9 @@ class Artist extends Model
         'show_type_id',
         'titolo',
         'descrizione',
+        'img_name',
+        'img_path',
+        'img_ext'
     ];
 
     public function showType()

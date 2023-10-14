@@ -1,0 +1,9 @@
+
+.artist-card{
+    height: 250px;
+    .artist-img{
+        object-position: center;
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+}

@@ -10,7 +10,7 @@ use Inertia\Inertia;
 class ArtistiController extends Controller
 {
     protected function index(){
-        $artists = Artist::all();
+        $artists = Artist::with('showType')->get();
 
         return Inertia::render('Dashboard/Artisti/Artisti', [
             'artisti' => $artists
