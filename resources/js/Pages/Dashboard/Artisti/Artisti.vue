@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <a :href="route('dashboard.artists.create')" class="btn-show border border-2"><i class="fa-solid fa-plus"></i></a>
+        <a :href="route('dashboard.artists.create')" class="btn-show border border-2 position-fixed end-0 bottom-0 m-3"><i class="fa-solid fa-plus"></i></a>
     </div>
 </template>
 

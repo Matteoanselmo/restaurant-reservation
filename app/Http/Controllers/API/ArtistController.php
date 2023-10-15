@@ -39,12 +39,11 @@ class ArtistController extends Controller
         } else {
             return response()->json('Qualcosa è andato storto');
         }
+    }
 
+    protected function getArtistByType($show_type_id){
+        $filteredArtistByType = Artist::with('showType')->where('show_type_id', $show_type_id)->get();
 
-
-        // return Inertia::render('Dashboard/Artisti/Artisti', [
-        //     'message' => 'Artista inserito correttamente',
-        //     'artisti' => Artist::all()
-        // ]);
+        return response()->json(['artistiFiltrati' => $filteredArtistByType]);
     }
 }

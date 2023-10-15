@@ -42,3 +42,6 @@ Route::post('payment/complete', [StriperController::class, 'completePayment']);
 Route::post('payment/failure', [StriperController::class, 'failPayment']);
 
 Route::post('/get-reservation-dates/{month}/{showTypeId}', [ReservationDateController::class, 'index']);
+
+//Artisti
+Route::post('/filtered-artist/{show_type_id}', [ArtistController::class, 'getArtistByType']);
