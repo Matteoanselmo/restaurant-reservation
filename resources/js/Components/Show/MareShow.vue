@@ -10,7 +10,7 @@
                 </h1>
             </div>
         </div>
-        <div class="col-6 col-md-4 col-lg-3 " v-for="(artista, i) in specialArtists" :key="i" >
+        <div class="col-6 col-md-4 col-lg-3 " v-for="(artista, i) in mareArtists" :key="i" >
             <div class="rounded-5 border border-2 p-2 mb-4 position-relative artist-card  guest-artist-card py-5 w-100 h-100">
                 <div class="position-absolute top-0 start-0 h-100 w-100 my-blur ">
                     <img :src="'/' + artista.img_path" alt="" class="h-100 w-100 artist-img rounded-5">
@@ -50,13 +50,13 @@ export default {
                 targetSection.scrollIntoView({ behavior: 'smooth' });
             }
         }
-        const specialArtists = ref([]);
+        const mareArtists = ref([]);
 
         onMounted(() => {
             axios.post(`/api/filtered-artist/${1}`)
             .then((res) => {
-                specialArtists.value = res.data.artistiFiltrati;
-                console.log(specialArtists.value)
+                mareArtists.value = res.data.artistiFiltrati;
+                console.log(mareArtists.value)
             }).catch((err) => {
                 console.error(err)
             })
@@ -91,7 +91,7 @@ export default {
         })
         return{
             scrollToSection,
-            specialArtists
+            mareArtists
 
         }
     }

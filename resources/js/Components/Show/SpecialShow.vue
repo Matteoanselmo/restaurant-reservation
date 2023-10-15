@@ -53,10 +53,12 @@ export default {
         const specialArtists = ref([]);
 
         onMounted(()=> {
+
             axios.post(`/api/filtered-artist/${2}`)
             .then((res) => {
                 specialArtists.value = res.data.artistiFiltrati;
                 console.log(specialArtists.value)
+                console.log('dsfhkgadsjfgasj')
             }).catch((err) => {
                 console.error(err)
             })
