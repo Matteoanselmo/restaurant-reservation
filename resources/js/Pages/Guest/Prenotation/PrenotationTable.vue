@@ -1,7 +1,12 @@
 <template>
-    <div class="container-fluid">
-            <ApplicationLogo class="position-absolute table-logo"/>
-        <div class="row table-row position-relative">
+    <div class="container-fluid position-relative">
+        <div class="d-flex flex-column align-items-center position-absolute top-0 start-0 m-1 z-3">
+            <a class="btn-show border border-2" :href="route('guest.select.show', {data: data.data})">
+                <i class="fa-solid fa-chevron-left  fs-3" ></i>
+            </a>
+        </div>
+            <ApplicationLogo class="position-absolute table-logo animated animate__fadeInUp"/>
+        <div class="row table-row position-relative animated animate__fadeInUp">
             <div class="table shadow d-flex align-items-center justify-content-center">
                 <a v-if="store.prenotations.some(item => item.justoCompiled === true)" :href="route('guest.prenotation', { data: data.data })" class="btn-show text-uppercase fs-3">prenota</a>
             </div>
@@ -31,11 +36,11 @@
                         </div>
                         <div class="d-flex">
                             <p class="mb-0 me-3 fs-5">Email*</p>
-                            <input type="email" v-model="store.prenotations[x].email"  class="form-control mb-3" >
+                            <input type="email" v-model="store.prenotations[x].email" @change="validateEmail(store.prenotations[x].email)"  class="form-control mb-3" :class="(validateEmail(store.prenotations[x].email)) ? 'border-2 border-success' : 'border-2 border-danger'">
                         </div>
                         <div class="d-flex">
                             <p class="mb-0 me-3 fs-5">Telefono*</p>
-                            <input type="text" v-model="store.prenotations[x].n_telefono" :placeholder="chair.cell" class="form-control mb-3 ">
+                            <input type="text" v-model="store.prenotations[x].n_telefono" :placeholder="chair.cell" class="form-control mb-3" @change="validatePhoneNumber(store.prenotations[x].n_telefono)" :class="(validatePhoneNumber(store.prenotations[x].n_telefono)) ? 'border-2 border-success' : 'border-2 border-danger'">
                         </div>
                         <div class="d-flex align-items-center justify-content-center" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Scegliendo di iscriverti alla nostra newsletter vogliamo assicurarti che rispettiamo la tua privacy. I tuoi dati personali saranno utilizzati esclusivamente da Villa-Albertina.it per inviarti aggiornamenti sui nostri spettacoli e offerte speciali. Non condivideremo né venderemo mai i tuoi dati a terze parti. Puoi annullare l'iscrizione in qualsiasi momento.">
                             <input type="checkbox" v-model="store.prenotations[x].newsletter" :placeholder="chair.newsletter" class="form-check-input me-3">
@@ -79,13 +84,10 @@ export default {
             Object.keys(obj).every((k) => obj[k] != '')
         })
 
-        const validateEmail = (index) => {
-            const chair = store.prenotations.value[index];
-            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-            if (!emailPattern.test(chair.email)) {
-                chair.email = '';
+        function validateEmail(email) {
+                const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/u;
+                return regex.test(email);
             }
-        };
         const changeButtonText = (id) => {
             setTimeout(() => {
                 const button = document.getElementById(id);
@@ -93,14 +95,9 @@ export default {
                 button.textContent = 'Modifica';
             }, 300)
         }
-        const validatePhoneNumber = (index) => {
-            const chair = store.prenotations.value[index];
-
-            // Assicurati che n_telefono sia una stringa
-            chair.n_telefono = chair.n_telefono.toString();
-
-            // Rimuovi tutti i caratteri non numerici dal numero di telefono
-            chair.n_telefono = chair.n_telefono.replace(/\D/g, '');
+        function validatePhoneNumber(phone){
+            const regex = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+            return regex.test(phone);
         };
 
         onMounted(()=> {
@@ -128,15 +125,12 @@ export default {
 <style scoped>
 .table-logo{
     top: 0;
-    left: 0;
+    right: 0;
     /* transform: translateX(-50%); */
     width: 220px;
+    height: 220px;
     z-index: 4;
 }
-
-/* @media (max-width: 992px) {
-
-} */
 
 .table-row{
     height: calc(100vh - 50px);
@@ -206,9 +200,7 @@ export default {
 
 @media (max-width: 992px) {
     .table-logo{
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
+        display: none !important;
     }
     .table{
         height: 25vh;

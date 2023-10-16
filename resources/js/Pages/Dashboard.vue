@@ -28,7 +28,7 @@ import { Link } from '@inertiajs/vue3';
                 </Link>
             </div>
             <div style="cursor: pointer;" class="animated animate__fadeIn">
-                <a class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
+                <a :href="route('dashboard.artists.index')" class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Artisti
                 </a>
             </div>

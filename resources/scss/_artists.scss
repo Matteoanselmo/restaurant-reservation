@@ -1,0 +1,13 @@
+
+.artist-card{
+    height: 250px;
+    .artist-img{
+        object-position: center;
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+}
+
+.guest-artist-card {
+    height: 130px;
+}

@@ -21,7 +21,7 @@ defineProps({
         <div class="d-flex">
             <div>
                 <MareShow
-                    class="full-screen "
+                    class="full-screen"
                     id="mare-show"
                 />
                 <DateMare
@@ -36,7 +36,7 @@ defineProps({
                     ref="showRef"/>
                 <div>
                     <SpecialShow
-                        class="full-screen d-flex flex-column justify-content-start align-items-center position-relative"
+                        class="full-screen"
                         id="special-show"
                     />
                     <DateSpacial
@@ -46,7 +46,7 @@ defineProps({
             </div>
             <div>
                 <TerraShow
-                    class="full-screen d-flex justify-content-center align-items-center"
+                    class="full-screen"
                     id="terra-show"
                 />
                 <DateTerra

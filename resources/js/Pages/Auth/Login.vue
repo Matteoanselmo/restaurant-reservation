@@ -33,7 +33,7 @@ const submit = () => {
             {{ status }}
         </div>
 
-        <form @submit.prevent="submit">
+        <form @submit.prevent="submit" class="fs-3">
             <div>
                 <InputLabel for="email" value="Email" />
 
@@ -78,10 +78,10 @@ const submit = () => {
                     :href="route('password.request')"
                     class="me-4"
                 >
-                    Forgot your password?
+                    Password dimenticata ?
                 </Link>
 
-                <PrimaryButton class="btn-show" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <PrimaryButton class="btn-show border border-2" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Log in
                 </PrimaryButton>
             </div>
