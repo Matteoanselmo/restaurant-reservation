@@ -43,57 +43,60 @@ import { ref, onMounted } from 'vue';
 export default {
     name: 'MareShow',
     setup(){
-        function scrollToSection(sectionId) {
-            const targetSection = document.getElementById(sectionId);
-
-            if (targetSection) {
-                targetSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
         const mareArtists = ref([]);
 
         onMounted(() => {
             axios.post(`/api/filtered-artist/${1}`)
             .then((res) => {
                 mareArtists.value = res.data.artistiFiltrati;
-                console.log(mareArtists.value)
             }).catch((err) => {
                 console.error(err)
             })
 
-            let initialTouchX = 0;
-            let initialTouchY = 0;
 
-            // Aggiungi un listener per il gesto di swipe
-            $el.addEventListener('touchstart', (e) => {
-                initialTouchX = e.touches[0].clientX;
-                initialTouchY = e.touches[0].clientY;
-            });
-
-            $el.addEventListener('touchend', (e) => {
-                const deltaX = initialTouchX - e.changedTouches[0].clientX;
-                const deltaY = initialTouchY - e.changedTouches[0].clientY;
-                // Definisci una soglia per determinare quando considerare il gesto come uno swipe
-                const swipeThreshold = 50;
-
-                if (deltaX > swipeThreshold) {
-                    // Calcola la direzione dello swipe
-                    const sectionId = 'chose-show'; // Vai alla sezione successiva
-                    scrollToSection(sectionId);
-                }
-
-                if (deltaY > swipeThreshold) {
-                    // Calcola la direzione dello swipe
-                    const sectionId = 'mare-date'; // Vai alla sezione successiva
-                    scrollToSection(sectionId);
-                }
-            });
         })
         return{
-            scrollToSection,
             mareArtists
 
         }
+    },
+    methods: {
+        scrollToSection(sectionId) {
+            const targetSection = document.getElementById(sectionId);
+
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    },
+    mounted(){
+        let initialTouchX = 0;
+        let initialTouchY = 0;
+
+        // Aggiungi un listener per il gesto di swipe
+        this.$el.addEventListener('touchstart', (e) => {
+            initialTouchX = e.touches[0].clientX;
+            initialTouchY = e.touches[0].clientY;
+        });
+
+        this.$el.addEventListener('touchend', (e) => {
+            const deltaX = initialTouchX - e.changedTouches[0].clientX;
+            const deltaY = initialTouchY - e.changedTouches[0].clientY;
+            // Definisci una soglia per determinare quando considerare il gesto come uno swipe
+            const swipeThreshold = 50;
+
+            if (deltaX > swipeThreshold) {
+                // Calcola la direzione dello swipe
+                const sectionId = 'chose-show'; // Vai alla sezione successiva
+                this.scrollToSection(sectionId);
+            }
+
+            if (deltaY > swipeThreshold) {
+                // Calcola la direzione dello swipe
+                const sectionId = 'mare-date'; // Vai alla sezione successiva
+                this.scrollToSection(sectionId);
+            }
+        });
     }
 }
 </script>

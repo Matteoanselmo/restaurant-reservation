@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid position-relative">
+    <div class="container-fluid position-relative" ref="specialShow">
         <div class="row">
             <div class="col-12 d-flex flex-column align-items-center mb-2">
                 <button class="btn-show" @click="scrollToSection('chose-show')">
@@ -40,6 +40,7 @@
 
 <script>
 import { ref, onMounted } from 'vue';
+import { useElementVisibility } from '@vueuse/core'
 export default {
     name: 'SpecialShow',
     setup(){
@@ -50,47 +51,51 @@ export default {
                 targetSection.scrollIntoView({ behavior: 'smooth' });
             }
         }
+        const specialShow =ref(null);
+        const targetIsVisible = useElementVisibility(specialShow)
         const specialArtists = ref([]);
 
         onMounted(()=> {
-
-            axios.post(`/api/filtered-artist/${2}`)
-            .then((res) => {
-                specialArtists.value = res.data.artistiFiltrati;
-                console.log(specialArtists.value)
-                console.log('dsfhkgadsjfgasj')
-            }).catch((err) => {
-                console.error(err)
-            })
-
-
-            let initialTouchY = 0
-            // Aggiungi un listener per il gesto di swipe
-            $el.addEventListener('touchstart', (e) => {
-            initialTouchY = e.touches[0].clientY;
-            });
-
-            $el.addEventListener('touchend', (e) => {
-                const deltaY = initialTouchY - e.changedTouches[0].clientY;
-
-                // Definisci una soglia per determinare quando considerare il gesto come uno swipe
-                const swipeThreshold = -50;
-
-                if (deltaY < swipeThreshold) {
-                    // Calcola la direzione dello swipe
-                    const sectionId = 'chose-show'; // Vai alla sezione successiva
-                    scrollToSection(sectionId);
-                } else {
-                    const sectionId = 'special-date'; // Vai alla sezione successiva
-                    scrollToSection(sectionId);
-                }
-            });
+            if(targetIsVisible){
+                axios.post(`/api/filtered-artist/${2}`)
+                .then((res) => {
+                    specialArtists.value = res.data.artistiFiltrati;
+                }).catch((err) => {
+                    console.error(err)
+                })
+            }
         })
         return {
             scrollToSection,
-            specialArtists
+            specialArtists,
+            specialShow,
+            targetIsVisible
         }
     },
+    mounted() {
+        let initialTouchY = 0;
+
+        // Aggiungi un listener per il gesto di swipe
+        this.$el.addEventListener('touchstart', (e) => {
+        initialTouchY = e.touches[0].clientY;
+        });
+
+        this.$el.addEventListener('touchend', (e) => {
+            const deltaY = initialTouchY - e.changedTouches[0].clientY;
+
+            // Definisci una soglia per determinare quando considerare il gesto come uno swipe
+            const swipeThreshold = -50;
+
+            if (deltaY < swipeThreshold) {
+                // Calcola la direzione dello swipe
+                const sectionId = 'chose-show'; // Vai alla sezione successiva
+                this.scrollToSection(sectionId);
+            } else {
+                const sectionId = 'special-date'; // Vai alla sezione successiva
+                this.scrollToSection(sectionId);
+            }
+        });
+    }
 }
 </script>
 

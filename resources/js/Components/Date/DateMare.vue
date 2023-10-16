@@ -24,7 +24,7 @@
                 >
                     <Link v-if="hasAvailableSeats(day.date)"
                     class="text-decoration-none text-black normal-font"
-                    :href="route('guest.mare.show', { data: day.date.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-') })"
+                    :href="route('guest.select.show', { data: day.date.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-') })"
                     >
                         <div class="day-header text-black ">{{ day.day }}</div>
                         <div class="day-name text-secondary">{{ day.dayName }}</div>
@@ -64,7 +64,7 @@ export default {
                 year: 'numeric',
                 hasDate: false
             }),
-            monthWithDates: [],
+            monthWithMareDates: [],
             currentDate: new Date(),
             firstDayOfWeek: 0,
         };
@@ -86,21 +86,22 @@ export default {
                 firstDayOfWeek: dayOfWeek,
             });
             }
-            this.getMonthDates();
+            this.getMareMonthDates();
             return calendarDays;
         },
     },
     methods: {
-        getMonthDates(){
+        getMareMonthDates(){
             const month = this.currentDate.getMonth() + 1;
-            this.monthWithDates = [];
+            this.monthWithMareDates = [];
             axios.post(`/api/get-reservation-dates/${month}/${1}`)
             .then((response) => {
                 if(response.data){
                     response.data.forEach(date => {
                         const dateObject = new Date(date.data);
-                        this.monthWithDates.push(dateObject);
+                        this.monthWithMareDates.push(dateObject);
                     });
+                    console.log(this.monthWithMareDates)
                 }
             })
             .catch((error)=> {
@@ -108,7 +109,7 @@ export default {
             })
         },
         hasAvailableSeats(date) {
-            return this.monthWithDates.some(eventDate => eventDate.getDate() === date.getDate());
+            return this.monthWithMareDates.some(eventDate => eventDate.getDate() === date.getDate());
         },
         prevMonth() {
             this.currentDate.setMonth(this.currentDate.getMonth() - 1);
