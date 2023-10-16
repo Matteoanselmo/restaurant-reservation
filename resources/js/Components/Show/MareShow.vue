@@ -1,13 +1,14 @@
 <template>
     <div class="container-fluid position-relative">
         <div class="row">
-            <div class="col-12 d-flex flex-column align-items-center mb-2">
-                <button class="btn-show" @click="scrollToSection('chose-show')">
-                    <i class="fa-solid fa-chevron-right  fs-3" ></i>
-                </button>
-                <h1>
+            <div class="col-12 d-flex align-items-center justify-content-between mb-2">
+                <div></div>
+                <h1 class="me-3">
                     Spettacolo di mare
                 </h1>
+                <button class="btn-show border border-2" @click="scrollToSection('chose-show')">
+                    <i class="fa-solid fa-chevron-right  fs-3" ></i>
+                </button>
             </div>
         </div>
         <div class="col-6 col-md-4 col-lg-3 " v-for="(artista, i) in mareArtists" :key="i" >
@@ -31,7 +32,7 @@
             </div>
         </div>
         <div class="col-12">
-            <button class="position-absolute start-50 translate-middle-x btn-show my-btn-bottom " @click="scrollToSection('mare-date')">
+            <button class="position-absolute start-50 translate-middle-x btn-show my-btn-bottom border border-2" @click="scrollToSection('mare-date')">
                 Date
             </button>
         </div>

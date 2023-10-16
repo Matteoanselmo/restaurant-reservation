@@ -8,11 +8,10 @@
                 Prenota il tuo posto a sedere e vivi uno show con degustazione a Villa Albertina.
             </h5>
         </div>
-        <div class="d-flex">
-            <button class="btn-show animated animate__fadeIn" v-for="(show, index) in allShow" :key="index" @click="scrollToSection(show.routeId)" >
+        <div class="d-flex w-100 align-items center justify-content-evenly">
+            <button class="btn-show border border-2 animated animate__fadeIn" v-for="(show, index) in allShow" :key="index" @click="scrollToSection(show.routeId)" >
                 {{ show.tipo }}
             </button>
-            <span class="backdrop"></span>
         </div>
         <div>
             <p class="fs-4 text-decoration-underline text-primary" @click="scrollToSection('attivita-date')" style="cursor: pointer;">
