@@ -97,7 +97,9 @@ export default {
             }, 1500); // Dopo 0.5 secondi
         } else {
             this.showRefView()
+            // document.getElementsByTagName('html')[0].style.overflow = "hidden";
         }
+
     },
     methods: {
         async scrollComponent(ref) {

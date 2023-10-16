@@ -1,13 +1,14 @@
 <template>
     <div class="container-fluid position-relative">
         <div class="row">
-            <div class="col-12 d-flex flex-column align-items-center mb-2" >
-                <button class="btn-show" @click="scrollToSection('chose-show')">
+            <div class="col-12 d-flex justify-content-between align-items-center mb-2" >
+                <button class="btn-show border border-2" @click="scrollToSection('chose-show')">
                     <i class="fa-solid fa-chevron-left  fs-3" ></i>
                 </button>
                 <h1>
                     Spettacolo di terra
                 </h1>
+                <div></div>
             </div>
             <div class="col-6 col-md-4 col-lg-3 " v-for="(artista, i) in specialArtists" :key="i" >
                 <div class="rounded-5 border border-2 p-2 mb-4 position-relative artist-card  guest-artist-card py-5 w-100 h-100">
@@ -30,7 +31,7 @@
                 </div>
             </div>
             <div class="col-12">
-                <button class="position-absolute start-50 translate-middle-x btn-show my-btn-bottom " @click="scrollToSection('terra-date')">
+                <button class="position-absolute start-50 translate-middle-x btn-show my-btn-bottom border border-2" @click="scrollToSection('terra-date')">
                     Date
                 </button>
             </div>
