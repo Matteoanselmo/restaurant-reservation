@@ -27,4 +27,9 @@ class ReservationDate extends Model
     {
         return $this->belongsTo(ShowType::class, 'show_type_id');
     }
+
+    public function images()
+{
+    return $this->hasMany(ReservationDateImage::class, 'reservation_date_id');
+}
 }
