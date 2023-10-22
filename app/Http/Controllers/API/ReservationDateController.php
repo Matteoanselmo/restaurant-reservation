@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ReservationDate;
+use App\Models\ReservationDateImage;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -49,14 +50,29 @@ class ReservationDateController extends Controller
             'pranzo_cena' => 'in:pranzo,cena', // Aggiunto il controllo per pranzo o cena
         ]);
 
-        ReservationDate::create([
-            'data' => $request->_value['data'],
-            'show_type_id' => $request->_value['show_type_id'],
-            'titolo' => $request->_value['titolo'],
-            'descrizione' => $request->_value['descrizione'],
-            'prezzo' => $request->_value['prezzo'],
-            'pranzo_cena' => $request->_value['pranzo_cena'],
+        $reservationDate = ReservationDate::create([
+            'data' => $request['data'],
+            'show_type_id' => $request['show_type_id'],
+            'titolo' => $request['titolo'],
+            'descrizione' => $request['descrizione'],
+            'prezzo' => $request['prezzo'],
+            'pranzo_cena' => $request['pranzo_cena'],
         ]);
+
+        if ($request->hasFile('img')) {
+            foreach ($request->file('img') as $image) {
+                $imageName = $image->getClientOriginalName();
+                $imageExt = $image->getClientOriginalExtension();
+                $imagePath = $image->move(public_path('images'), $imageName); // Salva l'immagine nella directory "public/images"
+
+                ReservationDateImage::create([
+                    'name' => $imageName,
+                    'ext' => $imageExt,
+                    'path' => $imagePath,
+                    'reservation_date_id' => $reservationDate->id,
+                ]);
+            }
+        }
 
         return redirect()->route('dashboard.date.index');
     }

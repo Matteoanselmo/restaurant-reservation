@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid d-flex flex-column px-3 justify-content-start mt-3">
         <h1 class="text-center mb-4 fw-bold animated animate__fadeInDown text-capitalize">Spettacolo {{new Date(data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}</h1>
-        <form @submit.prevent="createReservationDate">
+        <form @submit.prevent="createReservationDate" enctype="multipart/form-data">
             <div class="row gy-4 align-items-center justify-content-center">
                 <div class="col-12 col-md-5 d-flex flex-column align-items-start justify-content-start mb-4 h-100 animated animate__fadeInBottomLeft">
                     <div class="mb-3 w-100">
@@ -42,7 +42,7 @@
                         step=0.01
                         @input="formatCurrency"
                     >
-                    <input type="file" class="form-control mb-3" @change="onFileChange" multiple>
+                    <input type="file" name="img" class="form-control mb-3" @change="onFileChange" multiple>
                     <!-- Anteprime delle immagini -->
                     <div v-if="imagePreviews.length > 0" class="d-flex flex-wrap">
                         <div v-for="(image, index) in imagePreviews" :key="index">
@@ -134,12 +134,39 @@ export default {
                 reader.readAsDataURL(originalFile);
                 }
             }
-            console.log(formData.value.img)
+            // formData.value.img.forEach(element => {
+            //     console.log(element)
+            // });
+            console.log(typeof formData.value.img)
         }
 
         const createReservationDate = async () => {
             try {
-                router.post('/api/reservation-dates', formData);
+                // router.post('/api/reservation-dates', formData);
+                const newformdata = new FormData();
+                newformdata.append('data', formData.value.data);
+                newformdata.append('descrizione', formData.value.descrizione);
+                // for (const file of formData.value.img) {
+                //     newformdata.append('img', file);
+                // }
+                // Iterazione come se fosse un oggetto
+                for (const key in formData.value.img) {
+                if (formData.value.img.hasOwnProperty(key)) {
+                    // key è l'indice dell'array
+                    const image = formData.value.img[key];
+                    newformdata.append(`img[${key}]`, image);
+                }
+}
+                newformdata.append('pranzo_cena', formData.value.pranzo_cena);
+                newformdata.append('prezzo', formData.value.prezzo);
+                newformdata.append('show_type_id', formData.value.show_type_id);
+                newformdata.append('titolo', formData.value.titolo);
+
+                router.post('/api/reservation-dates', newformdata, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
             } catch (error) {
                 console.error('Error creating reservation date:', error);
             }
