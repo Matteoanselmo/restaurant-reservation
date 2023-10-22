@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="position-relative animated " :class="(targetIsVisible) ? 'animate__zoomIn' : ''">
+        <div class="position-relative animate__animated " :class="(targetIsVisible) ? 'animate__zoomIn' : ''">
             <div class="d-flex flex-column align-items-center position-absolute top-0 start-0 m-1">
                 <button class="btn-show" @click="scrollToSection('terra-show')">
                     <i class="fa-solid fa-chevron-up  fs-3" ></i>

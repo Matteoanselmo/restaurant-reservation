@@ -3,9 +3,9 @@
 use App\Http\Controllers\Api\ArtistController;
 use App\Http\Controllers\Api\NewsLetterController;
 use App\Http\Controllers\Api\PaymentController;
-use App\Http\Controllers\API\ReservationDateController;
-use App\Http\Controllers\API\ShowTypeController;
-use App\Http\Controllers\API\StriperController;
+use App\Http\Controllers\Api\ReservationDateController;
+use App\Http\Controllers\Api\ShowTypeController;
+use App\Http\Controllers\Api\StriperController;
 use App\Models\ReservationDate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -14,12 +14,12 @@ use Stripe\PaymentIntent;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| Api Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
+| Here is where you can register Api routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| is assigned the "Api" middleware group. Enjoy building your Api!
 |
 */
 
