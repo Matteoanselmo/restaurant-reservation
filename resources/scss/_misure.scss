@@ -11,4 +11,8 @@ html, body {
     overflow: hidden;
     height: 100%;
     font-family: 'Dancing Script', cursive !important;
+
+    .remove-overflow & {
+        overflow: visible;
+    }
 }

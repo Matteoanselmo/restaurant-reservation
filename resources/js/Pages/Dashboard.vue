@@ -56,7 +56,8 @@ import { Link } from '@inertiajs/vue3';
 </template>
 
 <script>
-import ApplicationLogo from '../Components/ApplicationLogo.vue'
+import ApplicationLogo from '../Components/ApplicationLogo.vue';
+
 export default {
     name: 'Dashboard',
     components: {

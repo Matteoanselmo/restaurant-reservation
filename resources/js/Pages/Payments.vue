@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="payment-form mb-5" style="overflow: auto !important;">
+        <div class="payment-form mb-5 ">
             <h2 class="text-center mt-5">Dati Pagante</h2>
             <!-- Display a payment form -->
             <form id="payment-form" class="d-flex flex-column justify-content-center align-items-center mb-4" >
@@ -52,7 +52,7 @@
 
 <script>
 import axios from 'axios';
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, onBeforeUnmount } from 'vue';
 import {generalStore} from '@/Stores/state';
 import { loadStripe } from '@stripe/stripe-js';
 import { router } from '@inertiajs/vue3';
@@ -122,7 +122,15 @@ export default {
                 }
             }
 
+            // Rimozione overflow
+            const removeOverflow = () => {
+                document.documentElement.style.overflow = 'visible';
+                document.body.style.overflow = 'visible';
+            };
+
+
         onMounted(async () => {
+            store.disableOverflowHidden();
             customer.amount = store.returnTotalPrice;
             customer.cart = JSON.stringify(store.prenotationsWithRequiredFields)
             customer.data = store.data;
@@ -145,7 +153,10 @@ export default {
 
             console.log(store.prenotationsWithRequiredFields)
         })
-
+        onBeforeUnmount(() => {
+            // Ripristina l'overflow al valore predefinito prima che il componente sia smontato
+            store.enableOverflowHidden();
+        });
         return {
             customer,
             store,

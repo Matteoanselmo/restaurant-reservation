@@ -21,7 +21,7 @@
                     </select>
                     <div class="files mb-3">
                         <label class="fs-3">Carica una immagine</label>
-                        <input type="file" name="image" class="form-control form-control-lg" @change="onFileChange">
+                        <input type="file" name="image" class="form-control form-control-lg" @change="onFileChange" accept="image/*">
                     </div>
                     <div class="d-flex justify-content-center">
                         <button type="submit" class="btn-show border border-2 text-center">Crea</button>

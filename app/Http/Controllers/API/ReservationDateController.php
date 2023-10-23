@@ -77,27 +77,36 @@ class ReservationDateController extends Controller
         return redirect()->route('dashboard.date.index');
     }
 
-    public function destroy($id){
-        $reservationDates = ReservationDate::findOrFail($id);
+    public function destroy($id) {
+        $reservationDate = ReservationDate::findOrFail($id);
+        $data = $reservationDate->data;
 
-        $existOther = ReservationDate::where('data', $reservationDates->data)
-        ->whereNotIn('id', [$reservationDates->id])
-        ->get();
+        // Ottieni le immagini associate alla data di prenotazione
+        $images = ReservationDateImage::where('reservation_date_id', $reservationDate->id)->get();
 
-        if(count($existOther) > 0){
-            $reservationDates->delete();
-            $date = ReservationDate::where('data', $reservationDates->data)->get();
-            // return response()->json([
-            //     "data" => $date
-            // ]);
-            return Inertia::render('Dashboard/Date/Index');
+        // Elimina le immagini dalla cartella public/images/
+        foreach ($images as $image) {
+            $imagePath = public_path('images/' . $image->path);
+            if (file_exists($imagePath)) {
+                unlink($imagePath); // Elimina il file fisico
+            }
+        }
+
+        // Elimina la data di prenotazione
+        $reservationDate->delete();
+
+        // Verifica se ci sono altre date con la stessa data
+        $otherDates = ReservationDate::where('data', $data)
+            ->where('id', '<>', $reservationDate->id)
+            ->count();
+
+        if ($otherDates > 0) {
+            return redirect()->route('dashboard.date.show', $data);
         } else {
-            $reservationDates->delete();
-
             return redirect()->route('dashboard.date.index');
-            //return response()->json($id);
         }
     }
+
 }
 
 

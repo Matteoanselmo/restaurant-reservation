@@ -42,7 +42,7 @@
                         step=0.01
                         @input="formatCurrency"
                     >
-                    <input type="file" name="img" class="form-control mb-3" @change="onFileChange" multiple>
+                    <input type="file" name="img" class="form-control mb-3" @change="onFileChange" multiple accept="image/*">
                     <!-- Anteprime delle immagini -->
                     <div v-if="imagePreviews.length > 0" class="d-flex flex-wrap">
                         <div v-for="(image, index) in imagePreviews" :key="index">

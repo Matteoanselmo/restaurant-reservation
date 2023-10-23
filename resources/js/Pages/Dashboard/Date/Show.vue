@@ -77,16 +77,19 @@
 import { computed } from 'vue'
 import { usePage } from '@inertiajs/vue3'
 import axios from 'axios'
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { router } from '@inertiajs/vue3';
+import {generalStore} from '@/Stores/state';
 export default {
     name: 'Show',
     setup(){
+
         const page = usePage()
         const date = computed(() => page.props.data)
         const showTypes = computed(() => page.props.showTypes)
         const newDate = ref(date);
         const alert = ref([]);
+        const store = generalStore();
 
         const deleteData = (id) => {
             try {
@@ -94,16 +97,15 @@ export default {
             } catch (error) {
                 console.error('Error creating reservation date:', error);
             }
-            // try {
-            //     const response = router.delete(`${window.location.origin}/api/delete-data/${id}`);
-            //     console.log(response)
-            //     newDate.value = [];
-            //     newDate.push(response.data.data)
-            // } catch (error) {
-            //     console.error(error);
-            // }
+
         }
 
+        onMounted(() => {
+            store.disableOverflowHidden();
+        })
+        onBeforeUnmount(() => {
+            store.enableOverflowHidden();
+        })
         return {
             date,
             newDate,
