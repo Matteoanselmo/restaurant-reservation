@@ -22,32 +22,32 @@ import { Link } from '@inertiajs/vue3';
             </Link>
         </div>
         <div class="full-screen d-flex justify-content-evenly align-items-start flex-wrap" id="dashboard">
-            <div style="cursor: pointer;" class="animated animate__fadeIn">
+            <div style="cursor: pointer;" class="animate__animated animate__fadeIn">
                 <Link :href="route('dashboard.date.index')"  class=" my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold" as="button">
                     Date
                 </Link>
             </div>
-            <div style="cursor: pointer;" class="animated animate__fadeIn">
+            <div style="cursor: pointer;" class="animate__animated animate__fadeIn">
                 <a :href="route('dashboard.artists.index')" class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Artisti
                 </a>
             </div>
-            <div style="cursor: pointer;" class="animated animate__fadeIn">
+            <div style="cursor: pointer;" class="animate__animated animate__fadeIn">
                 <a :href="route('dashboard.prenotazioni.index')" class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Prenotazioni
                 </a>
             </div>
-            <div style="cursor: pointer;" class="animated animate__fadeIn">
+            <div style="cursor: pointer;" class="animate__animated animate__fadeIn">
                 <a :href="route('dashboard.resoconto.index')" class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Resoconto
                 </a>
             </div>
-            <div style="cursor: pointer;" class="animated animate__fadeIn">
+            <div style="cursor: pointer;" class="animate__animated animate__fadeIn">
                 <a :href="route('dashboard.newsletter')" class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Newsletter
                 </a>
             </div>
-            <div style="cursor: pointer;" class="animated animate__fadeIn">
+            <div style="cursor: pointer;" class="animate__animated animate__fadeIn">
                 <a :href="route('dashboard.rubrica.index')" class="my-card btn-show border border-2 d-flex justify-content-center align-items-center m-3 fw-bold">
                     Rubrica
                 </a>
@@ -56,7 +56,8 @@ import { Link } from '@inertiajs/vue3';
 </template>
 
 <script>
-import ApplicationLogo from '../Components/ApplicationLogo.vue'
+import ApplicationLogo from '../Components/ApplicationLogo.vue';
+
 export default {
     name: 'Dashboard',
     components: {

@@ -19,7 +19,10 @@ return new class extends Migration
         $table->string('ext');
         $table->string('path');
         $table->unsignedBigInteger('reservation_date_id');
-        $table->foreign('reservation_date_id')->references('id')->on('reservation_dates');
+        $table->foreign('reservation_date_id')
+            ->references('id')
+            ->on('reservation_dates')
+            ->onDelete('cascade');
         $table->timestamps();
     });
 }

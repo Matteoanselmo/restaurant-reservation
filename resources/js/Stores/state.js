@@ -3,11 +3,16 @@ import { warn } from 'vue';
 
 export const generalStore = defineStore('state', {
     state: () => ({
+        // gestione overflow
+        overflowHidden: false,
+        // gestione benvenuto homepage
         isVisited: true,
+        //gestione della data
         data: {
             data: '',
             pranzoOCena: ''
         },
+        //gestione delle prenotazioni
         prenotations: [
             {
                 n_posto: 1,
@@ -136,7 +141,21 @@ export const generalStore = defineStore('state', {
                 // this.prenotations.push(userData);
                 console.log('Errore inserimento ', userData);
             }
-        }
+        },
+        // GESTIONE OVERFLOW
+        enableOverflowHidden() {
+            // Imposta l'overflow hidden sull'intero documento HTML
+            document.documentElement.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden';
+            this.overflowHidden = true;
+        },
+
+        disableOverflowHidden() {
+            // Ripristina l'overflow visibile sull'intero documento HTML
+            document.documentElement.style.overflow = 'visible';
+            document.body.style.overflow = 'visible';
+            this.overflowHidden = false;
+        },
 
     },
     persist: true,

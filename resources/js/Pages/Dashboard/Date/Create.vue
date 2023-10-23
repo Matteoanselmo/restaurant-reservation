@@ -1,9 +1,19 @@
 <template>
     <div class="container-fluid d-flex flex-column px-3 justify-content-start mt-3">
-        <h1 class="text-center mb-4 fw-bold animated animate__fadeInDown text-capitalize">Spettacolo {{new Date(data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}</h1>
+        <div class="row">
+            <div class="col-4">
+                <a class="btn-show border border-2" :href="route('dashboard.date.index')">
+                    <i class="fa-solid fa-chevron-left  fs-3" ></i>
+                </a>
+            </div>
+            <div class="col-4">
+                <h1 class="text-start mb-4 fw-bold animate__animated animate__fadeInDown text-capitalize">Spettacolo {{new Date(data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}</h1>
+            </div>
+            <div class="col-4"></div>
+        </div>
         <form @submit.prevent="createReservationDate" enctype="multipart/form-data">
             <div class="row gy-4 align-items-center justify-content-center">
-                <div class="col-12 col-md-5 d-flex flex-column align-items-start justify-content-start mb-4 h-100 animated animate__fadeInBottomLeft">
+                <div class="col-12 col-md-5 d-flex flex-column align-items-start justify-content-start mb-4 h-100 animate__animated animate__fadeInBottomLeft">
                     <div class="mb-3 w-100">
                         <label class="mb-1 fs-4" for="titolo">Titolo: *</label>
                         <div class="d-flex align-items-center justify-content-center">
@@ -28,7 +38,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-5 d-flex flex-column align-items-start justify-content-start mb-4 h-100 border-start border-2 animated animate__fadeInBottomRight">
+                <div class="col-12 col-md-5 d-flex flex-column align-items-start justify-content-start mb-4 h-100 border-start border-2 animate__animated animate__fadeInBottomRight">
                     <label class="mb-1 fs-4" for="descrizione">Descrizione:</label>
                     <textarea id="descrizione" class="form-control" v-model.trim="formData.descrizione" rows="10" required></textarea>
                     <label for="prezzo" class="mb-1 fs-4">
@@ -42,7 +52,7 @@
                         step=0.01
                         @input="formatCurrency"
                     >
-                    <input type="file" name="img" class="form-control mb-3" @change="onFileChange" multiple>
+                    <input type="file" name="img" class="form-control mb-3" @change="onFileChange" multiple accept="image/*">
                     <!-- Anteprime delle immagini -->
                     <div v-if="imagePreviews.length > 0" class="d-flex flex-wrap">
                         <div v-for="(image, index) in imagePreviews" :key="index">
@@ -50,7 +60,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 d-flex align-items-center justify-content-center animated animate__fadeInUp">
+                <div class="col-12 d-flex align-items-center justify-content-center animate__animated animate__fadeInUp">
                     <button class="btn-show border border-2 text-center" type="submit">Crea Spettacolo</button>
                 </div>
             </div>
@@ -61,12 +71,14 @@
 <script>
 import { usePage } from '@inertiajs/vue3';
 import axios from 'axios';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { router } from '@inertiajs/vue3';
-import * as bootstrap from 'bootstrap'
+import * as bootstrap from 'bootstrap';
+import {generalStore} from '@/Stores/state';
 export default {
     name: 'DashboardCreateDate',
     setup(){
+        const store = generalStore();
         const page = usePage()
         const data = page.props.data;
         const formData = ref(
@@ -210,11 +222,16 @@ export default {
             }
         }
         onMounted(() => {
+            store.disableOverflowHidden();
             fetchShowTypes();
             const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
             tooltipTriggerList.map(function (tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl);
             });
+        });
+
+        onBeforeUnmount(() => {
+            store.enableOverflowHidden();
         });
 
         return {
