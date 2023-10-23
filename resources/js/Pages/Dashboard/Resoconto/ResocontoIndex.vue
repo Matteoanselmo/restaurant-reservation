@@ -14,6 +14,7 @@
                     <h6 class="d-flex align-items-center mb-4">&euro; {{ transazione.amount / 100 }}</h6>
                     <div class="d-flex flex-column justify-content-center align-items-center flex-wrap">
                         <h6 class="mb-4 text-capitalize">{{ transazione.billing_details.name }}</h6>
+                        <h6 class="mb-4">{{ transazione.billing_details.email }}</h6>
                         <div class="w-100 d-flex align-items-center justify-content-evenly">
                             <a class="btn-show border border-2" :href="'mailto:' + transazione.billing_details.email"><i class="fa-regular fa-envelope"></i></a>
                             <a class="btn-show border border-2" :href="'tel:' + transazione.billing_details.phone"><i class="fa-solid fa-phone"></i></a>
@@ -26,17 +27,24 @@
 </template>
 
 <script>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, onBeforeUnmount } from 'vue';
 import { usePage } from '@inertiajs/vue3';
+import {generalStore} from '@/Stores/state';
 export default {
     name: 'RescocontoIndex',
     setup(){
+        const store = generalStore();
         const page = usePage();
         const transazioni = computed(() => page.props.transazioni);
 
         onMounted(() => {
+            store.disableOverflowHidden();
             console.log(transazioni.value);
-        })
+        });
+
+        onBeforeUnmount(() => {
+            store.enableOverflowHidden();
+        });
 
         return {
             transazioni
