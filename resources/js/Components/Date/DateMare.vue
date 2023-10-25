@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="position-relative animate__animated" :class="(targetIsVisible) ? 'animate__zoomIn' : ''">
-            <div class="d-flex flex-column align-items-center position-absolute top-0 end-0 m-1">
-                <button class="btn-show" @click="scrollToSection('mare-show')">
+        <div class=" animate__animated" :class="(targetIsVisible) ? 'animate__zoomIn' : ''">
+            <div class="d-flex flex-column align-items-center position-absolute top-0 end-0 m-1 btn-date-mare-back">
+                <button class="btn-show border border-2" @click="scrollToSection('mare-show')">
                     <i class="fa-solid fa-chevron-up  fs-3" ></i>
                 </button>
             </div>
@@ -166,6 +166,17 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+    @media screen and (max-width: 992px) {
+        .btn-date-mare-back{
+            width: 100%;
+            top: 100% !important;
+            left: 50%;
+            transform: translateX(-50%);
+            button{
+                margin-top: 30vh;
+                width: 95%;
+            }
+        }
+    }
 </style>

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->date('data');
             $table->unsignedBigInteger('show_type_id');
             $table->foreign('show_type_id')->references('id')->on('show_types');
-            // $table->foreignId('show_types_id')->constrained('show_types');
             $table->string('titolo');
             $table->text('descrizione');
             $table->float('prezzo', 5, 2);

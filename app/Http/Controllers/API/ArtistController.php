@@ -46,4 +46,10 @@ class ArtistController extends Controller
 
         return response()->json(['artistiFiltrati' => $filteredArtistByType]);
     }
+
+    protected function getArtistTitoloByType($show_type_id){
+        $filteredArtistByType = Artist::where('show_type_id', $show_type_id)->get(['id', 'titolo']);
+
+        return response()->json(['artistiFiltrati' => $filteredArtistByType]);
+    }
 }

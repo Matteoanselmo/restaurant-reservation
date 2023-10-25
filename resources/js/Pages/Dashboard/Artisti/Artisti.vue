@@ -1,10 +1,14 @@
 <template>
     <div class="container-fluid position-relative">
         <div class="row">
-            <div class="col-12  mb-4">
+            <div class="col-12 d-flex align-items-center justify-content-between mb-4">
+                <a class="btn-show border border-2" :href="route('dashboard')">
+                    <i class="fa-solid fa-chevron-left  fs-3" ></i>
+                </a>
                 <h1 class="text-center text-capitalize">
                     artisti
                 </h1>
+                <div></div>
             </div>
             <div class="col-12" v-if="message">
                 {{ message }}
@@ -14,15 +18,15 @@
                     <div class="position-absolute top-0 start-0 h-100 w-100 my-blur ">
                         <img :src="'/' + artista.img_path" alt="" class="h-100 w-100 artist-img rounded-5">
                     </div>
-                    <div class="position-absolute top-50 start-50 translate-middle z-2 d-flex justify-content-evenly align-items-center h-100 w-100">
+                    <div class="position-absolute top-50 start-50 translate-middle z-2 d-flex flex-column justify-content-center align-items-center h-100 w-100">
                         <h2 class="text-start text-capitalize">
                             {{ artista.titolo }}
                         </h2>
-                        <div class="d-flex flex-column justify-content-evenly align-items-center h-100">
-                            <h5 class="text-uppercase border border-2 btn-show">
-                                {{ artista.show_type.nome }}
-                            </h5>
-                            <p>
+                        <h5 class="text-uppercase normal-font">
+                            {{ artista.show_type.nome }}
+                        </h5>
+                        <div class="d-flex flex-column justify-content-evenly align-items-center h-50">
+                            <p class="artist-description normal-font">
                                 {{ artista.descrizione }}
                             </p>
                         </div>

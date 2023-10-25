@@ -29,7 +29,12 @@ class ReservationDate extends Model
     }
 
     public function images()
-{
-    return $this->hasMany(ReservationDateImage::class, 'reservation_date_id');
-}
+    {
+        return $this->hasMany(ReservationDateImage::class, 'reservation_date_id');
+    }
+
+    public function artists()
+    {
+        return $this->belongsToMany(Artist::class, 'artist_reservation_date', 'reservation_date_id', 'artist_id');
+    }
 }
