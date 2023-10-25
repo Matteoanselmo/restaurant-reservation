@@ -11,7 +11,7 @@
             </div>
             <div class="col-4"></div>
         </div>
-        <form @submit.prevent="createReservationDate" enctype="multipart/form-data">
+        <form @submit.prevent="createReservationDate" enctype="multipart/form-data" class="normal-font">
             <div class="row gy-4 align-items-center justify-content-center">
                 <div class="col-12 col-md-5 d-flex flex-column align-items-start justify-content-start mb-4 h-100 animate__animated animate__fadeInBottomLeft">
                     <div class="mb-3 w-100">
@@ -21,11 +21,24 @@
                         </div>
                     </div>
                     <div class="mb-3 w-100">
-                        <label class="mb-1 fs-4" for="showType">Show Type: *</label>
-                        <div class="d-flex align-items-center justify-content-center">
-                            <select id="showType" class="form-control me-3" v-model="formData.show_type_id" required>
-                                <option class="text-uppercase" v-for="(showType, x) in showTypes" :key="x" :value="showType.id">{{ showType.nome }}</option>
+                        <label class="mb-1 fs-4" for="showType">Tipo Show: *</label>
+                        <div class="d-flex align-items-center justify-content-center mb-3">
+                            <select id="showType" class="form-control me-3" v-model="formData.show_type_id" @change="getArtistsByShowType(formData.show_type_id)" required>
+                                <option v-for="(showType, x) in showTypes" :key="x" :value="showType.id"><span class="text-capitalize">{{ showType.nome }}</span></option>
                             </select>
+                        </div>
+                        <div v-if="artists.length > 0" class="normal-font mb-4 px-2">
+                            <div class="form-check animate__animated animate__fadeInUp animate__faster pb-2" v-for="(artist, index) in artists" :key="index">
+                                <input class="form-check-input" type="checkbox" :value="artist.id" :id="'artist_' + artist.id" @change="addArtistsInFormdata(artist)">
+                                <label class="form-check-label text-capitalize" :for="'artist_' + artist.id">
+                                    {{ artist.titolo }}
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="button" class="btn-show border border-2" data-bs-toggle="modal" data-bs-target="#createArtist">
+                                + Artista
+                            </button>
                         </div>
                     </div>
                     <div class="mb-3 w-100">
@@ -39,10 +52,10 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-5 d-flex flex-column align-items-start justify-content-start mb-4 h-100 border-start border-2 animate__animated animate__fadeInBottomRight">
-                    <label class="mb-1 fs-4" for="descrizione">Descrizione:</label>
-                    <textarea id="descrizione" class="form-control" v-model.trim="formData.descrizione" rows="10" required></textarea>
+                    <label class="mb-1 fs-4" for="descrizione">Descrizione: *</label>
+                    <textarea id="descrizione" class="form-control mb-4" v-model.trim="formData.descrizione" rows="10" required></textarea>
                     <label for="prezzo" class="mb-1 fs-4">
-                    Prezzo
+                        Prezzo *
                     </label>
                     <input
                         type="text"
@@ -65,6 +78,19 @@
                 </div>
             </div>
         </form>
+        <!-- Modal -->
+        <div class="modal fade" id="createArtist" tabindex="-1" aria-labelledby="createArtistLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ArtistiCreate/>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -75,12 +101,17 @@ import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { router } from '@inertiajs/vue3';
 import * as bootstrap from 'bootstrap';
 import {generalStore} from '@/Stores/state';
+import ArtistiCreate from '../Artisti/Create.vue'
 export default {
     name: 'DashboardCreateDate',
+    components: {
+        ArtistiCreate
+    },
     setup(){
         const store = generalStore();
         const page = usePage()
         const data = page.props.data;
+        const artists = ref([]);
         const formData = ref(
             {
                 titolo: '',
@@ -89,11 +120,39 @@ export default {
                 show_type_id: '',
                 pranzo_cena: 'pranzo',
                 data: data,
+                artisti: [],
                 img: [],
                 prezzo : 0
 
             }
         );
+
+        function addArtistsInFormdata(artist){
+            if (!formData.value.artisti.includes(artist.id)) {
+                // L'ID dell'artista non è presente nell'array, quindi lo aggiungiamo
+                formData.value.artisti.push(artist.id);
+            }
+            else {
+                const index = formData.value.artisti.indexOf(artist.id);
+                formData.value.artisti.splice(index, 1);
+            }
+
+            console.log(formData.value.artisti)
+        };
+
+        function getArtistsByShowType(showtypeId){
+            artists.value = [];
+            formData.value.artisti = [];
+            axios.post('/api/filtered-artist-title/' + showtypeId)
+            .then((res) => {
+                res.data.artistiFiltrati.forEach(artist => {
+                    artists.value.push(artist);
+                });
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+        };
         const imagePreviews = ref([]);
         // Aggiungo i file all array, creao un anteprima e ridimensiono i file per l'upload (meno byte piu velocità )
         function onFileChange(event) {
@@ -146,33 +205,25 @@ export default {
                 reader.readAsDataURL(originalFile);
                 }
             }
-            // formData.value.img.forEach(element => {
-            //     console.log(element)
-            // });
             console.log(typeof formData.value.img)
         }
 
         const createReservationDate = async () => {
             try {
-                // router.post('/api/reservation-dates', formData);
                 const newformdata = new FormData();
                 newformdata.append('data', formData.value.data);
                 newformdata.append('descrizione', formData.value.descrizione);
-                // for (const file of formData.value.img) {
-                //     newformdata.append('img', file);
-                // }
-                // Iterazione come se fosse un oggetto
                 for (const key in formData.value.img) {
-                if (formData.value.img.hasOwnProperty(key)) {
-                    // key è l'indice dell'array
-                    const image = formData.value.img[key];
-                    newformdata.append(`img[${key}]`, image);
+                    if (formData.value.img.hasOwnProperty(key)) {
+                        const image = formData.value.img[key];
+                        newformdata.append(`img[${key}]`, image);
+                    }
                 }
-}
                 newformdata.append('pranzo_cena', formData.value.pranzo_cena);
                 newformdata.append('prezzo', formData.value.prezzo);
                 newformdata.append('show_type_id', formData.value.show_type_id);
                 newformdata.append('titolo', formData.value.titolo);
+                newformdata.append('artisti', formData.value.artisti);
 
                 router.post('/api/reservation-dates', newformdata, {
                     headers: {
@@ -242,7 +293,10 @@ export default {
             onPriceBlur,
             formatCurrency,
             onFileChange,
-            imagePreviews
+            imagePreviews,
+            artists,
+            getArtistsByShowType,
+            addArtistsInFormdata
         }
     },
 };

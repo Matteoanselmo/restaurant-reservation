@@ -34,6 +34,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/get-all-reservation-dates/{month}/', [ReservationDateController::class, 'allMonthDate']);
     Route::post('/send-newsletter', [NewsLetterController::class, 'sendNewsletter']);
     Route::post('/create-artist', [ArtistController::class, 'store']);
+    Route::post('/filtered-artist-title/{show_type_id}', [ArtistController::class, 'getArtistTitoloByType']);
 });
 
 // Route::post('payment/initiate', [PaymentController::class, 'index'])->name('payment.initiate');

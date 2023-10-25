@@ -59,6 +59,13 @@ class ReservationDateController extends Controller
             'pranzo_cena' => $request['pranzo_cena'],
         ]);
 
+        if ($request->has('artisti')) {
+            $artistIds = explode(',', $request['artisti']);
+            $reservationDate->artists()->attach($artistIds);
+        }
+
+
+
         if ($request->hasFile('img')) {
             foreach ($request->file('img') as $image) {
                 $imageName = $image->getClientOriginalName();

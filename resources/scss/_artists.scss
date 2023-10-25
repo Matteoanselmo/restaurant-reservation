@@ -6,8 +6,29 @@
         -o-object-fit: cover;
         object-fit: cover;
     }
+    .artist-description{
+        // max-height: 50%;
+        overflow: auto;
+        padding: 0 20px;
+    }
+    .artist-description::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 .guest-artist-card {
-    height: 130px;
+    height: 160px;
+    .artist-img{
+        object-position: center;
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+    .artist-description{
+        // max-height: 50%;
+        overflow: auto;
+        padding: 0 20px;
+    }
+    .artist-description::-webkit-scrollbar {
+        display: none;
+    }
 }

@@ -23,4 +23,9 @@ class Artist extends Model
         return $this->belongsTo(ShowType::class, 'show_type_id');
     }
 
+    public function reservationDates()
+    {
+        return $this->belongsToMany(ReservationDate::class, 'artist_reservation_date', 'artist_id', 'reservation_date_id');
+    }
+
 }

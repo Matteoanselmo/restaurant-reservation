@@ -14,6 +14,7 @@
                         <label for="description" class="fs-3 text-capitalize">descrizione</label>
                         <textarea name="description" id="description" cols="30" rows="10" class="form-control" v-model="description"></textarea>
                     </div>
+                    <label class="mb-1 fs-4" for="show_type">Tipo Show: *</label>
                     <select name="show_type" class="form-control mb-3" v-model="showType">
                         <option value="1">Mare</option>
                         <option value="2">Special</option>
@@ -33,11 +34,13 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { router } from '@inertiajs/vue3';
+import {generalStore} from '@/Stores/state';
 export default {
     name: 'ArtistiCreate',
     setup(){
+        const store = generalStore();
         const title = ref('');
         const description = ref('');
         const showType = ref(null);
@@ -57,8 +60,16 @@ export default {
             try {
                 router.post('/api/create-artist', formData);
             } catch (error) {
+
             }
         }
+        onMounted(()=> {
+            store.disableOverflowHidden();
+        })
+
+        onBeforeUnmount(() => {
+            store.enableOverflowHidden();
+        });
 
         return{
             title,
