@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class=" animate__animated" :class="(targetIsVisible) ? 'animate__zoomIn' : ''">
+        <div class="position-relative animate__animated" :class="(targetIsVisible) ? 'animate__zoomIn' : ''">
             <div class="d-flex flex-column align-items-center position-absolute top-0 end-0 m-1 btn-date-mare-back">
                 <button class="btn-show border border-2" @click="scrollToSection('mare-show')">
                     <i class="fa-solid fa-chevron-up  fs-3" ></i>
