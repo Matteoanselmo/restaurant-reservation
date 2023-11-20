@@ -1,11 +1,14 @@
 <template>
     <div class="full-screen d-flex flex-column align-items-center justify-content-center my-4 animated animate__fadeInLeft">
+        <a class="btn-show border border-2 position-absolute top-0 start-0 ms-3" :href="route('dashboard')">
+            <i class="fa-solid fa-chevron-left  fs-3" ></i>
+        </a>
         <div class="d-flex align-items-center justify-content-evenly w-100 mb-5">
-            <button class="btn-show" @click="prevMonth">
+            <button class="btn-show " @click="prevMonth">
                 <i class="fas fa-chevron-left fs-2"></i>
             </button>
             <h1 class="text-center mb-0 fw-bold text-uppercase">{{ currentMonth }}</h1>
-            <button class="btn-show" @click="nextMonth">
+            <button class="btn-show " @click="nextMonth">
                 <i class="fas fa-chevron-right fs-2 "></i>
             </button>
         </div>

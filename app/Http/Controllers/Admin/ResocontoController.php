@@ -16,6 +16,7 @@ class ResocontoController extends Controller
         StripeGateway::setApiKey(env('STRIPE_SECRET'));
 
         $successTransactions = Charge::all();
+
         // $stripe->paymentIntents->all();
 
         return Inertia::render('Dashboard/Resoconto/ResocontoIndex', [

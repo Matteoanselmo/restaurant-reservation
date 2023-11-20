@@ -111,6 +111,7 @@ export default {
         const store = generalStore();
         const page = usePage()
         const data = page.props.data;
+        // const artists = page.props.artists;
         const artists = ref([]);
         const formData = ref(
             {

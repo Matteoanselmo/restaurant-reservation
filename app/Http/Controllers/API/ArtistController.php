@@ -33,9 +33,12 @@ class ArtistController extends Controller
             $artist->img_path = 'images/' . $imageName; // Percorso pubblico all'immagine
             $artist->img_ext = $image->getClientOriginalExtension();
             $artist->save();
-            $artists = Artist::all();
+            // $artists = Artist::all();
 
-            return redirect()->route('dashboard.artists.index', compact('artists'))->with('message', 'Artista-inserito correttamente');
+            return response()->json([
+                'message' => 'Artista inserito correttamente',
+                'class' => 'alert-success'
+        ]);
         } else {
             return response()->json('Qualcosa è andato storto');
         }

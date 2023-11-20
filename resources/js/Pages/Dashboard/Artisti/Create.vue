@@ -5,6 +5,10 @@
                 <h1>Aggiungi un nuovo Artista</h1>
             </div>
             <div class="col-12">
+                <Message
+                    v-if="message.message"
+                    :message="message"
+                />
                 <form @submit.prevent="createArtist">
                     <div class="mb-3">
                         <label for="title" class="fs-3 text-capitalize">titolo</label>
@@ -37,13 +41,21 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { router } from '@inertiajs/vue3';
 import {generalStore} from '@/Stores/state';
+import Message from '@/Components/Dashboard-Cmponents/Message.vue';
 export default {
     name: 'ArtistiCreate',
+    components: {
+        Message
+    },
     setup(){
         const store = generalStore();
         const title = ref('');
         const description = ref('');
         const showType = ref(null);
+        const message = ref({
+            message : '',
+            class: ''
+        });
         const img = ref('');
 
         function onFileChange(event){
@@ -58,9 +70,16 @@ export default {
             formData.append('image', img.value);
 
             try {
-                router.post('/api/create-artist', formData);
+                axios.post('/api/create-artist', formData)
+                .then((res) => {
+                    console.log(res.data);
+                    message.value.message = res.data.message;
+                    message.value.class = res.data.class;
+                }).catch((err) => {
+                    console.error(err)
+                })
             } catch (error) {
-
+                console.error(error)
             }
         }
         onMounted(()=> {
@@ -77,7 +96,8 @@ export default {
             showType,
             img,
             createArtist,
-            onFileChange
+            onFileChange,
+            message
         }
     }
 }

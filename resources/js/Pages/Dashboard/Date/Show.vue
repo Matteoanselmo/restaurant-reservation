@@ -1,7 +1,10 @@
 <template>
     <div class="d-flex flex-column pt-4 justify-content-start m-0 container-fluid">
+        <a class="btn-show border border-2 position-absolute top-0 start-0 m-3 z-3 animate__animated animate__zoomIn" :href="route('dashboard.date.index')">
+            <i class="fa-solid fa-chevron-left  fs-3" ></i>
+        </a>
         <div class="mb-5">
-            <h1 class="text-center mb-4 fw-bold animated animate__zoomIn">{{new Date(newDate[0].data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}</h1>
+            <h1 class="text-center mb-4 fw-bold animate__animated animate__zoomIn">{{new Date(newDate[0].data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}</h1>
             <form
             class="container-fluid border boorder-4 rounded-5 py-3 shadow mb-2 animated animate__zoomIn px-4"
             v-for="(data, i) in newDate" :key="i">
