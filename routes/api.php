@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/reservation-dates', [ReservationDateController::class, 'store']);
     Route::post('/update-reservation-dates/', [ReservationDateController::class, 'updatereservationDate']);
+    Route::delete('/delete-img-reservation/{id}', [ReservationDateController::class, 'deleteReservationDateImg']);
     Route::get('/show-types', [ShowTypeController::class, 'index']);
     Route::delete('/delete-data/{id}', [ReservationDateController::class, 'destroy']);
     Route::post('/get-all-reservation-dates/{month}/', [ReservationDateController::class, 'allMonthDate']);

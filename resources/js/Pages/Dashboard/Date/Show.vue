@@ -3,10 +3,14 @@
         <a class="btn-show border border-2 position-absolute top-0 start-0 m-3 z-3 animate__animated animate__zoomIn" :href="route('dashboard.date.index')">
             <i class="fa-solid fa-chevron-left  fs-3" ></i>
         </a>
+        <Message
+            v-if="message.message"
+            :message="message"
+        />
         <div class="mb-5">
             <h1 class="text-center mb-4 fw-bold text-capitalize animate__animated animate__zoomIn">{{new Date(newDate[0].data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}</h1>
             <form
-            @submit.prevent="updateReservationDate(data)"
+            @submit="updateReservationDate(data)"
             enctype="multipart/form-data"
             class="container-fluid border boorder-4 rounded-5 py-3 shadow mb-5 animate__animated animate__zoomIn px-4"
             v-for="(data, i) in newDate" :key="i">
@@ -54,9 +58,11 @@
                         <label class="mb-1 fs-4" for="descrizione">Descrizione:  </label>
                         <textarea id="descrizione" class="form-control mb-2" v-model.trim="data.descrizione"></textarea>
                         <div  class="d-flex flex-wrap mb-3">
-                            <div v-for="(image, index) in data.images" :key="index" class="w-50 position-relative date-image-container">
+                            <div v-for="(image, index) in data.images" :key="index" class="w-50 position-relative date-image-container p-2">
                                 <img :src="image.path" alt="Anteprima immagine" class="w-100 h-100 date-image-preview" >
-                                <button class="btn btn-danger delete-image fs-2"><i class="fa-solid fa-trash"></i></button>
+                                <form @submit="deleteImage(image.id)" enctype="multipart/form-data">
+                                    <button class="btn btn-danger delete-image fs-2"><i class="fa-solid fa-trash" type="submit"></i></button>
+                                </form>
                             </div>
                         </div>
                         <!-- Anteprime delle immagini -->
@@ -158,11 +164,13 @@ export default {
         const page = usePage()
         const date = computed(() => page.props.data)
         const showTypes = computed(() => page.props.showTypes)
-        const newDate = ref(date.value.map(item => ({ ...item, imagePreviews: [] })));
+        const newDate = ref(date.value.map(item => ({ ...item, imagesAdded: [], ...item, imagePreviews: []})));
+        const imagesAdded = ref([]);
         const artists = ref([]);
         const alert = ref([]);
         const store = generalStore();
         const imagePreviews = ref([]);
+        const message = ref('');
 
         const deleteData = (id) => {
             try {
@@ -181,6 +189,7 @@ export default {
 
                     const reader = new FileReader();
                     reader.onload = (e) => {
+                        data.imagesAdded.push(originalFile);
                         const dataURL = e.target.result;
 
                         const img = new Image();
@@ -215,14 +224,14 @@ export default {
                                 });
 
                                 // Ora puoi utilizzare sia data che l'evento
-                                data.imagePreviews.push(URL.createObjectURL(modifiedFile));
+                                data.imagePreviews.push(URL.createObjectURL(originalFile));
                             }, originalFile.type, 0.7);
                         };
                     };
                     reader.readAsDataURL(originalFile);
                 }
             }
-            console.log(data);
+            console.log(data.imagesAdded);
         }
 
 
@@ -290,31 +299,52 @@ export default {
         }
 
         async function updateReservationDate(data){
+            console.warn(data.imagesAdded);
             const formData = new FormData();
             formData.append('id', data.id);
             formData.append('titolo', data.titolo);
             formData.append('descrizione', data.descrizione);
             formData.append('pranzo_cena', data.pranzo_cena);
-            for (const key in  data.imagePreviews) {
-                if ( data.imagePreviews.hasOwnProperty(key)) {
-                    const image =  data.imagePreviews[key];
+            for (const key in data.imagesAdded) {
+                if (data.imagesAdded.hasOwnProperty(key)) {
+                    const image = data.imagesAdded[key];
                     formData.append(`img[${key}]`, image);
                 }
             }
-            formData.append('artisti', data.artists);
+            formData.append('artisti', JSON.stringify(data.artists));
             formData.append('data', data.data);
             formData.append('prezzo', data.prezzo);
+            formData.append('show_type_id', data.show_type_id);
             try {
-                axios.post('/api/update-reservation-dates/', formData)
-                .then((res) =>{
-                    console.log(res.data);
-                }).catch((err) => {
-                    console.error(err);
-                })
+                const confirmEdit = window.confirm('sicuro di voler apportare le modifiche ?');
+                if(confirmEdit){
+                    axios.post('/api/update-reservation-dates/', formData)
+                    .then((res) =>{
+                        console.log(res.data);
+                    }).catch((err) => {
+                        console.error(err);
+                    })
+                }
             } catch (error) {
                 console.error(error);
             }
 
+        }
+
+        async function deleteImage(id){
+            try {
+                const confirmDelete = window.confirm('Eliminando le foto la pagina verra ricaricata e perderai le modifiche')
+                if(confirmDelete){
+                    axios.delete('/api/delete-img-reservation/' + id)
+                    .then((res) => {
+                        message.value = res.data;
+                    }).catch((err) => {
+                        console.error(err); 
+                    })
+                }
+            } catch (error) {
+                console.error(error); 
+            }
         }
 
         onMounted(() => {
@@ -336,8 +366,11 @@ export default {
             imagePreviews,
             artists,
             removeImageFromPreview,
+            imagesAdded,
             alert,
-            updateReservationDate
+            updateReservationDate,
+            deleteImage,
+            message
         }
     }
 }

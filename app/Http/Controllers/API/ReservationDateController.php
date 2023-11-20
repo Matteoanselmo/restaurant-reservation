@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Artist;
 use Illuminate\Http\Request;
 use App\Models\ReservationDate;
 use App\Models\ReservationDateImage;
+use App\Models\ShowType;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
@@ -24,6 +26,18 @@ class ReservationDateController extends Controller
         }
 
         return response()->json($reservationDates);
+    }
+
+    public function show($data)
+    {
+       // Imposta la lingua italiana per Carbon
+
+        $matchedData = ReservationDate::where('data', $data)->with(['images','artists'])->get();
+        $showTypes = ShowType::all();
+        return response()->json([
+            'data' => $matchedData,
+            'showTypes' => $showTypes
+        ]);
     }
 
     protected function allMonthDate($month)
@@ -91,24 +105,20 @@ class ReservationDateController extends Controller
 
     protected function updatereservationDate(Request $request){
         $request->validate([
-            'id' => 'number',
             'data' => 'date',
             'titolo' => 'string',
             'descrizione' => 'string',
             'pranzo_cena' => 'in:pranzo,cena',
-            'img.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',  // Valida le immagini
+            // 'img.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',  // Valida le immagini
         ]);
 
         $reservationDate = ReservationDate::find($request->id);
 
         if (!$reservationDate) {
-            return redirect()->back()->with('error', 'Record non trovato');
+            return response()->json('Record non trovato');
         }
 
         $data = $request->all();
-
-        // Decodifica l'array degli artisti se presente
-        $artisti = isset($data['artisti']) ? json_decode($data['artisti']) : [];
 
         $reservationDate->update([
             'data' => $data['data'],
@@ -119,18 +129,26 @@ class ReservationDateController extends Controller
             'pranzo_cena' => $data['pranzo_cena'],
         ]);
 
-        // Verifica se ci sono nuovi artisti
-        if (!empty($artisti)) {
-            // Verifica che gli artisti siano un array
-            if (!is_array($artisti)) {
-                return redirect()->back()->with('error', 'Formato degli artisti non valido');
-            }
 
-            // Sync con gli artisti
-            $reservationDate->artists()->sync($artisti);
-        } else {
-            // Se non ci sono nuovi artisti, rimuovi tutte le relazioni esistenti
-            $reservationDate->artists()->detach();
+        $artistiInput = json_decode($data['artisti'], true);
+
+        // Ottieni gli id degli artisti esistenti per questa reservation date
+        $artistiEsistenti = $reservationDate->artists()->pluck('artists.id')->toArray();
+
+        // // Trova gli id da rimuovere (artisti non più selezionati)
+        $idDaRimuovere = array_diff($artistiEsistenti, array_column($artistiInput, 'id'));
+
+        // // Trova gli id da aggiungere (nuovi artisti selezionati)
+        $idDaAggiungere = array_diff(array_column($artistiInput, 'id'), $artistiEsistenti);
+
+        // // Rimuovi gli artisti non più selezionati
+        if (!empty($idDaRimuovere)) {
+            $reservationDate->artists()->detach($idDaRimuovere);
+        }
+
+        // // Aggiungi gli artisti selezionati
+        if (!empty($idDaAggiungere)) {
+            $reservationDate->artists()->attach($idDaAggiungere);
         }
 
         // Gestisci le immagini
@@ -153,7 +171,21 @@ class ReservationDateController extends Controller
             }
         }
 
-        return response()->json($request);
+        return response()->json($artistiInput);
+    }
+
+    protected function deleteReservationDateImg($id){
+        $image = ReservationDateImage::findOrFail($id);
+        if (file_exists($image->path)) {
+            unlink($image->path); // Elimina il file fisico
+        }
+
+        $image->delete();
+
+        return response()->json([
+            'message' => 'foto eliminata correttamente',
+            'class' => 'alert-succcess'
+        ]);
     }
 
     public function destroy($id) {
