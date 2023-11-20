@@ -89,7 +89,8 @@
                         <button type="button" class="btn-show bg-danger border-danger text-white normal-font py-3 text-uppercase rounded-5 px-4 fs-5" data-bs-toggle="modal" :data-bs-target="'#exampleModal_' + data.id">
                             Elimina
                         </button>
-                        <button class="btn-show border-warning  normal-font border-2 text-center bg-warning" type="submit">Modifica</button>
+                        <!-- EDIT -->
+                        <button class="btn-show border-warning  normal-font border-2 text-center bg-warning" type="submit" :disabled="data.artists.length === 0">Modifica</button>
                     </div>
                 </div>
             </form>
@@ -221,7 +222,7 @@ export default {
                     reader.readAsDataURL(originalFile);
                 }
             }
-            console.log(data.imagePreviews);
+            console.log(data);
         }
 
 
@@ -289,12 +290,31 @@ export default {
         }
 
         async function updateReservationDate(data){
-            axios.post('/api/update-reservation-dates/', data)
-            .then((res) =>{
-                console.log(res.data)
-            }).catch((err) => {
-                console.error(err)
-            })
+            const formData = new FormData();
+            formData.append('id', data.id);
+            formData.append('titolo', data.titolo);
+            formData.append('descrizione', data.descrizione);
+            formData.append('pranzo_cena', data.pranzo_cena);
+            for (const key in  data.imagePreviews) {
+                if ( data.imagePreviews.hasOwnProperty(key)) {
+                    const image =  data.imagePreviews[key];
+                    formData.append(`img[${key}]`, image);
+                }
+            }
+            formData.append('artisti', data.artists);
+            formData.append('data', data.data);
+            formData.append('prezzo', data.prezzo);
+            try {
+                axios.post('/api/update-reservation-dates/', formData)
+                .then((res) =>{
+                    console.log(res.data);
+                }).catch((err) => {
+                    console.error(err);
+                })
+            } catch (error) {
+                console.error(error);
+            }
+
         }
 
         onMounted(() => {
