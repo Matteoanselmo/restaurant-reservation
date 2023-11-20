@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('artist_id')->references('id')->on('artists');
-            $table->foreign('reservation_date_id')->references('id')->on('reservation_dates');
+            $table->foreign('reservation_date_id')->references('id')->on('reservation_dates')->onDelete('cascade');
         });
     }
 

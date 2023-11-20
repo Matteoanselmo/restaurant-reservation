@@ -72,7 +72,7 @@ class DateController extends Controller
        // Imposta la lingua italiana per Carbon
         App::setLocale('it');
 
-        $matchedData = ReservationDate::where('data', $data)->get();
+        $matchedData = ReservationDate::where('data', $data)->with(['images','artists'])->get();
         $showTypes = ShowType::all();
         return Inertia::render('Dashboard/Date/Show', [
             'data' => $matchedData,

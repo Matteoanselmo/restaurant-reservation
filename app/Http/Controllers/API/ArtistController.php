@@ -22,7 +22,10 @@ class ArtistController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension(); // Crea un nome univoco per l'immagine
-            $imagePath = $image->move(public_path('images'), $imageName); // Salva l'immagine nella directory "public/images"
+            $imagePath = '/uploads/' . $imageName; // Percorso relativo
+
+                // Salva l'immagine nella directory "public/uploads"
+                $image->move(public_path('uploads'), $imageName);
 
             // Crea un nuovo artista con i dati del modulo e i dati relativi all'immagine
             $artist = new Artist;
@@ -30,7 +33,7 @@ class ArtistController extends Controller
             $artist->descrizione = $request->input('description');
             $artist->show_type_id = $request->input('show_type_id');
             $artist->img_name = $imageName;
-            $artist->img_path = 'images/' . $imageName; // Percorso pubblico all'immagine
+            $artist->img_path = $imagePath; // Percorso pubblico all'immagine
             $artist->img_ext = $image->getClientOriginalExtension();
             $artist->save();
             // $artists = Artist::all();

@@ -68,8 +68,9 @@ class ReservationDateController extends Controller
 
         if ($request->hasFile('img')) {
             foreach ($request->file('img') as $image) {
-                $imageName = $image->getClientOriginalName();
                 $imageExt = $image->getClientOriginalExtension();
+                $timestamp = time();
+                $imageName = $timestamp . '.' . $imageExt;
                 $imagePath = '/uploads/' . $imageName; // Percorso relativo
 
                 // Salva l'immagine nella directory "public/uploads"
@@ -88,6 +89,11 @@ class ReservationDateController extends Controller
         return redirect()->route('dashboard.date.index');
     }
 
+    protected function updatereservationDate(Request $request){
+
+        return response()->json($request);
+    }
+
     public function destroy($id) {
         $reservationDate = ReservationDate::findOrFail($id);
         $data = $reservationDate->data;
@@ -95,9 +101,9 @@ class ReservationDateController extends Controller
         // Ottieni le immagini associate alla data di prenotazione
         $images = ReservationDateImage::where('reservation_date_id', $reservationDate->id)->get();
 
-        // Elimina le immagini dalla cartella public/images/
+        // Elimina le immagini dalla cartella public/uploads/
         foreach ($images as $image) {
-            $imagePath = public_path('images/' . $image->path);
+            $imagePath = $image->path;
             if (file_exists($imagePath)) {
                 unlink($imagePath); // Elimina il file fisico
             }

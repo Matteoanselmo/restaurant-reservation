@@ -73,8 +73,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 d-flex align-items-center justify-content-center animate__animated animate__fadeInUp">
-                    <button class="btn-show border border-2 text-center" type="submit">Crea Spettacolo</button>
+                <div class="col-12 d-flex flex-column align-items-center justify-content-center animate__animated animate__fadeInUp">
+                    <button class="btn-show border border-2 text-center" type="submit" :disabled="formData.artisti.length === 0">Crea Spettacolo</button>
+                    <div v-if="formData.artisti.length === 0">
+                        <p>* Devi scegliere almeno un artista</p>
+                    </div>
                 </div>
             </div>
         </form>
@@ -171,8 +174,8 @@ export default {
                     img.src = dataURL;
 
                     img.onload = () => {
-                    const maxWidth = 550; // Larghezza massima desiderata
-                    const maxHeight = 350; // Altezza massima desiderata
+                        const maxWidth = 550; // Larghezza massima desiderata
+                        const maxHeight = 350; // Altezza massima desiderata
 
                     let newWidth, newHeight;
                     if (img.width > img.height) {
@@ -200,7 +203,7 @@ export default {
 
                         formData.value.img.push(modifiedFile);
                         imagePreviews.value.push(URL.createObjectURL(modifiedFile));
-                    }, originalFile.type);
+                    }, originalFile.type, 0.7);
                     };
                 };
                 reader.readAsDataURL(originalFile);
