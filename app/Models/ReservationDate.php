@@ -17,6 +17,7 @@ class ReservationDate extends Model
         'prezzo',
         'pranzo_cena',
     ];
+    protected $onDelete = 'cascade';
 
     public function bookings()
     {

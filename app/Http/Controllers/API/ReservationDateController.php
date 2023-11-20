@@ -70,7 +70,10 @@ class ReservationDateController extends Controller
             foreach ($request->file('img') as $image) {
                 $imageName = $image->getClientOriginalName();
                 $imageExt = $image->getClientOriginalExtension();
-                $imagePath = $image->move(public_path('images'), $imageName); // Salva l'immagine nella directory "public/images"
+                $imagePath = '/uploads/' . $imageName; // Percorso relativo
+
+                // Salva l'immagine nella directory "public/uploads"
+                $image->move(public_path('uploads'), $imageName);
 
                 ReservationDateImage::create([
                     'name' => $imageName,
@@ -80,6 +83,7 @@ class ReservationDateController extends Controller
                 ]);
             }
         }
+
 
         return redirect()->route('dashboard.date.index');
     }

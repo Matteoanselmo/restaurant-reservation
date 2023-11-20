@@ -22,8 +22,8 @@ class DateController extends Controller
         // Imposta la lingua italiana per Carbon
         App::setLocale('it');
 
-        $matchedData = ReservationDate::with('showType')
-        ->with('bookings')
+        $matchedData = ReservationDate::
+        with(['bookings', 'showType', 'images'])
         ->where('data', $data)
         ->get();
 

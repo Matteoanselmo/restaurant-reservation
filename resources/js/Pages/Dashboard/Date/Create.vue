@@ -171,8 +171,8 @@ export default {
                     img.src = dataURL;
 
                     img.onload = () => {
-                    const maxWidth = 200; // Larghezza massima desiderata
-                    const maxHeight = 200; // Altezza massima desiderata
+                    const maxWidth = 550; // Larghezza massima desiderata
+                    const maxHeight = 350; // Altezza massima desiderata
 
                     let newWidth, newHeight;
                     if (img.width > img.height) {
