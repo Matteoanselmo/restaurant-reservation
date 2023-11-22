@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid d-flex flex-column px-3 justify-content-start mt-3 position-relative" id="prenotation-table">
-        <div class="d-flex flex-column align-items-center position-absolute top-0 start-0 m-1">
-            <a class="btn-show" href="/">
+        <div class="d-flex flex-column align-items-center position-absolute top-0 start-0 m-1 z-3">
+            <a class="btn-show border border-2" href="/">
                 <i class="fa-solid fa-chevron-left  fs-3" ></i>
             </a>
         </div>

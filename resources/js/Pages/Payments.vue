@@ -3,6 +3,11 @@
         <div class="payment-form mb-5 ">
             <h2 class="text-center mt-5">Dati Pagante</h2>
             <!-- Display a payment form -->
+            <h6 class="text-center mb-5">
+                <i class="fs-3 fa-regular fa-bell"></i>
+                Si ricorda che in caso di disdetta con mancato preavviso di giorni non inferiori a 6, sarà restituito un importo pari al 60% della prenotazione.
+                <i class="fs-3 fa-regular fa-bell"></i>
+            </h6>
             <form id="payment-form" class="d-flex flex-column justify-content-center align-items-center mb-4" >
                 <div class="p-4">
                     <div class="input-group mb-3 d-flex flex-column ">
@@ -103,7 +108,7 @@ export default {
                         return_url: `${window.location.origin}/grazie`,
                     },
                 });
-                console.log(error);
+                // console.log(error);
                 if (error === undefined) {
                     localStorage.clear;
                     router.post("/api/payment/complete", {
@@ -112,6 +117,14 @@ export default {
                         booked: store.prenotationsWithRequiredFields,
                         data:store.data
                     })
+                    // axios.post("/api/payment/complete", {
+                    //     token: token.value,
+                    //     customer: customer.value,
+                    //     booked: store.prenotationsWithRequiredFields,
+                    //     data:store.data
+                    // }).then((res) => {
+                    //     console.log(res.data);
+                    // })
                 } else {
                     // router.post("/api/payment/failure", {
                     //     token: token.value,

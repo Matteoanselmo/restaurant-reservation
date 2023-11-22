@@ -51,12 +51,14 @@ class PrenotationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($data)
+    public function show($dataId)
     {
-        $prenotationData = ReservationDate::where('data', $data)->get();
+        $prenotationData = ReservationDate::findOrFail($dataId);
         return Inertia::render('Prenotation', [
             'data' => $prenotationData
         ]);
+
+        // return response()->json($data);
     }
 
     /**

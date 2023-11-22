@@ -51,7 +51,7 @@ class StriperController extends Controller
         foreach ($data['booked'] as $customerData) {
             // Assuming you have a Booking model
             Booking::create([
-                'reservation_date_id' => 1,
+                'reservation_date_id' => $data['data']['dataId'],
                 'posto' => $customerData['n_posto']
             ]);
 

@@ -10,7 +10,8 @@ export const generalStore = defineStore('state', {
         //gestione della data
         data: {
             data: '',
-            pranzoOCena: ''
+            pranzoOCena: '',
+            dataId: ''
         },
         //gestione delle prenotazioni
         prenotations: [
@@ -126,9 +127,10 @@ export const generalStore = defineStore('state', {
         setVisited(){
             this.isVisited = false;
         },
-        setData(selectedData, pranzoCena){
+        setData(selectedData, pranzoCena, dataId){
             this.data.data = selectedData;
             this.data.pranzoOCena = pranzoCena;
+            this.data.dataId = dataId;
         },
         addInPrenotation(userData) {
             const existingIndex = this.prenotations.findIndex(user => user.n_posto === userData.n_posto);
