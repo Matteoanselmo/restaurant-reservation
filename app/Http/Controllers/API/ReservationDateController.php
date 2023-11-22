@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Artist;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Models\ReservationDate;
 use App\Models\ReservationDateImage;
@@ -218,6 +219,16 @@ class ReservationDateController extends Controller
         }
     }
 
+    protected function deleteBooked($id){
+        $booked = Booking::where('id', $id)->first();
+        $booked->delete();
+        //$reservationDate = ReservationDate::where('id', $request->reservationId)->select('id','titolo','data', 'pranzo_cena');
+        //return response()->json($reservationDate);
+        //return Inertia::render('Dashboard/Prenotazioni/PrenotazioneShow', ['prenotazione' => $reservationDate]);
+        // $booked->delete();
+
+        return true;
+    }
 }
 
 

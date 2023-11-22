@@ -56,6 +56,7 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
     //Prenotazioni
     Route::get('/prenotazioni', [AdminPrenotationController::class, 'index'])->name('dashboard.prenotazioni.index');
     Route::get('/prenotazioni-scadute', [AdminPrenotationController::class, 'oldPrenotations'])->name('dashboard.prenotazioni.scadute');
+    Route::get('/edit-booked', [AdminPrenotationController::class, 'show'])->name('dashboard.prenotazioni.prenotati');
 
     //Resoconto
     Route::get('/resoconto', [ResocontoController::class , 'index'])->name('dashboard.resoconto.index');

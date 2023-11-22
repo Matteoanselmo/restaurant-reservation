@@ -10,6 +10,7 @@ class Booking extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'reservation_date_id',
         'posto',
     ];

@@ -46,4 +46,10 @@ class PrenotationController extends Controller
         ]);
     }
 
+    protected function show(Request $request){
+        $reservationDate = ReservationDate::where('id', $request['id'])->select('id','titolo','data', 'pranzo_cena')->with('bookings')->first();
+        //return response()->json($reservationDate);
+        return Inertia::render('Dashboard/Prenotazioni/PrenotazioneShow', ['prenotazione' => $reservationDate]);
+    }
+
 }

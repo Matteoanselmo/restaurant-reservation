@@ -37,6 +37,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/send-newsletter', [NewsLetterController::class, 'sendNewsletter']);
     Route::post('/create-artist', [ArtistController::class, 'store']);
     Route::post('/filtered-artist-title/{show_type_id}', [ArtistController::class, 'getArtistTitoloByType']);
+    Route::delete('/delete-booked/{id}', [ReservationDateController::class, 'deleteBooked']);
 });
 
 // Route::post('payment/initiate', [PaymentController::class, 'index'])->name('payment.initiate');

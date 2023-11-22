@@ -15,13 +15,15 @@
                     <h3 class="text-capitalize">
                         {{new Date(prenotazione.data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}
                     </h3>
-                    <h6>{{ prenotazione.pranzo_cena }}</h6>
+                    <h6>{{ prenotazione.titolo }} - <span class="text-secondary">{{ prenotazione.pranzo_cena }}</span></h6>
                 </div>
                 <div class="d-flex justify-content-evenly flex-wrap">
                     <h6 v-for="(posto, x) in prenotazione.bookings" :key="x" class="text-secondary">
                         {{ posto.posto }}
                     </h6>
                 </div>
+                <!-- {{ prenotazione.bookings }} -->
+                <a :href="route('dashboard.prenotazioni.prenotati', {id:prenotazione.id})"  class="btn-show border border-2">Gestisci Spettatori</a>
             </div>
         </div>
     </div>
@@ -29,9 +31,12 @@
 
 <script>
 import { computed, onMounted, ref } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, Link } from '@inertiajs/vue3';
 export default {
     name:'prenotazioniIndex',
+    components: {
+        Link
+    },
     setup(){
         const page = usePage();
         const prenotazioni = computed(() => page.props.prenotazioni);
