@@ -57,9 +57,9 @@
 
 <script>
 import axios from 'axios';
-import { ref, onMounted, computed, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import {generalStore} from '@/Stores/state';
-import { loadStripe } from '@stripe/stripe-js';
+// import { loadStripe } from '@stripe/stripe-js';
 import { router } from '@inertiajs/vue3';
 export default {
     setup() {

@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 export default {
     name: 'ArtistiIndex',

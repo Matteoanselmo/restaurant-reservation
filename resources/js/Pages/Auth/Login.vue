@@ -26,14 +26,14 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestLayout class="full-screen d-flex flex-column justify-content-center align-items-center">
+    <GuestLayout class="full-screen d-flex flex-column justify-content-center align-items-center" style="background-color: #EDEDED;">
         <Head title="Log in" />
 
         <div v-if="status" class="mb-4 fs-4 text-success">
             {{ status }}
         </div>
 
-        <form @submit.prevent="submit" class="fs-3">
+        <form @submit.prevent="submit" class="fs-3 shadow-lg p-5 rounded-5" style="backdrop-filter: blur(50px) brightness(120%);">
             <div>
                 <InputLabel for="email" value="Email" />
 
@@ -67,8 +67,8 @@ const submit = () => {
 
             <div class="block mt-4">
                 <label class="d-flex align-items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" class=""/>
-                    <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                    <Checkbox name="remember" v-model:checked="form.remember" class="me-2"/>
+                    <span class="ml-2 text-sm text-gray-600">Ricorda</span>
                 </label>
             </div>
 
@@ -81,7 +81,7 @@ const submit = () => {
                     Password dimenticata ?
                 </Link>
 
-                <PrimaryButton class="btn-show border border-2" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <PrimaryButton class="btn-show border border-2 rounded-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Log in
                 </PrimaryButton>
             </div>
