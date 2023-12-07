@@ -6,7 +6,7 @@ export const generalStore = defineStore('state', {
         // gestione overflow
         overflowHidden: false,
         // gestione benvenuto homepage
-        isVisited: true,
+        isVisited: false,
         //gestione della data
         data: {
             data: '',
@@ -125,7 +125,7 @@ export const generalStore = defineStore('state', {
             }
         },
         setVisited(){
-            this.isVisited = false;
+            this.isVisited = true;
         },
         setData(selectedData, pranzoCena, dataId){
             this.data.data = selectedData;
