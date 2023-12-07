@@ -30,66 +30,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-md-4 col-lg-3 animate__animated animate__pulse" v-for="(artista, i) in mareArtists" :key="i" >
-                <div class="rounded-5 border border-2 p-2 mb-4 position-relative  guest-artist-card py-5">
-                    <div class="position-absolute top-0 start-0 h-100 w-100 my-blur ">
-                        <img :src="'/' + artista.img_path" alt="" class="h-100 w-100 artist-img rounded-5">
-                    </div>
-                    <div class="position-absolute top-50 start-50 translate-middle z-2 d-flex flex-column justify-content-center align-items-center h-100 w-100">
-                        <h2 class="text-start text-capitalize">
-                            {{ artista.titolo }}
-                        </h2>
-                        <h5 class="text-uppercase normal-font">
-                            {{ artista.show_type.nome }}
-                        </h5>
-                        <div class="d-flex flex-column justify-content-evenly align-items-center h-50">
-                            <p class="artist-description normal-font">
-                                {{ artista.descrizione }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-3 animate__animated animate__pulse" v-for="(artista, i) in mareArtists" :key="i" >
-                <div class="rounded-5 border border-2 p-2 mb-4 position-relative  guest-artist-card py-5">
-                    <div class="position-absolute top-0 start-0 h-100 w-100 my-blur ">
-                        <img :src="'/' + artista.img_path" alt="" class="h-100 w-100 artist-img rounded-5">
-                    </div>
-                    <div class="position-absolute top-50 start-50 translate-middle z-2 d-flex flex-column justify-content-center align-items-center h-100 w-100">
-                        <h2 class="text-start text-capitalize">
-                            {{ artista.titolo }}
-                        </h2>
-                        <h5 class="text-uppercase normal-font">
-                            {{ artista.show_type.nome }}
-                        </h5>
-                        <div class="d-flex flex-column justify-content-evenly align-items-center h-50">
-                            <p class="artist-description normal-font">
-                                {{ artista.descrizione }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-3 animate__animated animate__pulse" v-for="(artista, i) in mareArtists" :key="i" >
-                <div class="rounded-5 border border-2 p-2 mb-4 position-relative  guest-artist-card py-5">
-                    <div class="position-absolute top-0 start-0 h-100 w-100 my-blur ">
-                        <img :src="'/' + artista.img_path" alt="" class="h-100 w-100 artist-img rounded-5">
-                    </div>
-                    <div class="position-absolute top-50 start-50 translate-middle z-2 d-flex flex-column justify-content-center align-items-center h-100 w-100">
-                        <h2 class="text-start text-capitalize">
-                            {{ artista.titolo }}
-                        </h2>
-                        <h5 class="text-uppercase normal-font">
-                            {{ artista.show_type.nome }}
-                        </h5>
-                        <div class="d-flex flex-column justify-content-evenly align-items-center h-50">
-                            <p class="artist-description normal-font">
-                                {{ artista.descrizione }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="col-12">
                 <button class="position-absolute start-50 translate-middle-x btn-show my-btn-bottom border border-2" @click="scrollToSection('mare-date')">
                     Date

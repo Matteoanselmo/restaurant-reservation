@@ -1,29 +1,29 @@
 <template>
     <div class="container-fluid position-relative">
-        <div class="row">
-            <div class="col-12 d-flex justify-content-between align-items-center mb-2" >
+        <div class="row overflow-y-scroll" style="max-height: calc(100vh - 70px);" @scroll="checkScrollPosition">
+            <div class="col-12 d-flex align-items-center justify-content-between mb-2">
                 <button class="btn-show border border-2" @click="scrollToSection('chose-show')">
                     <i class="fa-solid fa-chevron-left  fs-3" ></i>
                 </button>
                 <h1>
-                    Spettacolo di terra
+                    Artisti di terra
                 </h1>
                 <div></div>
             </div>
-            <div class="col-6 col-md-4 col-lg-3 " v-for="(artista, i) in specialArtists" :key="i" >
-                <div class="rounded-5 border border-2 p-2 mb-4 position-relative artist-card  guest-artist-card py-5 w-100 h-100">
+            <div class="col-6 col-md-4 col-lg-3 animate__animated animate__pulse" v-for="(artista, i) in specialArtists" :key="i" >
+                <div class="rounded-5 border border-2 p-2 mb-4 position-relative guest-artist-card py-5 w-100 h-100">
                     <div class="position-absolute top-0 start-0 h-100 w-100 my-blur ">
                         <img :src="'/' + artista.img_path" alt="" class="h-100 w-100 artist-img rounded-5">
                     </div>
-                    <div class="position-absolute top-50 start-50 translate-middle z-2 d-flex justify-content-evenly align-items-center h-100 w-100">
+                    <div class="position-absolute top-50 start-50 translate-middle z-2 d-flex flex-column justify-content-center align-items-center h-100 w-100">
                         <h2 class="text-start text-capitalize">
                             {{ artista.titolo }}
                         </h2>
-                        <div class="d-flex flex-column justify-content-evenly align-items-center h-100 w-75">
-                            <h5 class="text-uppercase border border-2 btn-show">
-                                {{ artista.show_type.nome }}
-                            </h5>
-                            <p>
+                        <h5 class="text-uppercase normal-font">
+                            {{ artista.show_type.nome }}
+                        </h5>
+                        <div class="d-flex flex-column justify-content-evenly align-items-center h-50">
+                            <p class="artist-description normal-font">
                                 {{ artista.descrizione }}
                             </p>
                         </div>

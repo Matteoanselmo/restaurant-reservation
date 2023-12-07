@@ -41,7 +41,7 @@
 
 <script>
 import { Link } from '@inertiajs/vue3';
-import { compile, computed, onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useElementVisibility } from '@vueuse/core'
 export default {
     name: 'DateMare',

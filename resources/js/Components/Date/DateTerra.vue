@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="position-relative animate__animated " :class="(targetIsVisible) ? 'animate__zoomIn' : ''">
-            <div class="d-flex flex-column align-items-center position-absolute top-0 start-0 m-1">
-                <button class="btn-show" @click="scrollToSection('terra-show')">
+            <div class="d-flex flex-column align-items-center position-absolute top-0 start-0 m-1 btn-date-terra-back">
+                <button class="btn-show border border-2" @click="scrollToSection('terra-show')">
                     <i class="fa-solid fa-chevron-up  fs-3" ></i>
                 </button>
             </div>
@@ -41,7 +41,7 @@
 
 <script>
 import { Link } from '@inertiajs/vue3';
-import { compile, computed, onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useElementVisibility } from '@vueuse/core'
 
 export default {
@@ -166,6 +166,17 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+@media screen and (max-width: 992px) {
+        .btn-date-terra-back{
+            width: 100%;
+            top: 100% !important;
+            left: 50% !important;
+            transform: translateX(-50%);
+            button{
+                margin-top: 30vh;
+                width: 95%;
+            }
+        }
+    }
 </style>
