@@ -12,6 +12,7 @@ class NewsLetterController extends Controller
 {
     protected function sendNewsletter(Request $request)
     {
+        // return $request;
         $data = $request->all();
         $message = $data['message']['_value'];
 

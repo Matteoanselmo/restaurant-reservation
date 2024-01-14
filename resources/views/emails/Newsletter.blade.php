@@ -16,7 +16,7 @@
             Villa Albertina News
             </h1>
             <h3>
-                {{ $messages }}
+                {!! $messages !!}
             </h3>
             <div style="font-family: 'Berkshire Swash', cursive;">
                 👨‍🍳 Lo STAFF di {{ config('app.name') }} 👨‍🍳
