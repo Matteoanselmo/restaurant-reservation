@@ -17,7 +17,7 @@ class PrenotationController extends Controller
      * @return \Illuminate\Http\Response
      */
     protected function index()
-    {    $today = Carbon::now(); // Ottieni la data e l'ora attuali
+    {    $today = Carbon::now(); // Ottieni il mese attuale
 
         $resrvationDates = ReservationDate::with('bookings')
         ->whereDate('data', '>=', $today) // Seleziona date da oggi in poi
@@ -34,10 +34,10 @@ class PrenotationController extends Controller
     }
 
     protected function oldPrenotations(){
-        $today = Carbon::now(); // Ottieni la data e l'ora attuali
+        $today = Carbon::now(); // Ottieni il mese attuale
 
         $oldreservationDates = ReservationDate::with('bookings')
-        ->whereDate('data', '<', $today) // Seleziona date da oggi in poi
+        ->whereDate('data', '<', $today) // Seleziona date da oggi in dietro
         ->orderBy('data') // Ordina per data in ordine crescente
         ->get();
 
