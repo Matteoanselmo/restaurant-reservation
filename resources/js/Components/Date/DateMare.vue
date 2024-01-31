@@ -101,7 +101,7 @@ export default {
                         const dateObject = new Date(date.data);
                         this.monthWithMareDates.push(dateObject);
                     });
-                    console.log(this.monthWithMareDates)
+                    // console.log(this.monthWithMareDates)
                 }
             })
             .catch((error)=> {
