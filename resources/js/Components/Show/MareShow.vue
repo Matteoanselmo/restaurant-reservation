@@ -10,7 +10,12 @@
                     <i class="fa-solid fa-chevron-right  fs-3" ></i>
                 </button>
             </div>
-            <div class="col-6 col-md-4 col-lg-3 animate__animated animate__pulse" v-for="(artista, i) in mareArtists" :key="i" >
+            <div class="col-12">
+                <h1>
+                    Storia degli artisti di mare
+                </h1>
+            </div>
+            <!-- <div class="col-6 col-md-4 col-lg-3 animate__animated animate__pulse" v-for="(artista, i) in mareArtists" :key="i" >
                 <div class="rounded-5 border border-2 p-2 mb-4 position-relative  guest-artist-card py-5">
                     <div class="position-absolute top-0 start-0 h-100 w-100 my-blur ">
                         <img :src="'/' + artista.img_path" alt="" class="h-100 w-100 artist-img rounded-5">
@@ -29,7 +34,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="col-12">
                 <button class="position-absolute start-50 translate-middle-x btn-show my-btn-bottom border border-2" @click="scrollToSection('mare-date')">
                     Date

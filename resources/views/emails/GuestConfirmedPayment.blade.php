@@ -35,12 +35,16 @@
                     <th>
                         Prezzo
                     </th>
+                    <th>
+                        Posto
+                    </th>
                 </tr>
                 @foreach ($data['booked'] as $customerData)
                     <tr>
                         <td>{{ $customerData['nome'] }} {{ $customerData['cognome'] }}</td>
                         <td>{{$customerData['email']}}</td>
                         <td>&euro; {{$customerData['price']}}</td>
+                        <td>{{$customerData['n_posto']}}</td>
                     </tr>
                 @endforeach
             </table>

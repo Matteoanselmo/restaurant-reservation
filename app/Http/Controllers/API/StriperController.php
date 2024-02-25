@@ -7,6 +7,7 @@ use App\Mail\GuestConfirmedPayment;
 use App\Mail\MailBookedPrenotationChair;
 use App\Models\Booking;
 use App\Models\Client;
+use App\Models\ReservationDate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Stripe\StripeClient;
@@ -49,7 +50,7 @@ class StriperController extends Controller
         }
         // Loop through the customer array and save bookings
         foreach ($data['booked'] as $customerData) {
-            // Assuming you have a Booking model
+
             Booking::create([
                 'reservation_date_id' => $data['data']['dataId'],
                 'posto' => $customerData['n_posto']
@@ -68,11 +69,30 @@ class StriperController extends Controller
                     'n_telefono' => $customerData['n_telefono'],
                 ]);
 
-
             }
         }
+        $reservation_date = ReservationDate::findOrFail($data['data']['dataId']);
 
-        // Invia l'email personalizzata
+        // Verifica se esistono prenotazioni per quella ReservationDate
+        $existingBookings = Booking::where('reservation_date_id', $reservation_date->id)->count();
+        // Se non ci sono prenotazioni per quella ReservationDate
+        if ($existingBookings === 0) {
+            // Cerca altre ReservationDate per la stessa data
+            $otherReservationDates = ReservationDate::where('data', $reservation_date->data)
+                                                    ->where('id', '!=', $reservation_date->id)
+                                                    ->get();
+
+            foreach ($otherReservationDates as $otherReservationDate) {
+                // Crea 8 nuove prenotazioni per ogni ReservationDate trovata
+                for ($i = 0; $i < 8; $i++) {
+                    Booking::create([
+                        'reservation_date_id' => $otherReservationDate->id,
+                        'posto' => $i // Assumi che posto sia numerico e sequenziale
+                    ]);
+                }
+            }
+        }
+        // Invia l'email Conferma Pagamento
         Mail::to($data['customer']['email'])->send(new GuestConfirmedPayment($data));
 
         return redirect()->route('thanks.payment', compact('data'));

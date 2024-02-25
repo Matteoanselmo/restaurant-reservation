@@ -1,16 +1,21 @@
 <template>
-    <div class="d-flex flex-column justify-content-evenly py-3">
-        <div class="px-3 text-center">
-            <h1 class="mb-3 fw-bold">
-                Passa una serata con noi!
+    <div class="d-flex flex-column justify-content-evenly py-3 ">
+        <div class="px-3 text-center ">
+            <h1 class="mb-3 fw-bold text-white">
+                Dai un occhiata ai nostri menù
             </h1>
-            <h5 class="normal-font text-secondary">
+            <h5 class="normal-font" style="color: #41464b;">
                 Prenota il tuo posto a sedere e vivi uno show con degustazione a Villa Albertina.
             </h5>
         </div>
         <div class="d-flex w-100 align-items center justify-content-evenly">
             <button class="btn-show border border-2 animated animate__fadeIn" v-for="(show, index) in allShow" :key="index" @click="scrollToSection(show.routeId)" >
                 {{ show.tipo }}
+            </button>
+        </div>
+        <div class="d-flex w-100 align-items center justify-content-evenly">
+            <button class="btn-show border border-2 animated animate__fadeIn" >
+                Crea il tuo menu con noi
             </button>
         </div>
         <div>
@@ -33,10 +38,10 @@ export default {
                     tipo: 'mare',
                     routeId: 'mare-show'
                 },
-                {
-                    tipo: 'special',
-                    routeId: 'special-show'
-                },
+                // {
+                //     tipo: 'special',
+                //     routeId: 'special-show'
+                // },
                 {
                     tipo: 'terra',
                     routeId: 'terra-show'
@@ -112,6 +117,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+    // #primal-chose-show{
+    //     backdrop-filter: blur(6px);
+    // }
 </style>

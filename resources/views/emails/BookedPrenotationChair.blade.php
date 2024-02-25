@@ -18,6 +18,9 @@
             <h3>
                 La prenotazione per {{ $data['pranzoOCena'] }} del {{ $data['data'] }} è andata a buon fine
             </h3>
+            <h1>
+                Il tuo posto è il {{ $data['n_posto'] }}
+            </h1>
             <h4 style="font-family: 'Noto Serif Display', serif;">
             Grazie per aver prenotato il tuo show a Villa Albertina 🏠
             </h4>

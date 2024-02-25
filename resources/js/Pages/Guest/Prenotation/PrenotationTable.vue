@@ -17,11 +17,10 @@
                     <p v-if="isJustPrenotated.some(posto => posto === chair.n_posto)"><i class="fa-solid fa-x"></i></p>
                     <p v-if="chair.nome" class="position-absolute top-0 start-50 translate-middle-x">{{ chair.nome }}</p>
                 </button>
-                <!-- Modal -->
-
             </div>
         </div>
     </div>
+    <!-- Modal -->
     <div v-for="(chair, index) in store.prenotations" :key="index" class="modal fade" :id="'prenotationModal' + '-' + index" tabindex="-1" :aria-labelledby="'prenotationModalLabel' + '-' + index" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">

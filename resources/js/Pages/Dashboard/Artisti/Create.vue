@@ -1,8 +1,8 @@
 <template>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-12 mb-4">
-                <h1>Aggiungi un nuovo Artista</h1>
+        <div class="row normal-font">
+            <div class="col-12 mb-4 text-center ">
+                <h1 class="normal-font">Aggiungi Artista</h1>
             </div>
             <div class="col-12">
                 <Message

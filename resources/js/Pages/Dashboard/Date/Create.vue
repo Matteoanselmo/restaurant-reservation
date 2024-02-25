@@ -6,8 +6,8 @@
                     <i class="fa-solid fa-chevron-left  fs-3" ></i>
                 </a>
             </div>
-            <div class="col-4">
-                <h1 class="text-start mb-4 fw-bold animate__animated animate__fadeInDown text-capitalize">Spettacolo {{new Date(data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}</h1>
+            <div class="col-6">
+                <h1 class="text-start mb-4 fw-bold animate__animated animate__fadeInDown text-capitalize normal-font">Spettacolo {{new Date(data).toLocaleDateString('it-IT', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}</h1>
             </div>
             <div class="col-4"></div>
         </div>
@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div>
-                            <button type="button" class="btn-show border border-2" data-bs-toggle="modal" data-bs-target="#createArtist">
+                            <button type="button" class="btn-show border border-2" data-bs-toggle="modal" data-bs-target="#createArtist" :disabled="!formData.show_type_id">
                                 + Artista
                             </button>
                         </div>
@@ -52,8 +52,17 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-5 d-flex flex-column align-items-start justify-content-start mb-4 h-100 border-start border-2 animate__animated animate__fadeInBottomRight">
-                    <label class="mb-1 fs-4" for="descrizione">Descrizione: *</label>
-                    <textarea id="descrizione" class="form-control mb-4" v-model.trim="formData.descrizione" rows="10" required></textarea>
+                    <h4>
+                        Descrizione: *
+                    </h4>
+                    <!-- <textarea id="descrizione" class="form-control mb-4" v-model.trim="formData.descrizione" rows="10" required></textarea> -->
+                    <QuillEditor
+                        theme="snow"
+                        class="w-100"
+                        placeholder="Nuova cena per ..."
+                        v-model.content="formData.descrizione"
+                        contentType="html"
+                    />
                     <label for="prezzo" class="mb-1 fs-4">
                         Prezzo *
                     </label>
@@ -105,10 +114,13 @@ import { router } from '@inertiajs/vue3';
 import * as bootstrap from 'bootstrap';
 import {generalStore} from '@/Stores/state';
 import ArtistiCreate from '../Artisti/Create.vue'
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 export default {
     name: 'DashboardCreateDate',
     components: {
-        ArtistiCreate
+        ArtistiCreate,
+        QuillEditor
     },
     setup(){
         const store = generalStore();

@@ -43,10 +43,23 @@
     }
 
     .btn-show::after {
-    background-color: #fff;
+        background-color: #fff;
     }
 
     .btn-show:hover::after {
-    transform: scaleX(1.4) scaleY(1.6);
-    opacity: 0;
+        transform: scaleX(1.4) scaleY(1.6);
+        opacity: 0;
+    }
+
+    .btn-show:disabled{
+        background-color: lightgray;
+        border: 1px solid white;
+        color: gray;
+        &:hover{
+                transform: translateY(0);
+                box-shadow: 0;
+        }
+        &:active{
+            box-shadow: 0;
+        }
     }

@@ -188,5 +188,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#chose-show{
+        background-image: url('../../../public/images/logo/chose-min.JPG');
+        background-position: top;
+        background-size: cover;
+        background-repeat: no-repeat;
+}
 
+@media screen and (max-width : 767px ) {
+    #chose-show{
+        background-position: 75%;
+    }
+}
 </style>
