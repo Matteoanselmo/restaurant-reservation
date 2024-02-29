@@ -1,0 +1,27 @@
+{
+    "not_a_restourant" : {
+        "title" : "Non è un ristorante",
+        "capter_1" : "Lo Chef Simone Finetti darà vita ad un esperienza indimenticabile con racconti, assaggi, degustazioni di cibi e bevande scelte apposta per l'occasione.",
+        "capter_2" : " Scoprirete La gastronomia come non la conoscevate prima.",
+        "capter_3" : "Imparando la provenienza dei cibi stessi, la loro storia ed i metodi utilizzati per cucinarle"
+    },
+    "praise" : {
+        "title_1" : "Se il Signore ci ha ordinatgo di mangaire per vivere e ci invita a nutrirci per mezzo dell'appetito noi mangiando seguiamo un precetto divino.",
+        "title_2" : "Ora, rimane la questione della scelta dei cibi, e siccome è assurdo che Dio abbia messo al mondo tante cose buone unicamente per i cattivi, magiamole e ringraziamo colui che ci ha dato la gioia di poterle gustare.",
+        "signature" : "B. Savarin"
+    },
+    "chose_menu" : {
+        "title": "Dai un occhiata ai nostri menù",
+        "sub_title" :"Prenota il tuo posto a sedere e vivi uno show con degustazione a Villa Albertina."
+    },
+    "menu" : {
+        "sea" : "mare",
+        "ground" : "terra",
+        "create_menu" : "crea il tuo menu con noi",
+        "have_buisness" : "Hai una attività ?"
+    },
+    "artists" : {
+        "sea" : "artisti di mare",
+        "ground" : "artisti di terra"
+    }
+}

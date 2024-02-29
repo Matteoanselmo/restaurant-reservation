@@ -1,0 +1,18 @@
+{
+    "not_a_restourant" : {
+        "title" : "Not a Restaurant",
+        "capter_1" : "Chef Simone Finetti will create an unforgettable experience with stories, tastings, and samplings of food and drinks selected specifically for the occasion.",
+        "capter_2" : "Discover gastronomy as you've never known it before.",
+        "capter_3" : "Learn about the origins of the foods themselves, their history, and the methods used to cook them"
+    },
+    "chose_menu" : {
+        "title": "Take a Look at Our Menus",
+        "sub_title" :"Book your seat and experience a tasting show at Villa Albertina."
+    },
+    "menu" : {
+        "sea" : "sea",
+        "ground" : "land",
+        "create_menu" : "create your menu with us",
+        "have_buisness" : "Do you have a business?"
+    }
+}

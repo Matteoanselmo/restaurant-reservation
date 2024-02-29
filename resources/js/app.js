@@ -11,6 +11,7 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import { createPinia } from 'pinia';
 import piniaPluginPersistedState from "pinia-plugin-persistedstate";
 import Load from '@/Components/Load.vue';
+import i18n from './modules/i18n';
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedState);
@@ -26,6 +27,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .use(pinia)
+            .use(i18n)
             .mount(el);
     },
     progress: {
