@@ -11,10 +11,11 @@ const messages = {
     // 'hr': hr
 };
 
-const i18n = new createI18n({
+const i18n = createI18n({
     locale: 'it', // set locale
     fallbackLocale: 'en', // set fallback locale
     messages, // set locale messages
+    legacy: false,
 });
 
 export default i18n
