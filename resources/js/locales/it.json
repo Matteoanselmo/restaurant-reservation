@@ -47,6 +47,13 @@
         "friday": "Venerdì",
         "saturday": "Sabato"
     },
+    "form" : {
+        "name" : "name",
+        "email" : "email",
+        "last_name" : "cognome",
+        "ingredients" : "Ingredienti",
+        "allergens" : "allergeni"
+    },
     "rules" : {
         "name" : "Il nome inserito non è valido",
         "last_name" : "Il cognome inserito non è valido",
@@ -54,7 +61,8 @@
         "telefono" : "Il numero di telefono non è valido",
         "address": "L'indirizzo non è valido.",
         "city": "Il nome della città non è valido.",
-        "zip_code": "Il codice postale non è valido."
+        "zip_code": "Il codice postale non è valido.",
+        "max_length" : "Il testo inserito è troppo lungo. max: 500"
     },
     "no_date": {
         "text" : "Ci dispiace tanto, non c'è ancora nessuno spettacolo per"

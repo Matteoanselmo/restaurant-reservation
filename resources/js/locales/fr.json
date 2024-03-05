@@ -47,16 +47,24 @@
         "friday": "Vendredi",
         "saturday": "Samedi"
     },
+    "form": {
+            "name": "nom",
+            "email": "email",
+            "last_name": "nom de famille",
+            "ingredients": "Ingrédients",
+            "allergens": "allergènes"
+        },
     "rules": {
-        "name": "Le nom saisi n'est pas valide",
-        "last_name": "Le nom de famille saisi n'est pas valide",
-        "email": "L'email saisi n'est pas valide",
+        "name": "Le nom entré n'est pas valide",
+        "last_name": "Le nom de famille entré n'est pas valide",
+        "email": "L'email entré n'est pas valide",
         "telefono": "Le numéro de téléphone n'est pas valide",
-        "address": "L'adresse saisie n'est pas valide",
+        "address": "L'adresse n'est pas valide",
         "city": "Le nom de la ville n'est pas valide",
-        "zip_code": "Le code postal n'est pas valide"
+        "zip_code": "Le code postal n'est pas valide",
+        "max_length": "Le texte entré est trop long. Max : 500"
     },
     "no_date": {
-        "text": "Nous sommes vraiment désolés, il n'y a pas de spectacle disponible pour"
+        "text": "Nous sommes désolés, il n'y a pas encore de spectacle pour"
     }
 }

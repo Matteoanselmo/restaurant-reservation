@@ -47,16 +47,26 @@
         "friday": "Friday",
         "saturday": "Saturday"
     },
+    "form": {
+        "name": "name",
+        "email": "email",
+        "last_name": "last name",
+        "ingredients": "Ingredients",
+        "allergens": "allergens"
+    },
     "rules": {
-        "name": "The entered name is not valid",
-        "last_name": "The entered last name is not valid",
-        "email": "The entered email is not valid",
+        "name": "The name entered is not valid",
+        "last_name": "The last name entered is not valid",
+        "email": "The email entered is not valid",
         "telefono": "The phone number is not valid",
-        "address": "The street address is not valid.",
-        "city": "The city name is not valid.",
-        "zip_code": "The postal code is not valid."
+        "address": "The address is not valid",
+        "city": "The city name is not valid",
+        "zip_code": "The postal code is not valid",
+        "max_length": "The entered text is too long. Max: 500"
     },
     "no_date": {
-        "text": "We are very sorry, there are no shows available for"
+        "text": "We are sorry, there is no show yet for"
     }
+
+
 }

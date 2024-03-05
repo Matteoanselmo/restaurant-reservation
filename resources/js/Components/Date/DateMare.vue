@@ -105,7 +105,6 @@ function scrollToSection(sectionId) {
 }
 
 onMounted(() => {
-    console.log(currentDate.value.getMonth() + 1);
     let initialTouchY = 0;
     const el = target.value;
 

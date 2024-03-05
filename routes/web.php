@@ -40,7 +40,7 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () {
     Route::get('/', function () {
         return Inertia::render('Dashboard', [
-            'data'=>Route::has('data')
+            'data' => Route::has('data')
         ]);
     })->name('dashboard');
 
@@ -59,7 +59,7 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
     Route::get('/edit-booked', [AdminPrenotationController::class, 'show'])->name('dashboard.prenotazioni.prenotati');
 
     //Resoconto
-    Route::get('/resoconto', [ResocontoController::class , 'index'])->name('dashboard.resoconto.index');
+    Route::get('/resoconto', [ResocontoController::class, 'index'])->name('dashboard.resoconto.index');
 
     //NewsLetter
     Route::get('/newsletter', [DashBoardController::class, 'newsLetter'])->name('dashboard.newsletter');
@@ -83,6 +83,7 @@ Route::get('/spettacolo/data/{data}', [GuestDateController::class, 'selectShowFr
 Route::get('/ci-dispiace/{data}', [GuestDateController::class, 'noDate'])->name('guest.no.date');
 Route::get('/prenotazione/{data}', [PrenotationController::class, 'show'])->name('guest.prenotation');
 Route::get('/scelta-posti/{id}', [PrenotationController::class, 'index'])->name('scelta.posti');
+Route::get('crea-menu', [GuestDateController::class, 'createIndexMenu'])->name('create.menu');
 
 // Pagamenti
 Route::get('pagamento', function () {
@@ -111,4 +112,4 @@ Route::get('errore-pagamento', function () {
 //     return view('emails.Newsletter', compact('message'));
 // });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -49,7 +49,20 @@ export default function getValidationRules(t) {
                 return t('rules.zip_code');
             }
             return true;
-        }
+        },
+        text: (value) => {
+            if (value && value.length > 500) {
+                return t('rules.max_length');
+            }
+            return true;
+        },
+        // Aggiungi qui la nuova regola per "allergens"
+        allergens: (value) => {
+            if (value && value.length > 500) {
+                return t('rules.max_length');
+            }
+            return true;
+        },
 
     };
 }

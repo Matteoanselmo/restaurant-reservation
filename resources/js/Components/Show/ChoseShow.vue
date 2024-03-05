@@ -22,9 +22,12 @@
             </button>
         </div>
         <div class="d-flex w-100 align-items center justify-content-evenly">
-            <button class="btn-show border border-2 animated animate__fadeIn">
+            <Link
+                :href="route('create.menu')"
+                class="btn-show border border-2 animated animate__fadeIn"
+            >
                 {{ $t("menu.create_menu") }}
-            </button>
+            </Link>
         </div>
         <div>
             <p
@@ -40,8 +43,12 @@
 
 <script>
 import { generalStore } from "@/Stores/state";
+import { Link } from "@inertiajs/vue3";
 export default {
     name: "ChoseShow",
+    components: {
+        Link,
+    },
     data() {
         return {
             store: generalStore(),
