@@ -1,17 +1,15 @@
 <template>
-    <div class="d-flex flex-column align-items-center justify-content-center">
-        <!-- <h1 class="text-uppercase">villa albertina</h1>
-        <p class="text-center">logo</p> -->
-        <img src="/images/logo/logo.png" class="w-100" alt="">
-    </div>
+    <Link href="/">
+        <img
+            src="/images/logo/logo.png"
+            class="position-fixed top-0 start-0"
+            style="height: 100px"
+        />
+    </Link>
 </template>
 
-<script>
-export default {
-    name: 'ApplicationLogo'
-}
+<script setup>
+import { Link } from "@inertiajs/vue3";
 </script>
 
-<style>
-
-</style>
+<style></style>

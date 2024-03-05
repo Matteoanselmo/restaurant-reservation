@@ -9,9 +9,9 @@
                 class="col-12 d-flex align-items-center justify-content-between mb-2"
             >
                 <div></div>
-                <h1 class="me-3 text-capitalize">
+                <h2 class="me-3 text-capitalize">
                     {{ $t("artists.sea") }}
-                </h1>
+                </h2>
                 <button
                     class="btn-show border border-2"
                     @click="scrollToSection('chose-show')"
@@ -20,7 +20,7 @@
                 </button>
             </div>
             <div class="col-12">
-                <h1>Storia degli artisti di mare</h1>
+                <h3>Storia degli artisti di mare</h3>
             </div>
             <!-- <div class="col-6 col-md-4 col-lg-3 animate__animated animate__pulse" v-for="(artista, i) in mareArtists" :key="i" >
                 <div class="rounded-5 border border-2 p-2 mb-4 position-relative  guest-artist-card py-5">

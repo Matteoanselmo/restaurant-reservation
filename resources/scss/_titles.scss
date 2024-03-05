@@ -1,0 +1,47 @@
+
+// Breakpoint definitions based on Bootstrap 5.3 standards
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
+
+// Mixin for responsive font sizes
+@mixin responsive-font-sizes($sizes) {
+  @each $breakpoint, $font-size in $sizes {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      font-size: $font-size;
+    }
+  }
+}
+
+// Applying responsive font sizes to h1, h5, and p elements
+h1 {
+  @include responsive-font-sizes((
+    md: 30px !important,
+    lg: 50px !important,
+    xl: 60px !important,
+    xxl: 75px !important
+  ));
+}
+
+h5 {
+  @include responsive-font-sizes((
+    md: 18px !important,
+    lg: 20px !important,
+    xl: 22px !important,
+    xxl: 24px !important
+  ));
+}
+
+p {
+  @include responsive-font-sizes((
+    md: 16px !important,
+    lg: 18px !important,
+    xl: 20px !important,
+    xxl: 22px !important
+  ));
+}

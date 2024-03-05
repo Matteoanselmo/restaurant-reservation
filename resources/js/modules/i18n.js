@@ -2,13 +2,13 @@ import { createI18n } from 'vue-i18n';
 
 import it from '../locales/it.json'
 import en from '../locales/en.json'
-// import hr from '../locales/hr.json'
+import fr from '../locales/fr.json'
 
 
 const messages = {
     'it': it,
     'en': en,
-    // 'hr': hr
+    'fr': fr
 };
 
 const i18n = createI18n({

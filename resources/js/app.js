@@ -11,6 +11,8 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import { createPinia } from 'pinia';
 import piniaPluginPersistedState from "pinia-plugin-persistedstate";
 import Load from '@/Components/Load.vue';
+import ButtonInfo from '@/Components/ButtonInfo.vue';
+import ApplicationLogo from '@/Components/ApplicationLogo.vue'
 import i18n from './modules/i18n';
 
 const pinia = createPinia();
@@ -24,6 +26,8 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         return createApp({ render: () => h(App, props) })
             .component('Load', Load)
+            .component('button-info', ButtonInfo)
+            .component('application-logo', ApplicationLogo)
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .use(pinia)

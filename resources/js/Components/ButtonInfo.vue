@@ -31,6 +31,15 @@ function showDetails() {
         </button>
         <ul class="more-button-list">
             <li class="more-button-list-item">
+                <span @click="setLocale('it')">It</span>
+            </li>
+            <li class="more-button-list-item">
+                <span @click="setLocale('en')">En</span>
+            </li>
+            <li class="more-button-list-item">
+                <span @click="setLocale('fr')">Fr</span>
+            </li>
+            <li class="more-button-list-item">
                 <div class="d-flex">
                     <p>
                         Villa Albertina HR - Simone FInetti - P.Iva: 012345678 -
@@ -38,15 +47,6 @@ function showDetails() {
                     </p>
                 </div>
             </li>
-            <li class="more-button-list-item">
-                <span @click="setLocale('it')">It</span>
-            </li>
-            <li class="more-button-list-item">
-                <span @click="setLocale('en')">En</span>
-            </li>
-            <!-- <li class="more-button-list-item">
-                <span>Delete</span>
-            </li> -->
         </ul>
     </div>
 </template>
@@ -80,12 +80,20 @@ $menu-icon-transition: transform 0.3s;
     &.active {
         .more-button-list {
             opacity: 1;
+            z-index: 3;
             transform: scale(1);
         }
 
         .more-button-list-item {
             animation: fadeInItem 0.6s 0.2s forwards;
-
+            &:hover {
+                background-color: rgb(232, 232, 232);
+                border-radius: 6px;
+                span {
+                    transform: translateX(3px) scale(1.115);
+                    transition: all 0.25s ease-in-out;
+                }
+            }
             &:nth-child(2) {
                 animation-delay: 0.4s;
             }

@@ -2,7 +2,6 @@
 import { Head } from "@inertiajs/vue3";
 import { onMounted, ref } from "vue";
 import ApplicationLogo from "../Components/ApplicationLogo.vue";
-import ButtonInfo from "../Components/ButtonInfo.vue";
 import Lode from "../Components/Lode.vue";
 import NotARestaurant from "../Components/NotARestaurant.vue";
 import ChoseShow from "../Components/Show/ChoseShow.vue";
@@ -98,7 +97,7 @@ function getNextRef(currentRef) {
 <template>
     <Head title="Welcome" />
     <div id="home">
-        <ButtonInfo />
+        <button-info></button-info>
         <div>
             <ApplicationLogo
                 class="full-screen d-flex justify-content-center align-items-center overflow-hidden animate__animated animate__slideInUp"

@@ -14,13 +14,13 @@
                 >
                     <i class="fa-solid fa-chevron-left fs-3"></i>
                 </button>
-                <h1 class="text-capitalize">
+                <h2 class="text-capitalize">
                     {{ $t("artists.ground") }}
-                </h1>
+                </h2>
                 <div></div>
             </div>
             <div class="col-12">
-                <h1>Storia degli artisti di terra</h1>
+                <h3>Storia degli artisti di terra</h3>
             </div>
             <!-- <div class="col-6 col-md-4 col-lg-3 animate__animated animate__pulse" v-for="(artista, i) in specialArtists" :key="i" >
                 <div class="rounded-5 border border-2 p-2 mb-4 position-relative guest-artist-card py-5 w-100 h-100">

@@ -46,7 +46,17 @@
         "thursday": "Giovedì",
         "friday": "Venerdì",
         "saturday": "Sabato"
+    },
+    "rules" : {
+        "name" : "Il nome inserito non è valido",
+        "last_name" : "Il cognome inserito non è valido",
+        "email" : "la email inserita non è valida",
+        "telefono" : "Il numero di telefono non è valido",
+        "address": "L'indirizzo non è valido.",
+        "city": "Il nome della città non è valido.",
+        "zip_code": "Il codice postale non è valido."
+    },
+    "no_date": {
+        "text" : "Ci dispiace tanto, non c'è ancora nessuno spettacolo per"
     }
-
-
 }
