@@ -1,19 +1,26 @@
 <template>
     <div class="container-fluid position-relative">
-        <div class="row overflow-y-scroll" style="max-height: calc(100vh - 70px);" @scroll="checkScrollPosition">
-            <div class="col-12 d-flex align-items-center justify-content-between mb-2">
+        <div
+            class="row overflow-y-scroll"
+            style="max-height: calc(100vh - 70px)"
+            @scroll="checkScrollPosition"
+        >
+            <div
+                class="col-12 d-flex align-items-center justify-content-between mb-2"
+            >
                 <div></div>
-                <h1 class="me-3 text-capitalize">
-                    Artisti di mare
-                </h1>
-                <button class="btn-show border border-2" @click="scrollToSection('chose-show')">
-                    <i class="fa-solid fa-chevron-right  fs-3" ></i>
+                <h2 class="me-3 text-capitalize">
+                    {{ $t("artists.sea") }}
+                </h2>
+                <button
+                    class="btn-show border border-2"
+                    @click="scrollToSection('chose-show')"
+                >
+                    <i class="fa-solid fa-chevron-right fs-3"></i>
                 </button>
             </div>
             <div class="col-12">
-                <h1>
-                    Storia degli artisti di mare
-                </h1>
+                <h3>Storia degli artisti di mare</h3>
             </div>
             <!-- <div class="col-6 col-md-4 col-lg-3 animate__animated animate__pulse" v-for="(artista, i) in mareArtists" :key="i" >
                 <div class="rounded-5 border border-2 p-2 mb-4 position-relative  guest-artist-card py-5">
@@ -36,7 +43,10 @@
                 </div>
             </div> -->
             <div class="col-12">
-                <button class="position-absolute start-50 translate-middle-x btn-show my-btn-bottom border border-2" @click="scrollToSection('mare-date')">
+                <button
+                    class="position-absolute start-50 translate-middle-x btn-show my-btn-bottom border border-2"
+                    @click="scrollToSection('mare-date')"
+                >
                     Date
                 </button>
             </div>
@@ -45,47 +55,46 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from "vue";
 export default {
-    name: 'MareShow',
-    setup(){
+    name: "MareShow",
+    setup() {
         const mareArtists = ref([]);
 
         onMounted(() => {
-            axios.post(`/api/filtered-artist/${1}`)
-            .then((res) => {
-                mareArtists.value = res.data.artistiFiltrati;
-            }).catch((err) => {
-                console.error(err)
-            })
-
-
-        })
-        return{
-            mareArtists
-
-        }
+            axios
+                .post(`/api/filtered-artist/${1}`)
+                .then((res) => {
+                    mareArtists.value = res.data.artistiFiltrati;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        });
+        return {
+            mareArtists,
+        };
     },
     methods: {
         scrollToSection(sectionId) {
             const targetSection = document.getElementById(sectionId);
 
             if (targetSection) {
-                targetSection.scrollIntoView({ behavior: 'smooth' });
+                targetSection.scrollIntoView({ behavior: "smooth" });
             }
-        }
+        },
     },
-    mounted(){
+    mounted() {
         let initialTouchX = 0;
         let initialTouchY = 0;
 
         // Aggiungi un listener per il gesto di swipe
-        this.$el.addEventListener('touchstart', (e) => {
+        this.$el.addEventListener("touchstart", (e) => {
             initialTouchX = e.touches[0].clientX;
             initialTouchY = e.touches[0].clientY;
         });
 
-        this.$el.addEventListener('touchend', (e) => {
+        this.$el.addEventListener("touchend", (e) => {
             const deltaX = initialTouchX - e.changedTouches[0].clientX;
             const deltaY = initialTouchY - e.changedTouches[0].clientY;
             // Definisci una soglia per determinare quando considerare il gesto come uno swipe
@@ -94,20 +103,18 @@ export default {
 
             if (deltaX > swipeThresholdX) {
                 // Calcola la direzione dello swipe
-                const sectionId = 'chose-show'; // Vai alla sezione successiva
+                const sectionId = "chose-show"; // Vai alla sezione successiva
                 this.scrollToSection(sectionId);
             }
 
             if (deltaY > swipeThresholdY) {
                 // Calcola la direzione dello swipe
-                const sectionId = 'mare-date'; // Vai alla sezione successiva
+                const sectionId = "mare-date"; // Vai alla sezione successiva
                 this.scrollToSection(sectionId);
             }
         });
-    }
-}
+    },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

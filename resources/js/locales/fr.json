@@ -1,0 +1,70 @@
+{
+    "not_a_restourant": {
+        "title": "Ce n'est pas un restaurant",
+        "capter_1": "Le Chef Simone Finetti créera une expérience inoubliable avec des histoires, des dégustations de nourriture et de boissons choisies spécialement pour l'occasion.",
+        "capter_2": "Découvrez la gastronomie comme vous ne l'avez jamais connue auparavant.",
+        "capter_3": "Apprenez l'origine des aliments, leur histoire et les méthodes utilisées pour les cuisiner"
+    },
+    "praise": {
+        "title_1": "Si le Seigneur nous a ordonné de manger pour vivre et nous invite à nous nourrir par l'appétit, en mangeant, nous suivons un précepte divin.",
+        "title_2": "Reste maintenant la question du choix des aliments, et puisqu'il est absurde que Dieu ait mis tant de bonnes choses au monde uniquement pour les méchants, mangeons-les et remercions Celui qui nous a donné la joie de pouvoir les savourer.",
+        "signature": "B. Savarin"
+    },
+    "chose_menu": {
+        "title": "Jetez un œil à nos menus",
+        "sub_title": "Réservez votre place et vivez un spectacle avec dégustation à Villa Albertina."
+    },
+    "menu": {
+        "sea": "mer",
+        "ground": "terre",
+        "create_menu": "créez votre menu avec nous",
+        "have_buisness": "Vous avez une entreprise ?"
+    },
+    "artists": {
+        "sea": "artistes de la mer",
+        "ground": "artistes de la terre"
+    },
+    "months": {
+        "january": "Janvier",
+        "february": "Février",
+        "march": "Mars",
+        "april": "Avril",
+        "may": "Mai",
+        "june": "Juin",
+        "july": "Juillet",
+        "august": "Août",
+        "september": "Septembre",
+        "october": "Octobre",
+        "november": "Novembre",
+        "december": "Décembre"
+    },
+    "days": {
+        "sunday": "Dimanche",
+        "monday": "Lundi",
+        "tuesday": "Mardi",
+        "wednesday": "Mercredi",
+        "thursday": "Jeudi",
+        "friday": "Vendredi",
+        "saturday": "Samedi"
+    },
+    "form": {
+            "name": "nom",
+            "email": "email",
+            "last_name": "nom de famille",
+            "ingredients": "Ingrédients",
+            "allergens": "allergènes"
+        },
+    "rules": {
+        "name": "Le nom entré n'est pas valide",
+        "last_name": "Le nom de famille entré n'est pas valide",
+        "email": "L'email entré n'est pas valide",
+        "telefono": "Le numéro de téléphone n'est pas valide",
+        "address": "L'adresse n'est pas valide",
+        "city": "Le nom de la ville n'est pas valide",
+        "zip_code": "Le code postal n'est pas valide",
+        "max_length": "Le texte entré est trop long. Max : 500"
+    },
+    "no_date": {
+        "text": "Nous sommes désolés, il n'y a pas encore de spectacle pour"
+    }
+}

@@ -1,0 +1,72 @@
+{
+    "not_a_restourant": {
+        "title": "Not a Restaurant",
+        "capter_1": "Chef Simone Finetti will bring to life an unforgettable experience with stories, tastings, and samplings of food and drinks specially selected for the occasion.",
+        "capter_2": "You will discover gastronomy like you have never known it before.",
+        "capter_3": "Learning about the origin of the foods themselves, their history, and the methods used to cook them"
+    },
+    "praise": {
+        "title_1": "If the Lord has commanded us to eat to live and invites us to nourish ourselves through appetite, by eating we are following a divine precept.",
+        "title_2": "Now, the question of choosing foods remains, and since it is absurd that God has put so many good things in the world solely for the wicked, let us eat them and thank Him who gave us the joy of being able to taste them.",
+        "signature": "B. Savarin"
+    },
+    "chose_menu": {
+        "title": "Take a Look at Our Menus",
+        "sub_title": "Book your seat and experience a tasting show at Villa Albertina."
+    },
+    "menu": {
+        "sea": "sea",
+        "ground": "land",
+        "create_menu": "create your menu with us",
+        "have_buisness": "Do you have a business?"
+    },
+    "artists": {
+        "sea": "sea artists",
+        "ground": "land artists"
+    },
+    "months": {
+        "january": "January",
+        "february": "February",
+        "march": "March",
+        "april": "April",
+        "may": "May",
+        "june": "June",
+        "july": "July",
+        "august": "August",
+        "september": "September",
+        "october": "October",
+        "november": "November",
+        "december": "December"
+    },
+    "days": {
+        "sunday": "Sunday",
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday"
+    },
+    "form": {
+        "name": "name",
+        "email": "email",
+        "last_name": "last name",
+        "ingredients": "Ingredients",
+        "allergens": "allergens"
+    },
+    "rules": {
+        "name": "The name entered is not valid",
+        "last_name": "The last name entered is not valid",
+        "email": "The email entered is not valid",
+        "telefono": "The phone number is not valid",
+        "address": "The address is not valid",
+        "city": "The city name is not valid",
+        "zip_code": "The postal code is not valid",
+        "max_length": "The entered text is too long. Max: 500"
+    },
+    "no_date": {
+        "text": "We are sorry, there is no show yet for"
+    }
+
+
+}
