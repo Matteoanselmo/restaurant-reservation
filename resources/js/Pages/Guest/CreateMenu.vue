@@ -10,7 +10,7 @@
             </div>
         </div>
         <Form class="row">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-lg-6">
                 <div>
                     <div
                         class="position-relative animate__animated"
@@ -42,23 +42,13 @@
                                         'offset-day':
                                             day.firstDayOfWeek > 0 &&
                                             index < day.firstDayOfWeek,
-                                        'date-unavailable': !isDateAvailable(),
-                                        'date-available': isDateAvailable(
-                                            day.date
-                                        ),
-                                        'border-success': selectedDates.some(
-                                            (selectedDate) =>
-                                                selectedDate.getTime() ===
-                                                day.date.getTime()
-                                        ),
-                                        'my-blur': propsDates.some(
-                                            (propDate) =>
-                                                propDate.getTime() ===
-                                                day.date.getTime()
-                                        ),
+                                        'my-blur': day.notPrenotable, // Modifica qui
+                                        'border-success':
+                                            day.date === selectDate,
                                     },
                                 ]"
-                                @click="selectDate(day)"
+                                :disabled="day.notPrenotable"
+                                @click="setSelectedDate(day)"
                             >
                                 <div
                                     class="text-decoration-none text-black normal-font"
@@ -76,7 +66,7 @@
                 </div>
             </div>
             <div
-                class="col-12 col-md-6 d-flex flex-column align-items-center justify-content-center"
+                class="col-12 col-lg-6 d-flex flex-column align-items-center justify-content-center"
             >
                 <div class="mb-2 w-100">
                     <p class="mb-0 me-3 fs-5">{{ $t("form.name") }}*</p>
@@ -143,13 +133,14 @@ import { ref, computed, onMounted } from "vue";
 import { useElementVisibility } from "@vueuse/core";
 import { usePage } from "@inertiajs/vue3";
 import { generalStore } from "@/Stores/state";
+
 const store = generalStore();
 const subject = ref({
     name: "",
     email: "",
     text: "",
     allergens: "",
-    selectedDate: null, // Aggiungi questa riga
+    selectedDate: null,
 });
 
 const page = usePage();
@@ -203,40 +194,36 @@ const calendarDays = computed(() => {
             dayName: dayNameShort, // Usa il nome abbreviato del giorno
             date,
             firstDayOfWeek: (date.getDay() + 6) % 7,
+            notPrenotable: !isDateAvailable(date), // Aggiungi questa linea
         });
     }
     return days;
 });
 // Assicurati che props.hasDates sia definito e non sia vuoto prima di eseguire map
-const propsDates = ref(
-    props.hasDates && Array.isArray(props.hasDates)
-        ? props.hasDates.map((dateObj) => new Date(dateObj.data))
-        : []
-);
 
-const isDateAvailable = (date) => {
-    return !propsDates.value.some((propDate) => {
-        return (
-            propDate.getTime() === date.getTime() &&
-            propDate.getMonth() === currentDate.value.getMonth() &&
-            propDate.getFullYear() === currentDate.value.getFullYear()
-        );
+const isDateAvailable = (dayDate) => {
+    // Ottiene la data nel formato YYYY-MM-DD senza convertirla in un oggetto Date
+    const dayDateString = [
+        dayDate.getFullYear(),
+        ("0" + (dayDate.getMonth() + 1)).slice(-2),
+        ("0" + dayDate.getDate()).slice(-2),
+    ].join("-");
+
+    // Verifica se la data è presente nell'array props
+    return !props.some((dateObj) => {
+        // Usa direttamente la stringa della data senza conversione in oggetto Date
+        const propDateString = dateObj.data;
+        return propDateString === dayDateString;
     });
 };
 
-const selectedDates = ref([]);
+const selectDate = ref(null);
 
-const selectDate = (day) => {
-    if (isDateAvailable(day.date)) {
-        // Se la data selezionata è già quella attiva, deselezionala
-        if (subject.selectedDate === day.date.toISOString().substring(0, 10)) {
-            subject.selectedDate = null;
-        } else {
-            // Altrimenti, imposta la nuova data selezionata
-            subject.selectedDate = day.date.toISOString().substring(0, 10);
-        }
+function setSelectedDate(day) {
+    if (!day.notPrenotable) {
+        selectDate.value = day.date;
     }
-};
+}
 
 function prevMonth() {
     currentDate.value = new Date(
@@ -261,7 +248,7 @@ Object.keys(validationRules).forEach((ruleName) => {
 store.disableOverflowHidden();
 
 console.log(props);
-console.log(calendarDays);
+console.log(calendarDays.value);
 </script>
 
 <style lang="scss" scoped>

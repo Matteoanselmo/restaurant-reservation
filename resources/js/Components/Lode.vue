@@ -1,11 +1,11 @@
 <template>
     <div>
-        <h1>
+        <h3>
             {{ $t("praise.title_1") }}
-        </h1>
-        <h1 class="mb-5">
+        </h3>
+        <h3 class="mb-5">
             {{ $t("praise.title_2") }}
-        </h1>
+        </h3>
         <div class="text-end w-100">
             <h4>
                 {{ $t("praise.signature") }}

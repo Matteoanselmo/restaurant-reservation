@@ -134,7 +134,7 @@ onMounted(() => {
             >
                 <button
                     class="btn-show border border-2"
-                    @click="scrollToSection('mare-show')"
+                    @click="scrollToSection('terra-show')"
                 >
                     <i class="fa-solid fa-chevron-up fs-3"></i>
                 </button>
