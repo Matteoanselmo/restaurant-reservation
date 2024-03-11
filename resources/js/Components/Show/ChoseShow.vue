@@ -30,13 +30,9 @@
             </Link>
         </div>
         <div>
-            <p
-                class="fs-4 text-decoration-underline text-primary"
-                @click="scrollToSection('attivita-date')"
-                style="cursor: pointer"
-            >
+            <a :href="route('create.menu')" class="animated animate__fadeIn">
                 {{ $t("menu.have_buisness") }}
-            </p>
+            </a>
         </div>
     </div>
 </template>
