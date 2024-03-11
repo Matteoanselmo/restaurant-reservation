@@ -30,13 +30,9 @@
             </Link>
         </div>
         <div>
-            <p
-                class="fs-4 text-decoration-underline text-primary"
-                @click="scrollToSection('attivita-date')"
-                style="cursor: pointer"
-            >
+            <a :href="route('create.menu')" class="animated animate__fadeIn">
                 {{ $t("menu.have_buisness") }}
-            </p>
+            </a>
         </div>
     </div>
 </template>
@@ -123,13 +119,6 @@ export default {
                 const sectionId = "terra-show"; // Vai alla sezione successiva
                 this.scrollToSection(sectionId);
                 console.log("X: " + deltaX);
-            }
-
-            if (deltaY > swipeThreshold) {
-                // Calcola la direzione dello swipe nell'asse Y
-                const sectionId = "special-show"; // Vai alla sezione successiva
-                this.scrollToSection(sectionId);
-                console.log("Y: " + deltaY);
             }
         });
     },
