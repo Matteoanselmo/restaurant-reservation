@@ -35,7 +35,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('home');
 // Dashboard Amministratore
 Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () {
     Route::get('/', function () {

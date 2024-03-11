@@ -60,9 +60,7 @@
                     <h3 class="text-uppercase">
                         {{ data.pranzo_cena }} {{ newDate[0].show_type.nome }}
                     </h3>
-                    <h5 class="mb-5">
-                        {{ data.descrizione }}
-                    </h5>
+                    <h5 class="mb-5" v-html="data.descrizione"></h5>
                     <h3 class="mb-4">&euro;{{ data.prezzo }} p.p.</h3>
                     <a
                         :href="route('scelta.posti', { id: data.id })"

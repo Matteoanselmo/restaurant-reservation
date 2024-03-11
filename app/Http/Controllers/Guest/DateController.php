@@ -9,33 +9,35 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Inertia\Inertia;
 
-class DateController extends Controller
-{
+class DateController extends Controller {
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    protected function selectShowFromData($data)
-    {
+    protected function selectShowFromData($data) {
         // Imposta la lingua italiana per Carbon
         App::setLocale('it');
 
-        $matchedData = ReservationDate::
-        with(['bookings', 'showType', 'images'])
-        ->where('data', $data)
-        ->get();
+        $matchedData = ReservationDate::with(['bookings', 'showType', 'images'])
+            ->where('data', $data)
+            ->get();
 
         return Inertia::render('Guest/SelectShowFromData', [
             'data' => $matchedData,
         ]);
     }
 
-    public function noDate($data){
+    public function noDate($data) {
 
-        return Inertia::render('Guest/NoDate',[
+        return Inertia::render('Guest/NoDate', [
             'data' => $data
         ]);
+    }
+
+    public function createIndexMenu() {
+        $reservationDates = ReservationDate::all();
+        return Inertia::render('Guest/CreateMenu', ["hasDates" => $reservationDates]);
     }
 }

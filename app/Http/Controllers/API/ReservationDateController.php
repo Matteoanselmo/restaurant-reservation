@@ -12,10 +12,8 @@ use App\Models\ShowType;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
-class ReservationDateController extends Controller
-{
-    protected function index($month, $showTypeId)
-    {
+class ReservationDateController extends Controller {
+    protected function index($month, $showTypeId) {
         $reservationDates = ReservationDate::with('showType')
             ->with('bookings')
             ->where(DB::raw('MONTH(data)'), '=', $month)
@@ -29,11 +27,10 @@ class ReservationDateController extends Controller
         return response()->json($reservationDates);
     }
 
-    public function show($data)
-    {
-       // Imposta la lingua italiana per Carbon
+    public function show($data) {
+        // Imposta la lingua italiana per Carbon
 
-        $matchedData = ReservationDate::where('data', $data)->with(['images','artists'])->get();
+        $matchedData = ReservationDate::where('data', $data)->with(['images', 'artists'])->get();
         $showTypes = ShowType::all();
         return response()->json([
             'data' => $matchedData,
@@ -41,8 +38,7 @@ class ReservationDateController extends Controller
         ]);
     }
 
-    protected function allMonthDate($month)
-    {
+    protected function allMonthDate($month) {
         $reservationDates = ReservationDate::with('showType')
             ->where(DB::raw('MONTH(data)'), '=', $month)
             ->get();
@@ -54,13 +50,12 @@ class ReservationDateController extends Controller
         return response()->json($reservationDates);
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $request->validate([
             'data' => 'date',
             // 'show_type_id' => 'required|exists:show_types.id',
-            'titolo' => 'string',
-            'descrizione' => 'string',
+            'titolo' => 'required|string',
+            'descrizione' => 'required|string',
             // 'prezzo' => 'float',
             'pranzo_cena' => 'in:pranzo,cena', // Aggiunto il controllo per pranzo o cena
         ]);
@@ -104,7 +99,7 @@ class ReservationDateController extends Controller
         return redirect()->route('dashboard.date.index');
     }
 
-    protected function updatereservationDate(Request $request){
+    protected function updatereservationDate(Request $request) {
         $request->validate([
             'data' => 'date',
             'titolo' => 'string',
@@ -175,7 +170,7 @@ class ReservationDateController extends Controller
         return response()->json($artistiInput);
     }
 
-    protected function deleteReservationDateImg($id){
+    protected function deleteReservationDateImg($id) {
         $image = ReservationDateImage::findOrFail($id);
         if (file_exists($image->path)) {
             unlink($image->path); // Elimina il file fisico
@@ -219,7 +214,7 @@ class ReservationDateController extends Controller
         }
     }
 
-    protected function deleteBooked($id){
+    protected function deleteBooked($id) {
         $booked = Booking::where('id', $id)->first();
         $booked->delete();
         //$reservationDate = ReservationDate::where('id', $request->reservationId)->select('id','titolo','data', 'pranzo_cena');
@@ -230,5 +225,3 @@ class ReservationDateController extends Controller
         return true;
     }
 }
-
-
