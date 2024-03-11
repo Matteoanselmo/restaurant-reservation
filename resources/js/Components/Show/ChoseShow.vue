@@ -120,13 +120,6 @@ export default {
                 this.scrollToSection(sectionId);
                 console.log("X: " + deltaX);
             }
-
-            if (deltaY > swipeThreshold) {
-                // Calcola la direzione dello swipe nell'asse Y
-                const sectionId = "special-show"; // Vai alla sezione successiva
-                this.scrollToSection(sectionId);
-                console.log("Y: " + deltaY);
-            }
         });
     },
     created() {},
