@@ -16,7 +16,7 @@
                 <i class="fs-3 fa-regular fa-bell"></i>
             </h6>
             <Form
-                @submit.prevent="handleSubmit"
+                @submit="handleSubmit"
                 id="payment-form"
                 class="d-flex flex-column justify-content-center align-items-center mb-4 shadow"
             >
@@ -179,7 +179,7 @@ const formatCurrency = function (value) {
 };
 
 const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     paymentProcessing.value = true;
     const { error } = await stripe.value.confirmPayment({
         elements: elements.value,
