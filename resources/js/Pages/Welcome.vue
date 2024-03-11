@@ -33,7 +33,7 @@ onMounted(() => {
         setCookie("isVisited", true, 30);
         setTimeout(() => {
             scrollComponent(restaurantRef);
-        }, 1500);
+        }, 3500);
     }
 });
 
@@ -66,9 +66,14 @@ async function scrollComponent(ref) {
             behavior: "smooth",
             block: "start",
         });
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        const nextRef = getNextRef(ref);
 
+        // Determina se è necessario applicare il ritardo prima di passare al prossimo componente
+        if (ref === restaurantRef || ref === lodeRef) {
+            // Applica il ritardo solo tra restaurantRef, lodeRef e showRef
+            await new Promise((resolve) => setTimeout(resolve, 3500));
+        }
+
+        const nextRef = getNextRef(ref);
         if (nextRef) {
             scrollComponent(nextRef);
         }
@@ -92,6 +97,8 @@ function getNextRef(currentRef) {
         return null; // Termina lo scorrimento qui
     }
 }
+
+store.enableOverflowHidden();
 </script>
 
 <template>
@@ -99,10 +106,13 @@ function getNextRef(currentRef) {
     <div id="home">
         <button-info></button-info>
         <div>
-            <ApplicationLogo
+            <div
                 class="full-screen d-flex justify-content-center align-items-center overflow-hidden animate__animated animate__slideInUp"
                 ref="appLogoRef"
-            />
+            >
+                <img src="/images/logo/logo.png" class="w-100" />
+            </div>
+            <ApplicationLogo />
             <NotARestaurant
                 class="full-screen d-flex justify-content-center align-items-center overflow-hidden animate__animated animate__zoomIn"
                 ref="restaurantRef"
