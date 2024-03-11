@@ -64,6 +64,10 @@
         "zip_code": "Il codice postale non è valido.",
         "max_length" : "Il testo inserito è troppo lungo. max: 500"
     },
+    "commons" : {
+        "language" : "lingua",
+        "who-we-are" : "chi siamo"
+    },
     "no_date": {
         "text" : "Ci dispiace tanto, non c'è ancora nessuno spettacolo per"
     }

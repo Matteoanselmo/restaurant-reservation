@@ -252,6 +252,10 @@ const validationRules = getValidationRules(t);
 Object.keys(validationRules).forEach((ruleName) => {
     defineRule(ruleName, validationRules[ruleName]);
 });
+
+onBeforeUnmount(() => {
+    store.enableOverflowHidden();
+});
 removeOverflow();
 </script>
 

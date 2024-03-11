@@ -1,6 +1,9 @@
 <template>
     <Link :href="route('home')">
-        <img src="/images/logo/logo.png" class="position-fixed top-0 start-0" />
+        <img
+            src="/images/logo/logo.png"
+            class="position-fixed top-0 start-0 rounded m-2"
+        />
     </Link>
 </template>
 
