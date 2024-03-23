@@ -170,7 +170,7 @@ onMounted(() => {
                 >
                     <Link
                         v-if="hasAvailableSeats(day.date)"
-                        class="text-decoration-none text-black normal-font"
+                        class="text-decoration-none text-black normal-font w-100 h-100"
                         :href="
                             route('guest.select.show', {
                                 data: day.date
@@ -190,7 +190,7 @@ onMounted(() => {
                     </Link>
                     <Link
                         v-else
-                        class="text-decoration-none normal-font"
+                        class="text-decoration-none text-black normal-font w-100 h-100"
                         :href="
                             route('guest.no.date', {
                                 data: day.date

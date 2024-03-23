@@ -148,7 +148,7 @@ export default {
             const month = this.currentDate.getMonth() + 1;
             this.monthWithMareDates = [];
             axios
-                .post(`/api/get-reservation-dates/${month}/${1}`)
+                .post(`/api/get-reservation-dates/${month}/${2}`)
                 .then((response) => {
                     if (response.data) {
                         response.data.forEach((date) => {
