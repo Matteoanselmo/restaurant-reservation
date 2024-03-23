@@ -136,13 +136,13 @@ store.enableOverflowHidden();
                     id="chose-show"
                     ref="showRef"
                 />
-                <!-- <div>
+                <div>
                     <SpecialShow class="full-screen" id="special-show" />
                     <DateSpacial
                         class="full-screen d-flex flex-column justify-content-start align-items-center"
                         id="special-date"
                     />
-                </div> -->
+                </div>
             </div>
             <div>
                 <TerraShow class="full-screen" id="terra-show" />

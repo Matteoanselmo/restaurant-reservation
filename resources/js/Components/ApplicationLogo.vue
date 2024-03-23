@@ -15,9 +15,19 @@ import { Link } from "@inertiajs/vue3";
 img {
     height: 100px;
 }
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 1200px) {
     img {
         height: 45px;
+    }
+}
+@media screen and (max-width: 768px) {
+    img {
+        height: 35px;
+    }
+}
+@media screen and (max-width: 576px) {
+    img {
+        height: 25px;
     }
 }
 </style>

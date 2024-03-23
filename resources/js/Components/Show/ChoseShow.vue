@@ -22,12 +22,18 @@
             </button>
         </div>
         <div class="d-flex w-100 align-items center justify-content-evenly">
-            <Link
+            <button
+                class="btn-show border border-2 animated animate__fadeIn"
+                @click="scrollToSection('special-show')"
+            >
+                <span>special</span>
+            </button>
+            <!-- <Link
                 :href="route('create.menu')"
                 class="btn-show border border-2 animated animate__fadeIn"
             >
                 {{ $t("menu.create_menu") }}
-            </Link>
+            </Link> -->
         </div>
         <div>
             <a :href="route('create.menu')" class="animated animate__fadeIn">
