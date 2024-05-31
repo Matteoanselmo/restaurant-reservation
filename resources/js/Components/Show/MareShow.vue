@@ -56,10 +56,27 @@
 
 <script>
 import { ref, onMounted } from "vue";
+import axios from "axios";
+
 export default {
     name: "MareShow",
     setup() {
         const mareArtists = ref([]);
+
+        const scrollToSection = (sectionId) => {
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: "smooth" });
+            }
+        };
+
+        const checkScrollPosition = () => {
+            const targetSection = document.getElementById(sectionId);
+
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: "smooth" });
+            }
+        };
 
         onMounted(() => {
             axios
@@ -70,49 +87,42 @@ export default {
                 .catch((err) => {
                     console.error(err);
                 });
+
+            let initialTouchX = 0;
+            let initialTouchY = 0;
+
+            const handleTouchStart = (e) => {
+                initialTouchX = e.touches[0].clientX;
+                initialTouchY = e.touches[0].clientY;
+            };
+
+            const handleTouchEnd = (e) => {
+                const deltaX = initialTouchX - e.changedTouches[0].clientX;
+                const deltaY = initialTouchY - e.changedTouches[0].clientY;
+                const swipeThresholdY = 200;
+                const swipeThresholdX = 80;
+
+                if (deltaX > swipeThresholdX) {
+                    scrollToSection("chose-show");
+                }
+
+                if (deltaY > swipeThresholdY) {
+                    scrollToSection("mare-date");
+                }
+            };
+
+            const element = document.querySelector(".container-fluid");
+            if (element) {
+                element.addEventListener("touchstart", handleTouchStart);
+                element.addEventListener("touchend", handleTouchEnd);
+            }
         });
+
         return {
             mareArtists,
+            scrollToSection,
+            checkScrollPosition,
         };
-    },
-    methods: {
-        scrollToSection(sectionId) {
-            const targetSection = document.getElementById(sectionId);
-
-            if (targetSection) {
-                targetSection.scrollIntoView({ behavior: "smooth" });
-            }
-        },
-    },
-    mounted() {
-        let initialTouchX = 0;
-        let initialTouchY = 0;
-
-        // Aggiungi un listener per il gesto di swipe
-        this.$el.addEventListener("touchstart", (e) => {
-            initialTouchX = e.touches[0].clientX;
-            initialTouchY = e.touches[0].clientY;
-        });
-
-        this.$el.addEventListener("touchend", (e) => {
-            const deltaX = initialTouchX - e.changedTouches[0].clientX;
-            const deltaY = initialTouchY - e.changedTouches[0].clientY;
-            // Definisci una soglia per determinare quando considerare il gesto come uno swipe
-            const swipeThresholdY = 200;
-            const swipeThresholdX = 80;
-
-            if (deltaX > swipeThresholdX) {
-                // Calcola la direzione dello swipe
-                const sectionId = "chose-show"; // Vai alla sezione successiva
-                this.scrollToSection(sectionId);
-            }
-
-            if (deltaY > swipeThresholdY) {
-                // Calcola la direzione dello swipe
-                const sectionId = "mare-date"; // Vai alla sezione successiva
-                this.scrollToSection(sectionId);
-            }
-        });
     },
 };
 </script>

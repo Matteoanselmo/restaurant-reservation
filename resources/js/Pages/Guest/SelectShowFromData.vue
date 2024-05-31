@@ -33,25 +33,18 @@
                     v-for="(data, i) in newDate"
                     :key="i"
                 >
-                    <div id="myCarousel" class="w-100">
-                        <div class="carousel-inner mb-4 w-100">
-                            <Carousel class="position-relative">
-                                <Slide
-                                    v-for="(image, index) in data.images"
-                                    :key="index"
-                                >
-                                    <img
-                                        :src="image.path"
-                                        class="carousel__item shadow"
-                                        alt="..."
-                                    />
-                                </Slide>
-
-                                <template #addons>
-                                    <Navigation />
-                                    <Pagination />
-                                </template>
-                            </Carousel>
+                    <div class="complex-grid row">
+                        <div
+                            v-for="(image, index) in data.images"
+                            :key="index"
+                            :class="getBootstrapGridClasses(index)"
+                            class="mb-3"
+                        >
+                            <img
+                                :src="image.path"
+                                class="img-fluid shadow w-100"
+                                alt="..."
+                            />
                         </div>
                     </div>
                     <h3 class="text-uppercase text-center">
@@ -83,8 +76,6 @@ import { computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { generalStore } from "@/Stores/state";
-import "vue3-carousel/dist/carousel.css";
-import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 
 const page = usePage();
 const date = computed(() => page.props.data);
@@ -98,40 +89,28 @@ onMounted(() => {
 onBeforeUnmount(() => {
     store.enableOverflowHidden();
 });
+
+const getBootstrapGridClasses = (index) => {
+    if (index % 2 === 0) {
+        // Indice pari
+        return "col-3";
+    } else {
+        // Indice dispari
+        return "col-6";
+    }
+};
 </script>
 
 <style lang="scss" scoped>
 #prenotation-table {
     overflow: auto;
 
-    #myCarousel {
-        .carousel-inner {
-            .carousel__item {
-                min-height: 200px;
-                width: 100%;
-                background-color: var(--vc-clr-primary);
-                color: var(--vc-clr-white);
-                font-size: 20px;
-                border-radius: 8px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-        }
-    }
-    @media screen and (min-width: 767px) {
-        #myCarousel {
-            height: 50vh;
-            .carousel-inner {
-                height: 100%;
-                .carousel__item {
-                    min-height: 100%;
-                    min-height: 100%;
-                    object-fit: contain;
-                    object-position: center;
-                    width: auto;
-                }
-            }
+    .complex-grid {
+        display: flex;
+        flex-wrap: wrap;
+
+        img {
+            border-radius: 8px;
         }
     }
 }

@@ -28,12 +28,6 @@
             >
                 <span>special</span>
             </button>
-            <!-- <Link
-                :href="route('create.menu')"
-                class="btn-show border border-2 animated animate__fadeIn"
-            >
-                {{ $t("menu.create_menu") }}
-            </Link> -->
         </div>
         <div>
             <a :href="route('create.menu')" class="animated animate__fadeIn">
@@ -59,10 +53,6 @@ export default {
                     tipo: "mare",
                     routeId: "mare-show",
                 },
-                // {
-                //     tipo: 'special',
-                //     routeId: 'special-show'
-                // },
                 {
                     tipo: "terra",
                     routeId: "terra-show",
@@ -118,22 +108,18 @@ export default {
 
             if (deltaX < -swipeThreshold) {
                 // Calcola la direzione dello swipe nell'asse X
-                const sectionId = "mare-show"; // Vai alla sezione successiva
+                const sectionId = "mare-show"; // Vai alla sezione sinistra
                 this.scrollToSection(sectionId);
-                console.log("X: " + deltaX);
             } else if (deltaX > swipeThreshold) {
-                const sectionId = "terra-show"; // Vai alla sezione successiva
+                const sectionId = "terra-show"; // Vai alla sezione destra
                 this.scrollToSection(sectionId);
-                console.log("X: " + deltaX);
+            } else if (deltaY > -swipeThreshold) {
+                const sectionId = "special-show"; // Vai alla sezione in basso
+                this.scrollToSection(sectionId);
             }
         });
     },
-    created() {},
 };
 </script>
 
-<style lang="scss" scoped>
-// #primal-chose-show{
-//     backdrop-filter: blur(6px);
-// }
-</style>
+<style scoped></style>
