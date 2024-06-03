@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid position-relative">
         <div
-            class="row overflow-y-scroll"
+            class="row overflow-y-scroll text-white"
             style="max-height: calc(100vh - 70px)"
             @scroll="checkScrollPosition"
         >
