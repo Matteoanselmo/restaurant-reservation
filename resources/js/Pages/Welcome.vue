@@ -163,6 +163,19 @@ store.enableOverflowHidden();
     background-repeat: no-repeat;
 }
 
+#terra-show {
+    background-image: url("../../../public/images/sfondi/carne.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#mare-show {
+    background-image: url("../../../public/images/sfondi/pesce.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 @media screen and (max-width: 767px) {
     #chose-show {
         background-position: 75%;

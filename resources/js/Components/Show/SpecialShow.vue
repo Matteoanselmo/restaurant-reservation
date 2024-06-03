@@ -1,15 +1,28 @@
 <template>
-    <div class="container-fluid position-relative" ref="specialShow">
-        <div class="row">
-            <div class="col-12 d-flex flex-column align-items-center mb-2">
-                <button class="btn-show border border-2" @click="scrollToSection('chose-show')">
-                    <i class="fa-solid fa-chevron-up  fs-3" ></i>
+    <div class="container-fluid position-relative">
+        <div
+            class="row overflow-y-scroll"
+            style="max-height: calc(100vh - 70px)"
+            @scroll="checkScrollPosition"
+        >
+            <div
+                class="col-12 d-flex align-items-center justify-content-between mb-2"
+            >
+                <div></div>
+                <h2 class="me-3 text-capitalize">
+                    {{ $t("artists.special") }}
+                </h2>
+                <button
+                    class="btn-show border border-2"
+                    @click="scrollToSection('chose-show')"
+                >
+                    <i class="fa-solid fa-chevron-up fs-3"></i>
                 </button>
-                <h1>
-                    Arstisti Special
-                </h1>
             </div>
-            <div class="ol-6 col-md-4 col-lg-3 animate__animated animate__pulse" v-for="(artista, i) in specialArtists" :key="i" >
+            <div class="col-12">
+                <h3>Storia degli artisti Special</h3>
+            </div>
+            <!-- <div class="col-6 col-md-4 col-lg-3 animate__animated animate__pulse" v-for="(artista, i) in mareArtists" :key="i" >
                 <div class="rounded-5 border border-2 p-2 mb-4 position-relative  guest-artist-card py-5">
                     <div class="position-absolute top-0 start-0 h-100 w-100 my-blur ">
                         <img :src="'/' + artista.img_path" alt="" class="h-100 w-100 artist-img rounded-5">
@@ -28,9 +41,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="col-12">
-                <button class="position-absolute start-50 translate-middle-x btn-show my-btn-bottom border border-2" @click="scrollToSection('special-date')">
+                <button
+                    class="position-absolute start-50 translate-middle-x btn-show my-btn-bottom border border-2"
+                    @click="scrollToSection('special-date')"
+                >
                     Date
                 </button>
             </div>
@@ -39,48 +55,50 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
-import { useElementVisibility } from '@vueuse/core'
+import { ref, onMounted } from "vue";
+import { useElementVisibility } from "@vueuse/core";
 export default {
-    name: 'SpecialShow',
-    setup(){
+    name: "SpecialShow",
+    setup() {
         function scrollToSection(sectionId) {
             const targetSection = document.getElementById(sectionId);
 
             if (targetSection) {
-                targetSection.scrollIntoView({ behavior: 'smooth' });
+                targetSection.scrollIntoView({ behavior: "smooth" });
             }
         }
-        const specialShow =ref(null);
-        const targetIsVisible = useElementVisibility(specialShow)
+        const specialShow = ref(null);
+        const targetIsVisible = useElementVisibility(specialShow);
         const specialArtists = ref([]);
 
-        onMounted(()=> {
-            if(targetIsVisible){
-                axios.post(`/api/filtered-artist/${2}`)
-                .then((res) => {
-                    specialArtists.value = res.data.artistiFiltrati;
-                }).catch((err) => {
-                    console.error(err)
-                })
+        onMounted(() => {
+            if (targetIsVisible) {
+                axios
+                    .post(`/api/filtered-artist/${2}`)
+                    .then((res) => {
+                        specialArtists.value = res.data.artistiFiltrati;
+                    })
+                    .catch((err) => {
+                        console.error(err);
+                    });
             }
-        })
+        });
         return {
             scrollToSection,
             specialArtists,
             specialShow,
-            targetIsVisible
-        }
+            targetIsVisible,
+        };
     },
     mounted() {
         let initialTouchY = 0;
 
         // Aggiungi un listener per il gesto di swipe
-        this.$el.addEventListener('touchstart', (e) => {
-        initialTouchY = e.touches[0].clientY;
+        this.$el.addEventListener("touchstart", (e) => {
+            initialTouchY = e.touches[0].clientY;
         });
 
-        this.$el.addEventListener('touchend', (e) => {
+        this.$el.addEventListener("touchend", (e) => {
             const deltaY = initialTouchY - e.changedTouches[0].clientY;
 
             // Definisci una soglia per determinare quando considerare il gesto come uno swipe
@@ -88,17 +106,15 @@ export default {
 
             if (deltaY < swipeThreshold) {
                 // Calcola la direzione dello swipe
-                const sectionId = 'chose-show'; // Vai alla sezione successiva
+                const sectionId = "chose-show"; // Vai alla sezione successiva
                 this.scrollToSection(sectionId);
             } else {
-                const sectionId = 'special-date'; // Vai alla sezione successiva
+                const sectionId = "special-date"; // Vai alla sezione successiva
                 this.scrollToSection(sectionId);
             }
         });
-    }
-}
+    },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -22,7 +22,8 @@
     },
     "artists": {
         "sea": "artistes de la mer",
-        "ground": "artistes de la terre"
+        "ground": "artistes de la terre",
+        "special" : "artistes special"
     },
     "months": {
         "january": "Janvier",
