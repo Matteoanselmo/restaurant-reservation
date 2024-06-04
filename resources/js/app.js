@@ -1,6 +1,9 @@
 import './bootstrap';
 import '../css/app.css';
 
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
@@ -19,7 +22,7 @@ const pinia = createPinia();
 pinia.use(piniaPluginPersistedState);
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'villa-albertina';
-
+AOS.init();
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
