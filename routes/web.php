@@ -98,6 +98,10 @@ Route::get('errore-pagamento', function () {
     return Inertia::render('PaymentError');
 })->name('error.payment');
 
+Route::get("about", function () {
+    return Inertia::render('ChiSiamo');
+})->name("about");
+
 // Route::get('email', function() {
 //     $message = 'ciao ciao ciao ';
 //     // Mail::to('matteo.anselmo96@gmail.com')->send(new GuestConfirmedPayment($data));

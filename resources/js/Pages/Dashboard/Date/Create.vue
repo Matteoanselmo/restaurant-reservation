@@ -12,7 +12,7 @@
                 </a>
             </div>
             <div class="col-6">
-                <h1
+                <h2
                     class="text-start mb-4 fw-bold animate__animated animate__fadeInDown text-capitalize normal-font"
                 >
                     Spettacolo
@@ -24,7 +24,7 @@
                             day: "numeric",
                         })
                     }}
-                </h1>
+                </h2>
             </div>
             <div class="col-4"></div>
         </div>
@@ -222,7 +222,7 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import { usePage } from "@inertiajs/vue3";
 import axios from "axios";
 import { ref, onMounted, onBeforeUnmount } from "vue";
@@ -232,216 +232,182 @@ import { generalStore } from "@/Stores/state";
 import ArtistiCreate from "../Artisti/Create.vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
-export default {
-    name: "DashboardCreateDate",
-    components: {
-        ArtistiCreate,
-        QuillEditor,
-    },
-    setup() {
-        const store = generalStore();
-        const page = usePage();
-        const data = page.props.data;
-        // const artists = page.props.artists;
-        const artists = ref([]);
-        const formData = ref({
-            titolo: "",
-            descrizione: "",
-            posti_disponibili: 1,
-            show_type_id: "",
-            pranzo_cena: "pranzo",
-            data: data,
-            artisti: [],
-            img: [],
-            prezzo: 0,
-        });
+const store = generalStore();
+const page = usePage();
+const data = page.props.data;
+// const artists = page.props.artists;
+const artists = ref([]);
+const formData = ref({
+    titolo: "",
+    descrizione: "",
+    posti_disponibili: 1,
+    show_type_id: "",
+    pranzo_cena: "pranzo",
+    data: data,
+    artisti: [],
+    img: [],
+    prezzo: 0,
+});
 
-        function addArtistsInFormdata(artist) {
-            if (!formData.value.artisti.includes(artist.id)) {
-                // L'ID dell'artista non è presente nell'array, quindi lo aggiungiamo
-                formData.value.artisti.push(artist.id);
-            } else {
-                const index = formData.value.artisti.indexOf(artist.id);
-                formData.value.artisti.splice(index, 1);
-            }
+function addArtistsInFormdata(artist) {
+    if (!formData.value.artisti.includes(artist.id)) {
+        // L'ID dell'artista non è presente nell'array, quindi lo aggiungiamo
+        formData.value.artisti.push(artist.id);
+    } else {
+        const index = formData.value.artisti.indexOf(artist.id);
+        formData.value.artisti.splice(index, 1);
+    }
 
-            console.log(formData.value.artisti);
-        }
+    console.log(formData.value.artisti);
+}
 
-        function getArtistsByShowType(showtypeId) {
-            artists.value = [];
-            formData.value.artisti = [];
-            axios
-                .post("/api/filtered-artist-title/" + showtypeId)
-                .then((res) => {
-                    res.data.artistiFiltrati.forEach((artist) => {
-                        artists.value.push(artist);
-                    });
-                })
-                .catch((err) => {
-                    console.error(err);
-                });
-        }
-        const imagePreviews = ref([]);
-        // Aggiungo i file all array, creao un anteprima e ridimensiono i file per l'upload (meno byte piu velocità )
-        function onFileChange(event) {
-            const files = event.target.files;
-
-            for (const key in files) {
-                if (files.hasOwnProperty(key)) {
-                    const originalFile = files[key];
-
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const dataURL = e.target.result;
-
-                        const img = new Image();
-                        img.src = dataURL;
-
-                        img.onload = () => {
-                            const maxWidth = 550; // Larghezza massima desiderata
-                            const maxHeight = 350; // Altezza massima desiderata
-
-                            let newWidth, newHeight;
-                            if (img.width > img.height) {
-                                newWidth = maxWidth;
-                                newHeight = (img.height / img.width) * maxWidth;
-                            } else {
-                                newHeight = maxHeight;
-                                newWidth = (img.width / img.height) * maxHeight;
-                            }
-
-                            // Crea un canvas per ridimensionare l'immagine
-                            const canvas = document.createElement("canvas");
-                            const ctx = canvas.getContext("2d");
-                            canvas.width = newWidth;
-                            canvas.height = newHeight;
-                            ctx.drawImage(img, 0, 0, newWidth, newHeight);
-
-                            // Converti il canvas in un nuovo oggetto Blob (File)
-                            canvas.toBlob(
-                                (blob) => {
-                                    const modifiedFile = new File(
-                                        [blob],
-                                        originalFile.name,
-                                        {
-                                            type: originalFile.type,
-                                            lastModified:
-                                                originalFile.lastModified,
-                                            size: blob.size,
-                                        }
-                                    );
-
-                                    formData.value.img.push(modifiedFile);
-                                    imagePreviews.value.push(
-                                        URL.createObjectURL(modifiedFile)
-                                    );
-                                },
-                                originalFile.type,
-                                0.7
-                            );
-                        };
-                    };
-                    reader.readAsDataURL(originalFile);
-                }
-            }
-            console.log(typeof formData.value.img);
-        }
-
-        async function createReservationDate() {
-            try {
-                const newformdata = new FormData();
-                newformdata.append("data", formData.value.data);
-                newformdata.append("descrizione", formData.value.descrizione);
-                for (const key in formData.value.img) {
-                    if (formData.value.img.hasOwnProperty(key)) {
-                        const image = formData.value.img[key];
-                        newformdata.append(`img[${key}]`, image);
-                    }
-                }
-                newformdata.append("pranzo_cena", formData.value.pranzo_cena);
-                newformdata.append("prezzo", formData.value.prezzo);
-                newformdata.append("show_type_id", formData.value.show_type_id);
-                newformdata.append("titolo", formData.value.titolo);
-                newformdata.append("artisti", formData.value.artisti);
-
-                router.post("/api/reservation-dates", newformdata, {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                });
-            } catch (error) {
-                console.error("Error creating reservation date:", error);
-            }
-        }
-
-        const showTypes = ref([]);
-
-        const fetchShowTypes = async () => {
-            try {
-                const response = await axios.get("/api/show-types");
-                showTypes.value = response.data;
-            } catch (error) {
-                console.error("Error fetching show types:", error);
-            }
-        };
-
-        function formatCurrency() {
-            let price = String(formData.value.prezzo).replace(/[^\d]/g, "");
-            let pre, dec;
-            let delimiter = ".";
-
-            let result = price;
-
-            if (price.length > 3 && price.charAt(0) == "0") {
-                price = price.substr(1);
-            }
-
-            if (price.length > 2) {
-                pre = price.slice(0, -2);
-                dec = price.substr(price.length - 2, 2);
-                result = pre + delimiter + dec;
-            }
-
-            formData.value.prezzo = result;
-        }
-
-        function onPriceBlur($event) {
-            if ($event.target.value.includes(".")) {
-                let price = parseFloat($event.target.value);
-                formData.value.prezzo = price.toFixed(2);
-            }
-        }
-        onMounted(() => {
-            store.disableOverflowHidden();
-            fetchShowTypes();
-            const tooltipTriggerList = [].slice.call(
-                document.querySelectorAll('[data-bs-toggle="tooltip"]')
-            );
-            tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl);
+function getArtistsByShowType(showtypeId) {
+    artists.value = [];
+    formData.value.artisti = [];
+    axios
+        .post("/api/filtered-artist-title/" + showtypeId)
+        .then((res) => {
+            res.data.artistiFiltrati.forEach((artist) => {
+                artists.value.push(artist);
             });
+        })
+        .catch((err) => {
+            console.error(err);
         });
+}
+const imagePreviews = ref([]);
+// Aggiungo i file all array, creao un anteprima e ridimensiono i file per l'upload (meno byte piu velocità )
+function onFileChange(event) {
+    const files = event.target.files;
+    for (let i = 0; i < files.length; i++) {
+        const originalFile = files[i];
+        const reader = new FileReader();
 
-        onBeforeUnmount(() => {
-            store.enableOverflowHidden();
-        });
+        reader.onload = (e) => {
+            const dataURL = e.target.result;
+            const img = new Image();
+            img.src = dataURL;
 
-        return {
-            data,
-            formData,
-            createReservationDate,
-            showTypes,
-            onPriceBlur,
-            formatCurrency,
-            onFileChange,
-            imagePreviews,
-            artists,
-            getArtistsByShowType,
-            addArtistsInFormdata,
+            img.onload = () => {
+                const maxWidth = 550;
+                const maxHeight = 350;
+
+                let newWidth, newHeight;
+                if (img.width > img.height) {
+                    newWidth = maxWidth;
+                    newHeight = (img.height / img.width) * maxWidth;
+                } else {
+                    newHeight = maxHeight;
+                    newWidth = (img.width / img.height) * maxHeight;
+                }
+
+                const canvas = document.createElement("canvas");
+                const ctx = canvas.getContext("2d");
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+                ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+                canvas.toBlob(
+                    (blob) => {
+                        const modifiedFile = new File(
+                            [blob],
+                            originalFile.name,
+                            {
+                                type: originalFile.type,
+                                lastModified: originalFile.lastModified,
+                            }
+                        );
+
+                        formData.value.img.push(modifiedFile);
+                        imagePreviews.value.push(
+                            URL.createObjectURL(modifiedFile)
+                        );
+                    },
+                    originalFile.type,
+                    0.7
+                );
+            };
         };
-    },
+
+        reader.readAsDataURL(originalFile);
+    }
+}
+
+async function createReservationDate() {
+    try {
+        const newformdata = new FormData();
+        newformdata.append("data", formData.value.data);
+        newformdata.append("descrizione", formData.value.descrizione);
+        formData.value.img.forEach((image, index) => {
+            newformdata.append(`img[${index}]`, image);
+        });
+        newformdata.append("pranzo_cena", formData.value.pranzo_cena);
+        newformdata.append("prezzo", formData.value.prezzo);
+        newformdata.append("show_type_id", formData.value.show_type_id);
+        newformdata.append("titolo", formData.value.titolo);
+        newformdata.append("artisti", formData.value.artisti.join(","));
+
+        router.post("/api/reservation-dates", newformdata, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+    } catch (error) {
+        console.error("Error creating reservation date:", error);
+    }
+}
+
+const showTypes = ref([]);
+
+const fetchShowTypes = async () => {
+    try {
+        const response = await axios.get("/api/show-types");
+        showTypes.value = response.data;
+    } catch (error) {
+        console.error("Error fetching show types:", error);
+    }
 };
+
+function formatCurrency() {
+    let price = String(formData.value.prezzo).replace(/[^\d]/g, "");
+    let pre, dec;
+    let delimiter = ".";
+
+    let result = price;
+
+    if (price.length > 3 && price.charAt(0) == "0") {
+        price = price.substr(1);
+    }
+
+    if (price.length > 2) {
+        pre = price.slice(0, -2);
+        dec = price.substr(price.length - 2, 2);
+        result = pre + delimiter + dec;
+    }
+
+    formData.value.prezzo = result;
+}
+
+function onPriceBlur($event) {
+    if ($event.target.value.includes(".")) {
+        let price = parseFloat($event.target.value);
+        formData.value.prezzo = price.toFixed(2);
+    }
+}
+onMounted(() => {
+    store.disableOverflowHidden();
+    fetchShowTypes();
+    const tooltipTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    );
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+});
+
+onBeforeUnmount(() => {
+    store.enableOverflowHidden();
+});
 </script>
 
 <style scoped>

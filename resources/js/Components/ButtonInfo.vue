@@ -32,7 +32,7 @@ function showDetails() {
             </li>
             <li class="more-button-list-item">
                 <a
-                    href="mailto:info.villaalbertina@gmail.com"
+                    :href="route('about')"
                     class="text-decoration-none text-black"
                 >
                     <i class="fa-solid fa-kitchen-set"></i>

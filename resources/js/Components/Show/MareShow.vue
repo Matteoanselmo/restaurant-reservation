@@ -16,7 +16,9 @@
                     class="btn-show border border-2"
                     @click="scrollToSection('chose-show')"
                 >
-                    <i class="fa-solid fa-chevron-right fs-3"></i>
+                    <i
+                        class="fa-solid fa-chevron-right fs-6 fs-md-4 fs-lg-3"
+                    ></i>
                 </button>
             </div>
             <div class="col-12">

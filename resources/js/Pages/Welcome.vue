@@ -109,9 +109,7 @@ store.enableOverflowHidden();
             <div
                 class="full-screen d-flex justify-content-center align-items-center overflow-hidden animate__animated animate__slideInUp"
                 ref="appLogoRef"
-            >
-                <img src="/images/logo/logo.png" class="w-100" />
-            </div>
+            ></div>
             <ApplicationLogo />
             <NotARestaurant
                 class="full-screen d-flex justify-content-center align-items-center overflow-hidden animate__animated animate__zoomIn"
