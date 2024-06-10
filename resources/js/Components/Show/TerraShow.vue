@@ -12,7 +12,9 @@
                     class="btn-show border border-2"
                     @click="scrollToSection('chose-show')"
                 >
-                    <i class="fa-solid fa-chevron-left fs-3"></i>
+                    <i
+                        class="fa-solid fa-chevron-left fs-6 fs-md-4 fs-lg-3"
+                    ></i>
                 </button>
                 <h2 class="text-capitalize">
                     {{ $t("artists.ground") }}

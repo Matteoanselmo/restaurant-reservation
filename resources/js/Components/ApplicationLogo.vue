@@ -22,12 +22,12 @@ img {
 }
 @media screen and (max-width: 768px) {
     img {
-        height: 35px;
+        height: 40px;
     }
 }
 @media screen and (max-width: 576px) {
     img {
-        height: 25px;
+        height: 35px;
     }
 }
 </style>

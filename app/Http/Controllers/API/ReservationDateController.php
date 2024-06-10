@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Artist;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use App\Models\ReservationDate;
 use App\Models\ReservationDateImage;
 use App\Models\ShowType;
 use Illuminate\Support\Facades\DB;
-use Inertia\Inertia;
+use Illuminate\Support\Facades\File;
+
 
 class ReservationDateController extends Controller {
     protected function index($month, $showTypeId) {
@@ -80,10 +80,9 @@ class ReservationDateController extends Controller {
             foreach ($request->file('img') as $image) {
                 $imageExt = $image->getClientOriginalExtension();
                 $timestamp = time();
-                $imageName = $timestamp . '.' . $imageExt;
-                $imagePath = '/uploads/' . $imageName; // Percorso relativo
+                $imageName = $timestamp . '_' . uniqid() . '.' . $imageExt;
+                $imagePath = '/uploads/' . $imageName;
 
-                // Salva l'immagine nella directory "public/uploads"
                 $image->move(public_path('uploads'), $imageName);
 
                 ReservationDateImage::create([
@@ -188,16 +187,16 @@ class ReservationDateController extends Controller {
         $reservationDate = ReservationDate::findOrFail($id);
         $data = $reservationDate->data;
 
-        // Ottieni le immagini associate alla data di prenotazione
-        $images = ReservationDateImage::where('reservation_date_id', $reservationDate->id)->get();
-
-        // Elimina le immagini dalla cartella public/uploads/
+        // Elimina le immagini associate dal database e dal filesystem
+        $images = $reservationDate->images;
         foreach ($images as $image) {
-            $imagePath = $image->path;
-            if (file_exists($imagePath)) {
-                unlink($imagePath); // Elimina il file fisico
+            $imagePath = public_path($image->path);
+            if (File::exists($imagePath)) {
+                File::delete($imagePath);
             }
+            $image->delete();
         }
+
 
         // Elimina la data di prenotazione
         $reservationDate->delete();
