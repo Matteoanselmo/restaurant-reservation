@@ -14,6 +14,7 @@ import { Link } from "@inertiajs/vue3";
 <style lang="scss" scoped>
 img {
     height: 100px;
+    z-index: 9;
 }
 @media screen and (max-width: 1200px) {
     img {
