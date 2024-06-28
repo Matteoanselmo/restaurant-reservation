@@ -2,18 +2,27 @@
     <Link :href="route('home')">
         <img
             src="/images/logo/logo.png"
-            class="position-fixed top-0 start-0 rounded m-2"
+            class="position-fixed top-0 rounded m-2"
+            :class="align"
         />
     </Link>
 </template>
 
 <script setup>
 import { Link } from "@inertiajs/vue3";
+import { defineProps } from "vue";
+
+const props = defineProps({
+    align: {
+        type: String,
+        default: "start-0",
+    },
+});
 </script>
 
 <style lang="scss" scoped>
 img {
-    height: 100px;
+    height: 65px;
     z-index: 9;
 }
 @media screen and (max-width: 1200px) {
