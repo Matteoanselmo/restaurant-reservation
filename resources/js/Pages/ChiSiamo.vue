@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, onBeforeUnmount } from "vue";
+import { reactive, ref, onBeforeUnmount, computed } from "vue";
 import { generalStore } from "@/Stores/state";
 import ApplicationLogo from "../Components/ApplicationLogo.vue";
 const store = generalStore();
@@ -24,15 +24,17 @@ onBeforeUnmount(() => {
 });
 
 removeOverflow();
-</script>
 
+// Detect screen size
+const isSmallScreen = computed(() => window.innerWidth < 768);
+</script>
 <template>
     <div class="container-fluid">
         <ApplicationLogo />
         <div class="row">
             <div class="col-12 about-1 position-relative">
                 <div
-                    class="text-white position-absolute bottom-0 start-50 translate-middle-x w-100 text-center"
+                    class="text-overlay w-100 text-center d-none d-md-block position-absolute bottom-0 start-50 translate-middle-x text-white"
                 >
                     <p class="mb-1">
                         Villa Albertina è unʼode alla bellezza della natura
@@ -51,20 +53,24 @@ removeOverflow();
                 </div>
             </div>
         </div>
-        <!-- <div class="row mx-2 mb-4">
-            <div
-                class="col-12 col-md-7 about-description d-flex align-items-center justify-content-center flex-column"
-                data-aos="fade-up"
-            ></div>
-            <div class="col-12 col-md-5 about-2">
-                <img
-                    src="/images/about/about-2.jpg"
-                    class="img-thumbnail border-0 p-0"
-                    alt=""
-                    data-aos="fade-up"
-                />
+        <div class="row mt-3 d-md-none">
+            <div class="col-12 text-dark text-center">
+                <p class="mb-1">
+                    Villa Albertina è unʼode alla bellezza della natura nella
+                    sua forma più pura.
+                </p>
+                <p class="mb-1">
+                    Nelle verdi campagne di Argenta, in provincia di Ferrara,
+                    lʼarte incontra la tradizione attraverso un vero e proprio
+                    viaggio sensoriale.
+                </p>
+                <p class="">
+                    I profumi e i sapori della terra, dove lʼallevamento
+                    intensivo non esiste e i piatti sono cucinati rispettando
+                    stagionalità e freschezza.
+                </p>
             </div>
-        </div> -->
+        </div>
         <div class="row">
             <div
                 data-aos="fade-up"
@@ -136,8 +142,16 @@ removeOverflow();
 }
 
 .img-slide {
-    max-height: 100vh; /* Imposta l'altezza massima delle immagini al 100% dell'altezza della finestra */
-    object-fit: contain; /* Ritaglia l'immagine per adattarla alla dimensione del contenitore */
+    max-height: 100vh;
+    object-fit: contain;
+}
+
+.text-overlay {
+    @media (max-width: 767px) {
+        position: static !important;
+        transform: none !important;
+        margin-top: 1rem;
+    }
 }
 
 @media screen and (max-width: 767px) {

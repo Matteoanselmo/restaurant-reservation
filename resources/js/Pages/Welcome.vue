@@ -159,6 +159,14 @@ store.enableOverflowHidden();
     background-position: top;
     background-size: cover;
     background-repeat: no-repeat;
+
+    @media screen and (min-width: 992px) {
+        background-position: center;
+    }
+
+    @media screen and (max-width: 767px) {
+        background-position: 75%;
+    }
 }
 
 #terra-show {
@@ -172,11 +180,5 @@ store.enableOverflowHidden();
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-}
-
-@media screen and (max-width: 767px) {
-    #chose-show {
-        background-position: 75%;
-    }
 }
 </style>
