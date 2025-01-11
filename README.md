@@ -7,60 +7,106 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## About the Project
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This is a **restaurant management application** tailored for a VIP restaurant with **12 exclusive seats**. The project is built using **Laravel 10**, **Vue 3**, and **Bootstrap**, along with **Inertia.js** and other JavaScript helpers. It provides robust tools for managing reservations, dates, and customer interactions.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Key Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Reservation System**:
+  - Fully-featured calendar for managing reservations.
+  - Limited seating with dynamic availability updates.
 
-## Learning Laravel
+- **Dashboards**:
+  - **Admin Dashboard**: Manage reservations, view analytics, and configure settings.
+  - **User Dashboard**: Allow customers to view and manage their bookings.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Queue Management**:
+  - Background job processing with Laravel queues for sending notifications and managing asynchronous tasks.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Interactive Calendar**:
+  - Integrated calendar for selecting dates and managing bookings in real-time.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Frontend Design**:
+  - Responsive interface built with **Bootstrap** for a clean and professional look.
 
-## Laravel Sponsors
+- **Other Features**:
+  - Notifications for booking confirmations and reminders.
+  - Custom middleware for secure route protection.
+  - Intuitive and seamless user experience with **Inertia.js**.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Installation
 
-### Premium Partners
+### Prerequisites
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Ensure you have the following installed on your system:
+- PHP >= 8.1
+- Composer
+- Node.js & npm
+- MySQL or any supported database
 
-## Contributing
+### Steps
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repository/restaurant-management.git
+   cd restaurant-management
+   ```
 
-## Code of Conduct
+2. Install PHP dependencies:
+   ```bash
+   composer install
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+3. Install JavaScript dependencies:
+   ```bash
+   npm install
+   ```
 
-## Security Vulnerabilities
+4. Create a `.env` file and configure your environment variables. Use `.env.example` as a template.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+5. Run migrations and seeders:
+   ```bash
+   php artisan migrate --seed
+   ```
+
+6. Build the frontend assets:
+   ```bash
+   npm run dev
+   ```
+
+7. Start the local development server:
+   ```bash
+   php artisan serve
+   ```
+
+## Usage
+
+### Admin Dashboard
+- Manage reservations and monitor seating availability.
+- Analyze customer data and trends.
+
+### Reservation System
+- Customers can book available seats directly from the calendar.
+- Admin can manually add, modify, or cancel bookings.
+
+### Notifications
+- Automatically send email confirmations and reminders for reservations.
+
+### Queue Management
+- Efficient handling of background tasks, such as sending notifications and updates.
+
+## Security
+
+This application implements the following security features:
+- Middleware for role-based route protection.
+- CSRF protection for all forms and requests.
+- Secure handling of sensitive data via `.env` variables.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+---
+
+<p align="center">Made with ❤️ using Laravel, Vue, Bootstrap, and Inertia.js.</p>
